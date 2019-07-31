@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="com.zybar.bar.dao.UserMapper">
+
+
+
+        <insert id="insert" parameterType="com.zybar.bar.model.User">
+            insert into tb_user(user_id) value (#{userId})
+        </insert>
+
+        </mapper>
