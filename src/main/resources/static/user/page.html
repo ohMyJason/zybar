@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交流吧</title>
+    <script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="./js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="./layer/layer.js"></script>
+    <script type="text/javascript" src="./js/skPlayer.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.jplayer.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/layer.css">
+    <link rel="stylesheet" type="text/css" href="css/livecss.css?v=2">
+    <link rel="icon" href="img/webtitle.png">
+    <!--    <meta name="renderer" content="webkit">-->
+    <meta name="renderer" content="ie-comp">
+</head>
+<body>
+<div class="content ">
+    <div class="content-top">
+        <div class="content-top-title">
+        </div>
+        <div class="content-top-tips">
+            <p>
+                策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，也不会降低金融产品的固有风险，不作为买卖依据，建议投资者自主决定交易，自负风险。市场有风险，入市需谨慎！</p>
+        </div>
+        <div id="user">
+            <div id="user-information">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div id="lq-btn">
+                <button id="login" class="layui-btn layui-btn-primary">登录</button>
+                <button id="quit" class="layui-btn layui-btn-primary" style="display: none">退出</button>
+            </div>
+        </div>
+    </div>
+    <div class="nav-head">
+        <button class="nav nav1 layui-btn layui-btn-fluid">
+            <!--                论坛资讯改金融超市-->
+            金融超市
+        </button>
+        <div class="nav nav2 layui-btn layui-btn-fluid">
+            <!--                数据宝典改多维量化-->
+            多维量化
+        </div>
+        <!--            <p></p>-->
+        <div class="nav nav5 layui-btn layui-btn-fluid">
+            <!--                数据一览改视频直播-->
+            视频直播
+        </div>
+        <div class="nav nav3 layui-btn layui-btn-fluid" style="color: white">
+            观点在线
+        </div>
+        <div class="nav nav4 layui-btn layui-btn-fluid">
+            网友互动
+        </div>
+    </div>
+    <div class="content-body  layui-anim layui-anim-scale">
+        <!--                论坛资讯-->
+        <div class="infomation">
+            <div class="nav-content ">
+                <button class="nav-btn layui-btn layui-btn-radius" style="color: white">状元之声</button>
+                <button class="nav-btn layui-btn layui-btn-radius">机构研报</button>
+                <button class="nav-btn layui-btn layui-btn-radius">手机app</button>
+                <button class="nav-btn layui-btn layui-btn-radius">尖儿货</button>
+                <button class="nav-btn layui-btn layui-btn-radius">操盘经典</button>
+                <button class="nav-btn layui-btn layui-btn-radius">布局计划</button>
+                <button class="nav-btn layui-btn layui-btn-radius">投资者教育</button>
+                <button class="nav-btn layui-btn layui-btn-radius">大数据云</button>
+            </div>
+            <div class="report">
+                <!--                                        状元之声-->
+                <div id="audio" style="overflow: hidden; display: block;">
+
+
+                    <meta charset="UTF-8">
+                    <title>Title</title>
+                    <script src="./js/jquery.cookie.js"></script>
+                    <script src="./js/skPlayer.min.js"></script>
+
+                    <style>
+                        #skPlayer .skPlayer-list {
+                            max-height: 80%;
+                        }
+
+                        #skPlayer .skPlayer-picture {
+                            width: 28%;
+                        }
+
+                        #skPlayer .skPlayer-control {
+                            width: 70%;
+                            padding: 10px 0px 15px;
+                        }
+
+                        #skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {
+                            width: 86%;
+                        }
+                    </style>
+
+
+                    <div id="skPlayer" style="height:100%;width: 100%" class="skPlayer-list-on">
+                        <audio class="skPlayer-source" src="https://audio.qzy77.com/15635271225d3187d2b926a.m4a"
+                               preload="auto"></audio>
+                        <div class="skPlayer-picture">
+                            <img class="skPlayer-cover" src="http://image.find37.com/15572135375cd131619d491.png"
+                                 alt="">
+                            <a href="javascript:;" class="skPlayer-play-btn">
+                                <span class="skPlayer-left"></span>
+                                <span class="skPlayer-right"></span>
+                            </a>
+                        </div>
+                        <div class="skPlayer-control">
+                            <p class="skPlayer-name">7.19行情回顾后市展望</p>
+                            <p class="skPlayer-author">蒋迦南</p>
+                            <div class="skPlayer-percent">
+                                <div class="skPlayer-line-loading" style="width: 100%;"></div>
+                                <div class="skPlayer-line"></div>
+                            </div>
+                            <p class="skPlayer-time">
+                                <span class="skPlayer-cur">00:00</span>/<span class="skPlayer-total">04:09</span>
+                            </p>
+                            <div class="skPlayer-volume" style="">
+                                <i class="skPlayer-icon"></i>
+                                <div class="skPlayer-percent">
+                                    <div class="skPlayer-line" style="width: 60.19%;"></div>
+                                </div>
+                            </div>
+                            <div class="skPlayer-list-switch">
+                                <i class="skPlayer-list-icon"></i>
+                            </div>
+                            <i class="skPlayer-mode"></i>
+                        </div>
+                        <ul class="skPlayer-list">
+
+                            <li data-index="0" class="skPlayer-curMusic" data-id="261" data-total="0">
+                                <i class="skPlayer-list-sign"></i>
+                                <span class="skPlayer-list-index">1</span>
+                                <span class="skPlayer-list-name" title="7.19行情回顾后市展望">7.19行情回顾后市展望</span>
+                                <span class="skPlayer-list-author" title="蒋迦南">蒋迦南</span>
+                            </li>
+
+
+
+                        </ul>
+                    </div>
+
+                    <script>
+                        $(function () {
+                            if ($.cookie("user") != null && $.cookie("user") != "null") {
+                                var user_information = JSON.parse($.cookie("user"));
+                            } else {
+                                var user_information = ""
+                            }
+                            songs = new Array();
+                            var res;
+                            var player;
+                            var musicId = "";
+                            $.ajax({
+                                url: api_url + "/rests/common/audio_list",
+                                type: "post",
+                                async: false,
+                                data: {"member_id": user_information.id},
+                                success: function (result) {
+                                    res = result;
+                                    for (var i = 0; i < result.data.length; i++) {
+                                        // console.log(result.data[i].title);
+                                        var song = {
+                                            "name": result.data[i].title,
+                                            "author": result.data[i].upload_name,
+                                            "src": result.data[i].content_url,
+                                            "cover": result.data[i].headimg
+                                        };
+                                        songs.push(song);
+                                        // console.log(song)
+                                    }
+                                }
+                            })
+                            player = new skPlayer({
+                                //可选项配置同上
+                                music: {
+                                    type: 'file',
+                                    //必需项,自配置文件方式指定填'file'
+                                    source: songs
+                                }
+                            });
+                            console.log(player);
+                            for (var i = 0; i < res.data.length; i++) {
+                                $(".skPlayer-list>li").eq(i).attr("data-id", res.data[i].id).attr("data-total", res.data[i].total).attr("data-status", res.data[i].status);
+                                if ($(".skPlayer-list>li").eq(i).attr("data-status") == 0) {
+                                    $(".skPlayer-list>li").eq(i).css("background-color", "#ef8f88")
+                                    // .css("pointer-events","none")
+                                }
+                            }
+                            // $(".skPlayer-list>li").click(function () {
+                            //     if (user_information == "" || user_information == null) {
+                            //         layer.msg("请先登入")
+                            //     } else if (user_information.grade == 0) {
+                            //         layer.msg("抱歉，该内容只有会员才能查看")
+                            //     }
+                            //     else {
+                            //         $.ajax({
+                            //             url: api_url + "/rests/common/play_count",
+                            //             type: "post",
+                            //             data: {"id": $(this).attr("data-id"), "type": 1},
+                            //             success: function (res) {
+                            //             }
+                            //         })
+                            //     }
+                            //
+                            // })
+
+                        })
+                    </script>
+
+
+                </div>
+                <!--                    机构研报-->
+                <div id="research-report"></div>
+
+                <!--                                        手机app-->
+                <div id="mobile-app" style="overflow:hidden">
+                    <div>
+                        <div class="mobile-app-img">
+                            <div style="float: left;height:100%;width: 50%;text-align: center">
+                                <p>创盈小助手</p>
+                                <img src="img/app/cy.png" height="75%">
+                            </div>
+                            <div style="float: left;height:100%;text-align: center;width: 50%">
+                                <p>瑞达期货</p>
+                                <img src="img/app/app2.png" height="75%">
+                            </div>
+                        </div>
+                        <div class="mobile-app-img">
+                            <p>华鑫期货</p>
+                            <div class="mobile-app-img-div">
+                                <p>华鑫期货恒生app</p><img src="img/app/hx1.png">
+                            </div>
+                            <div class="mobile-app-img-div">
+                                <p>华鑫星途app</p><img src="img/app/hx2.jpg">
+                            </div>
+                        </div>
+                        <div class="mobile-app-img">
+                            <p>东证</p>
+                            <div class="mobile-app-img-div">
+                                <p>东证博易大师</p><img src="img/app/dzby.png">
+                            </div>
+                            <div class="mobile-app-img-div">
+                                <p>东证赢家</p><img src="img/app/dzyj.png">
+                            </div>
+                        </div>
+                        <div class="mobile-app-img">
+                            <p>金控期货</p>
+                            <div class="mobile-app-img-div">
+                                <p>Android</p><img src="img/app/jk1.png" height="100%">
+                            </div>
+                            <div class="mobile-app-img-div">
+                                <p>IOS</p><img src="img/app/jk2.png">
+                            </div>
+                        </div>
+                        <div class="mobile-app-img">
+                            <p>山金期货</p>
+                            <div class="mobile-app-img-div">
+                                <p>Android</p><img src="img/app/sj1.png">
+                            </div>
+                            <div class="mobile-app-img-div">
+                                <p>IOS</p><img src="img/app/sj2.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                    尖儿货-->
+                <div id="Top-cargo">
+                    <div id="Top-cargo-content"></div>
+                </div>
+                <!--                    操盘经典-->
+                <div id="Traders-classic">
+                    <div style="text-align: center"></div>
+                </div>
+                <!--                    布局计划-->
+                <div id="Layout-plan"></div>
+                <!--                                        投资者教育-->
+                <div id="investor-education">
+                    <div id="investor-btns">
+                        <button class="selected-btn-color investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">
+                            防洗钱专栏
+                        </button>
+                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">风险提示
+                        </button>
+                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">基础知识
+                        </button>
+                    </div>
+                    <div class="investor-news" style="display: block">
+                        <p><a href="investor/反洗钱专栏/反洗钱宣传折页.pdf" target="_blank">反洗钱宣传折页</a></p>
+                        <p><a href="investor/反洗钱专栏/反洗钱知识26问.pdf" target="_blank">反洗钱知识26问</a></p>
+                        <p><a href="investor/反洗钱专栏/朗朗乾坤除黑恶，清风正气谱新篇.pdf" target="_blank">朗朗乾坤除黑恶，清风正气谱新篇</a></p>
+                        <p><a href="investor/反洗钱专栏/反洗钱普及小视频.mp4" target="_blank">反洗钱普及小视频</a></p>
+                    </div>
+                    <div class="investor-news">
+                        <p><a href="investor/风险提示/风险揭示.pdf" target="_blank">风险揭示</a></p>
+                        <p><a href="investor/风险提示/关于发布《郑州商品交易所实际控制关系账户管理办法》的公告20180824.pdf" target="_blank">关于发布《郑州商品交易所实际控制关系账户管理办法》的公告20180824</a>
+                        </p>
+                        <p><a href="investor/风险提示/关于发布《郑州商品交易所异常交易行为管理办法》的公告20180824.pdf" target="_blank">关于发布《郑州商品交易所异常交易行为管理办法》的公告20180824</a>
+                        </p>
+                        <p><a href="investor/风险提示/期货风险要点总结.pdf" target="_blank">期货风险要点总结</a></p>
+                        <p><a href="investor/风险提示/大连商品交易所实际控制关系账户 管理办法20180528.doc" target="_blank">大连商品交易所实际控制关系账户
+                            管理办法20180528</a></p>
+                        <p><a href="investor/风险提示/关于发布《上海期货交易所异常交易行为 管理办法》和《上海期货交易所实际 控制关系账户管理办法》的公告20180511.doc"
+                              target="_blank">关于发布《上海期货交易所异常交易行为 管理办法》和《上海期货交易所实际 控制关系账户管理办法》的公告20180511</a></p>
+                        <p><a href="investor/风险提示/上海国际能源交易中心异常交易行为管理细则20180320.doc" target="_blank">上海国际能源交易中心异常交易行为管理细则20180320</a>
+                        </p>
+                    </div>
+                    <div class="investor-news">
+                        <p><a href="http://audio.find37.com/06.12%20黑色金属期货分析方法与技巧%20蔡跃辉.mp4" target="_blank">06.12
+                            黑色金属期货分析方法与技巧 蔡跃辉</a></p>
+                        <p><a href="http://audio.find37.com/06.12%20化工品种调研务实%20张锡莹.mp4" target="_blank">06.12 化工品种调研务实
+                            张锡莹</a></p>
+                        <p><a href="http://audio.find37.com/06.11%20期货基础知识%20%20林聪明.mp4" target="_blank">06.11 期货基础知识
+                            林聪明</a></p>
+                        <p><a href="http://audio.find37.com/06.12%20期货基础知识与交易制度%20%20林聪明.mp4" target="_blank">06.12
+                            期货基础知识与交易制度 林聪明</a></p>
+                        <p><a href="http://audio.find37.com/06.12%20浅析期货交易方法.mp4" target="_blank">06.12 浅析期货交易方法</a></p>
+                        <p><a href="http://audio.find37.com/06.11%20K线及其组合%20%20肖永志.mp4" target="_blank">06.11 K线及其组合
+                            肖永志</a></p>
+                        <p><a href="http://audio.find37.com/06.11%20商品基本面交易分析体系%20尤名胜.mp4" target="_blank">06.11
+                            商品基本面交易分析体系 尤名胜</a></p>
+                        <p><a href="http://audio.find37.com/06.11%20指标分析与训练%20肖永志.mp4" target="_blank">06.11 指标分析与训练
+                            肖永志</a></p>
+                        <p><a href="http://audio.find37.com/06.11%20金属品种调研务实%20蔡跃辉.mp4" target="_blank">06.11 金属品种调研务实
+                            蔡跃辉</a></p>
+                        <p><a href="http://audio.find37.com/06.12%20股指行情展望%20王俊翔.mp4" target="_blank">06.12 股指行情展望
+                            王俊翔</a></p>
+                        <p><a href="http://audio.find37.com/06.12商品价格分析体系.mp4" target="_blank">06.12商品价格分析体系</a></p>
+                        <p><a href="http://audio.find37.com/06.12%20期权基础知识.mp4" target="_blank">06.12 期权基础知识</a></p>
+                        <p><a href="investor/基础知识/豆粕期权.pdf" target="_blank">豆粕期权</a></p>
+                        <p><a href="investor/基础知识/红枣期货宣传册.pdf" target="_blank">红枣期货宣传册</a></p>
+                        <p><a href="investor/基础知识/基本面分析.pdf" target="_blank">基本面分析</a></p>
+                        <p><a href="investor/基础知识/技术分析.pdf" target="_blank">技术分析</a></p>
+                        <p><a href="investor/基础知识/苹果期货介绍材料.pdf" target="_blank">苹果期货介绍材料</a></p>
+                        <p><a href="investor/基础知识/苹果期货宣传册.pdf" target="_blank">苹果期货宣传册</a></p>
+                        <p><a href="investor/基础知识/期货交易时间汇总（更新20190401）.pdf" target="_blank">期货交易时间汇总（更新20190401）</a></p>
+                        <p><a href="investor/基础知识/期货结算.pdf" target="_blank">期货结算</a></p>
+                        <p><a href="investor/基础知识/期货术语.pdf" target="_blank">期货术语</a></p>
+                        <p><a href="investor/基础知识/玉米期权.pdf" target="_blank">玉米期权</a></p>
+                        <p><a href="investor/基础知识/原油期货100问.pdf" target="_blank">原油期货100问</a></p>
+                        <p><a href="investor/基础知识/告诉你什么是深100ETF期权-东证期货.mp4" target="_blank">告诉你什么是深100ETF期权-东证期货</a></p>
+
+                    </div>
+                </div>
+                <!--                                        大数据云-->
+                <div id="datum"></div>
+            </div>
+        </div>
+        <div class="data">
+            <div class=" take data-body">
+                <div id="suspension">
+                    <div class="layui-btn-group" style="width: 100% ;height: 30px">
+                        <button class="layui-btn layui-btn-sm" style="border-top-left-radius: 5px;color:#666666">焦炭
+                        </button>
+                        <button class="layui-btn layui-btn-sm">甲醇</button>
+                        <button class="layui-btn layui-btn-sm">螺纹钢</button>
+                        <button class="layui-btn layui-btn-sm">沥青</button>
+                        <button class="layui-btn layui-btn-sm">热卷</button>
+                        <button class="layui-btn layui-btn-sm" style="border-top-right-radius: 5px">焦煤</button>
+                    </div>
+                    <table class="layui-table" lay-size="sm" lay-skin="nob" style="margin: 0">
+                        <thead>
+                        <tr>
+                            <td style="text-align: center">时间</td>
+                            <td style="text-align: center">品种</td>
+                            <td style="text-align: center">方向</td>
+                            <td style="text-align: center">点位</td>
+
+                        </tr>
+
+                        </thead>
+
+                    </table>
+                    <div class="suspension-white"></div>
+                    <div id="suspension-mohu" style="overflow: hidden;height: 71%;filter: blur(7px)">
+                        <div style="overflow: auto;height: 100%; margin-right: -5%">
+                            <table id="data-table" class="layui-table " lay-size="sm" lay-skin="nob">
+                                <colgroup>
+                                    <col width="25%">
+                                    <col width="22%">
+                                    <col width="20%">
+                                    <col width="16%">
+                                </colgroup>
+                                <tbody id="tb-contain">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="market data-body">
+                <!--                    市场数据-->
+                <iframe frameborder="0" width="105%" height="273" scrolling="yes"
+                        src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>
+                <iframe frameborder="0" width="100%" height="558px" scrolling="yes"
+                        src="https://www.jin10.com/example/jin10.com.html?fontSize=10px&backgroundColor=fff&color=31a1ec"></iframe>
+                -->
+            </div>
+            <div class="odds">
+                <div class="data-body-nav">
+                    <div class="data-body-nav-content" style="border-left: #9e9e9e 1px solid">人气排名</div>
+                    <div class="data-body-nav-content">胜率排名</div>
+                </div>
+                <div class="data-body-odds"
+                     style="box-shadow: -5px 0px 5px #dad6d6;height: 43%;border-left: #9e9e9e 1px solid;border-bottom: none;border-top-left-radius:0;border-bottom-left-radius:0"></div>
+                <div class="data-body-odds" style="border-bottom-left-radius: 0"></div>
+                <div class="contact-us">
+                    <div class="contact-us-content">
+                        <p style="bottom: 8.5%">客服热线:0592-6809325</p>
+                        <p style="bottom: 4.7%;">客服微信:k688918</p>
+                        <p style="bottom: 1%;font-size: 12.4px;">意见邮箱:kefubu@jin808.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="expert-message">
+            <div id="xf" style="left: 74.6%;"><img width="75px" src="img/jrgd.png"></div>
+            <div id="live-nav">
+                <button class="btn-selected layui-btn layui-btn-radius" data-room="0" style="margin-left: 6%">直播大厅
+                </button>
+                <button class="layui-btn layui-btn-radius"></button>
+                <button class="layui-btn layui-btn-radius"></button>
+                <button class="layui-btn layui-btn-radius"></button>
+                <!--                    <button class="layui-btn layui-btn-radius" data-room="7">测试专栏</button>-->
+            </div>
+            <div class="expert-strategy-overflow">
+                <div class="expert-strategy">
+                    <p>策略仅供参考，不作为买卖依据</p>
+                    <!--                    <div class="expert-strategy-div" style="border-left: none"></div>-->
+                    <div class="huifu"><img src="img/xiala.png"></div>
+                    <div class="yincang"><img src="img/shangla.png"></div>
+                    <div class="xiala"><img src="img/xiala.png"></div>
+                    <div class="shangla"><img src="img/shangla.png"></div>
+                    <!--                    <div class="expert-strategy-div"></div>-->
+
+                </div>
+            </div>
+            <div class="expert-content-white">
+
+            </div>
+            <p id="getqx">请激活后查看</p>
+            <div class="expert-content">
+
+            </div>
+            <div class="clbg">
+                策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，也不会降低金融产品的固有风险，不作为买卖依据，建议投资者自主决定交易，自负风险。市场有风险，入市需谨慎！
+
+            </div>
+        </div>
+        <div class="data-view">
+            <!--                轮播图-->
+            <div class="news layui-carousel">
+                <div carousel-item id="bannerAppend" style="height: 100%;"></div>
+
+            </div>
+            <div id="div-iframe">
+                <iframe name="iframename" id="ifram1" scrolling="no" class="iframe" width="200%" height="200%"
+                        frameborder="0" src=""></iframe>
+            </div>
+        </div>
+        <div class="order-message">
+            <!--                网友互动-->
+            <div class="order-content-white"></div>
+            <div class="order-content">
+
+            </div>
+            <div style="height: 25%;margin-top: 8%">
+                <p id="has-message">我有话要说</p>
+                <textarea class="text-area"></textarea>
+                <button id="send" class="layui-btn layui-btn-primary layui-btn-radius">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--    提示音播放插件-->
+<!--<div id="jplayer1"></div>-->
+<!--<div id="jplayer2"></div>-->
+<!--<div id="jplayer3"></div>-->
+
+<!--<script type="text/javascript">-->
+    <!--console.log(screen.height)-->
+    <!--console.log(screen.width)-->
+    <!--// $('#audio').load('music.html');-->
+    <!--$(".nav-btn").click(function () {-->
+        <!--$(".report>button").text($(this).text())-->
+    <!--})-->
+    <!--layui.use('form', function () {-->
+        <!--var form = layui.form;-->
+
+        <!--//监听提交-->
+        <!--// form.on('submit(formDemo)', function(data){-->
+        <!--//     layer.msg(JSON.stringify(data.field));-->
+        <!--//     return false;-->
+        <!--// });-->
+    <!--});-->
+    <!--// 注意：导航 依赖 element 模块，否则无法进行功能性操作-->
+    <!--layui.use('element', function () {-->
+        <!--var element = layui.element;-->
+
+        <!--//…-->
+    <!--});-->
+
+    <!--// $(function () {-->
+    <!--//     // $(".content").slideDown(500)-->
+    <!--//     $(".content").animate({left:0,opacity:'show'},1000)-->
+    <!--// })-->
+
+
+<!--</script>-->
+<script type="text/javascript" src="./js/user_information.js" +Math.random()></script>
+<script type="text/javascript" src="./js/login.js"></script>
+<script type="text/javascript" src="./js/webscork.js"></script>
+<script type="text/javascript" src="./js/data.js"></script>
+<script type="text/javascript" src="./js/news.js"></script>
+<script type="text/javascript" src="./js/odds.js"></script>
+<script type="text/javascript" src="js/information.js"></script>
+
+</body>
+</html>
