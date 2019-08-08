@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!--这里配置自己的jdbc路径，由于大家的都不同，方便大家使用，我直接在pom中添加了jdbc依赖-->
+    <!--<classPathEntry location="D:\environment\apache-maven-3.6.0\mavenRepository\mysql\mysql-connector-java\5.1.41" />-->
+
+    <context id="MysqlTables" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <!--抑制警告-->
+            <property name="suppressTypeWarnings" value="true" />
+            <!--是否去除自动生成的注释 true：是 ： false:否-->
+            <!--bug：如果这里为true，xml文件内容会生成两遍-->
+            <property name="suppressAllComments" value="false" />
+            <!-- 是否生成注释代时间戳 -->
+            <property name="suppressDate" value="false" />
+        </commentGenerator>
+
+        <!--配置数据库连接url，账户，密码-->
+        <jdbcConnection connectionURL="jdbc:mysql://120.79.30.62/jybar" driverClass="com.mysql.jdbc.Driver" password="1998314Ll." userId="root" />
+
+        <!--配置生成的实体类位置-->
+        <javaModelGenerator targetPackage="com.zybar.bar.model" targetProject="src/main/java" />
+
+        <!--配置生成的xml位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources" />
+
+        <!--配置生成的接口位置-->
+        <javaClientGenerator targetPackage="com.zybar.bar.dao" targetProject="src/main/java" type="XMLMAPPER" />
+
+        <!--生成表配置，一个表一个table，加入已经生成，则会overwrite-->
+        <table tableName="tb_app" domainObjectName="App"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_big_data" domainObjectName="BigData"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_caopan" domainObjectName="Caopan"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_inve_edu" domainObjectName="InveEdu"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_jianerhuo" domainObjectName="Jianerhuo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_muti_quanti" domainObjectName="MutiQuanti"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_paper" domainObjectName="Paper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_plan" domainObjectName="Plan"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_strategy" domainObjectName="Strategy"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_user" domainObjectName="User"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+
+        <table tableName="tb_zyvoice" domainObjectName="Zyvoice"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+
+            <!--<property name="useActualColumnNames" value="false"/>-->
+        </table>
+    </context>
+</generatorConfiguration>
