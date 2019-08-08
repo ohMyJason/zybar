@@ -1,12 +1,7 @@
 package com.zybar.bar.controller;
 
-import com.zybar.bar.model.User;
-import com.zybar.bar.service.UserService;
-import org.omg.CORBA.INTERNAL;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author 刘佳昇
@@ -14,20 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 
 
-@Controller
+@RestController
 public class UserController {
-    @Autowired
-    UserService userService;
 
-
-    @GetMapping("/insert")
-    public String InsertUser(User user){
-        Integer col =userService.insertUser(user);
-
-        System.out.println(col);
-
-        return null;
-
-    }
 
 }

@@ -61,41 +61,6 @@ $(function () {
                     })
                 }
             })
-            // $.ajax({
-            //     url:api_url+"rests/common/journal_list",
-            //     type:"post",
-            //     success:function (result) {
-            //         console.log(result)
-            //         var morning=result.journal_four;
-            //         var evening=result.journal_five;
-            //         var day=result.journal_one;
-            //         var week=result.journal_two;
-            //         var special=result.journal_three;
-            //         function addNews(date,img,x) {
-            //             for(var i=0;i<date.length;i++){
-            //                 $("<div data-content="+date[i].url+"><img src="+img+"><p>"+date[i].title+"</p></div>").appendTo($(".publication-news:eq("+x+")"))
-            //             }
-            //         }
-            //         addNews(evening,'./img/news/wan.jpg',1);
-            //         addNews(morning,'./img/news/zao.jpg',0);
-            //         addNews(day,'./img/news/type.jpg',2);
-            //         addNews(week,'./img/news/zhou.jpg',3);
-            //         addNews(special,'./img/news/te.jpg',4);
-            //         $(".publication-news").find("div").click(function () {
-            //             console.log($(this).attr("data-content"));
-            //             window.open($(this).attr("data-content"),"_target");
-            //         })
-            //         $(".publication-btn").click(function () {
-            //             var index=$(this).index();
-            //             $(".publication-btn").removeClass("publication-btn-color");
-            //             $(this).addClass("publication-btn-color");
-            //             $(".publication-news").hide();
-            //             $(".publication-news").eq(index).show();
-            //         })
-            //         // for(var i=0;i<=result.)
-            //         // $("<div></div>")
-            //     }
-            // })
         }
         if(index==2){
             $(".report>div").hide()
