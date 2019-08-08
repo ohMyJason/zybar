@@ -22,13 +22,13 @@ public class PaperServiceImpl implements PaperService {
     PaperMapper paperMapper;
 
     @Override
-    public String insertPaper(String paperPath, String paperName) {
+    public Integer insertPaper(String paperPath, String paperName) {
         Paper paper = new Paper();
         paper.setPdfUrl(paperPath);
         paper.setPaperName(paperName);
         paper.setUpdateTime(new SimpleDateFormat("yy-HH-mm HH:mm:ss").format(new Date()));
         paperMapper.insert(paper);
-        return "0";
+        return 0;
     }
 
     @Override

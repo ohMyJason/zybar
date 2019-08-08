@@ -30,6 +30,14 @@
     from tb_app
     where app_id = #{appId,jdbcType=INTEGER}
   </select>
+
+
+  <select id="selectAllApp" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List"/>
+      from tb_app
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--
       WARNING - @mbggenerated

@@ -21,8 +21,10 @@ public class FileUtil {
      *
      * @param file
      * @return
+     * flag 1-pdf 2-img 3-mp3
+     *
      */
-    public String fileUpload(MultipartFile file) {
+    public String fileUpload(MultipartFile file,Integer flag) {
         //判断文件是否为空
         if (file.isEmpty()) {
             return "-1";
@@ -30,8 +32,23 @@ public class FileUtil {
 
         String fileName = file.getOriginalFilename();
 
+        String prePath ="";
+        switch(flag){
+            case 1:
+//                pdf
+                prePath="D:/working/bar/src/main/resources/static/file/pdf/";
+                break;
+            case 2:
+//                img
+                prePath="D:/working/bar/src/main/resources/static/file/img/";
+                break;
+            case 3:
+//                mp3
+                prePath="D:/working/bar/src/main/resources/static/file/mp3/";
+                break;
+        }
         //加个时间戳，尽量避免文件名称重复
-        String path = "D:/working/bar/src/main/resources/static/file/pdf/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        String path = prePath + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
         File dest = new File(path);
 
         //判断文件是否已经存在

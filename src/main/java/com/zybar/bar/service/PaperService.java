@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface PaperService {
-    String insertPaper(String paperPath,String paperName);
+    Integer insertPaper(String paperPath,String paperName);
 
     List<Paper> selectAllPaper();
 }
