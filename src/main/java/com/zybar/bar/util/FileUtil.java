@@ -86,18 +86,19 @@ public class FileUtil {
         response.reset();
         response.setHeader("Content-Disposition", "attachment;fileName=" + filePathName);
 
-        try {
+//        jdk7新写法，由于实现了autucloseable接口，定义在try中的流会自动关闭
+        try(OutputStream os = response.getOutputStream()) {
             InputStream inStream = new FileInputStream(filePathName);
-            OutputStream os = response.getOutputStream();
+//            OutputStream os = response.getOutputStream();
 
             byte[] buff = new byte[1024];
             int len = -1;
             while ((len = inStream.read(buff)) > 0) {
                 os.write(buff, 0, len);
             }
-            os.flush();
-            os.close();
 
+//            os.flush();
+//            os.close();
             inStream.close();
         } catch (Exception e) {
             e.printStackTrace();
