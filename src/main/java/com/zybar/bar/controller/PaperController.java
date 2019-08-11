@@ -1,5 +1,6 @@
 package com.zybar.bar.controller;
 
+import com.zybar.bar.dao.PaperMapper;
 import com.zybar.bar.model.Paper;
 import com.zybar.bar.service.PaperService;
 import com.zybar.bar.util.FileUtil;
@@ -26,6 +27,9 @@ public class PaperController {
 
     @Autowired
     PaperService paperService;
+
+    @Autowired
+    PaperMapper paperMapper;
 
     /**
      * 上传pdf文件
@@ -76,5 +80,20 @@ public class PaperController {
     /**
      * 待写，文件删除
      */
+    @PostMapping("/deletePaper")
+    public Result deletePaper(@RequestParam(name = "paperId") Integer paperId){
+        try {
+            Paper paper = paperMapper.selectByPrimaryKey(paperId);
+            fileUtil.deleteFile(paper.getPdfUrl());
+            int col = paperMapper.deleteByPrimaryKey(paperId);
+            if (col>0){
+                return Result.createSuccessResult();
+            }else {
+                return Result.createByFailure("删除失败");
+            }
+        }catch (Exception e){
+            return Result.createByFailure("出错");
+        }
+    }
 
 }

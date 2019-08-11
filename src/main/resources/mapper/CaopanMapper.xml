@@ -119,4 +119,8 @@
       name = #{name,jdbcType=VARCHAR}
     where paper_id = #{paperId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" parameterType="com.zybar.bar.model.Caopan" resultMap="BaseResultMap">
+    select * from tb_caopan
+  </select>
 </mapper>

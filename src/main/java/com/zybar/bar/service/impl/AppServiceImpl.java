@@ -35,17 +35,21 @@ public class AppServiceImpl implements AppService {
      */
     @Override
     public Result insertApp(MultipartFile imgFile, App app) {
-        String url = fileUtil.fileUpload(imgFile, 2);
-        app.setPhotoUrl(url);
-        if (!url.equals("-1")&&!url.equals("-2")&&!url.equals("-3")){
-            int col = appMapper.insertSelective(app);
-            if(col>0) {
-                return Result.createSuccessResult();
+        try {
+            String url = fileUtil.fileUpload(imgFile, 2);
+            app.setPhotoUrl(url);
+            if (!url.equals("-1")&&!url.equals("-2")&&!url.equals("-3")){
+                int col = appMapper.insertSelective(app);
+                if(col>0) {
+                    return Result.createSuccessResult();
+                }else {
+                    return Result.createByFailure("添加App失败，请联系管理员");
+                }
             }else {
-                return Result.createByFailure("添加App失败，请联系管理员");
+                return Result.createByFailure("图片上传错误，请联系管理员");
             }
-        }else {
-            return Result.createByFailure("图片上传错误，请联系管理员");
+        }catch (Exception e){
+            return Result.createByFailure("出错");
         }
 
     }
@@ -71,10 +75,17 @@ public class AppServiceImpl implements AppService {
      */
     @Override
     public Result deleteApp(Integer id) {
-        if (appMapper.deleteByPrimaryKey(id)>0){
-            return Result.createSuccessResult();
-        }else {
-            return Result.createByFailure("删除App失败，请联系管理员");
+        try {
+
+            App app = appMapper.selectByPrimaryKey(id);
+            fileUtil.deleteFile(app.getPhotoUrl());
+            if (appMapper.deleteByPrimaryKey(id)>0){
+                return Result.createSuccessResult();
+            }else {
+                return Result.createByFailure("删除App失败，请联系管理员");
+            }
+        }catch (Exception e){
+                return Result.createByFailure("出错");
         }
     }
 }

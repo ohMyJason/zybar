@@ -108,4 +108,31 @@ public class FileUtil {
         return "0";
     }
 
+    /**
+     * 获取当前时间
+     * @return
+     */
+    public String getCurrTime(){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    }
+
+
+    /**
+     * 删除文件
+     * @param fileName
+     * @return
+     */
+    public String deleteFile(String fileName){
+        File file = new File(fileName);
+        if (!file.exists()){
+            return "-2";
+        }
+        if (file.delete()){
+            return "0";
+        }else {
+            return "-1";
+        }
+
+    }
+
 }
