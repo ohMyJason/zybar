@@ -30,7 +30,7 @@
         <javaClientGenerator targetPackage="com.zybar.bar.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
         <!--生成表配置，一个表一个table，加入已经生成，则会overwrite-->
-        <table tableName="tb_app" domainObjectName="App"
+        <table tableName="tb_zy_view" domainObjectName="zyView"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -38,84 +38,5 @@
             <!--<property name="useActualColumnNames" value="false"/>-->
         </table>
 
-        <table tableName="tb_big_data" domainObjectName="BigData"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_caopan" domainObjectName="Caopan"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_inve_edu" domainObjectName="InveEdu"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_jianerhuo" domainObjectName="Jianerhuo"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_muti_quanti" domainObjectName="MutiQuanti"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_paper" domainObjectName="Paper"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_plan" domainObjectName="Plan"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_strategy" domainObjectName="Strategy"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_user" domainObjectName="User"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-        <table tableName="tb_zyvoice" domainObjectName="Zyvoice"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
     </context>
 </generatorConfiguration>

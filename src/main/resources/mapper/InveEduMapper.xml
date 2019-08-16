@@ -119,4 +119,8 @@
       select_name = #{selectName,jdbcType=INTEGER}
     where paper_id = #{paperId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+      select * from tb_inve_edu
+  </select>
 </mapper>

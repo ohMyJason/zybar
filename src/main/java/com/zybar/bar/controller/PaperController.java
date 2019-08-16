@@ -68,10 +68,6 @@ public class PaperController {
     }
 
 
-    /**
-     * 我现在这里添加一点代码
-     */
-
 
     /**
      * 返回所有的paper文件

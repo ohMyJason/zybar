@@ -40,7 +40,7 @@ public class CaopanController {
             caopan.setUpdateTime(fileUtil.getCurrTime());
 
             if (caopanMapper.insertSelective(caopan) > 0) {
-                return Result.createSuccessResult();
+                return Result.createSuccessResult(caopan);
             } else {
                 return Result.createByFailure("数据库操作失败，请联系管理员");
             }
