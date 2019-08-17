@@ -2,7 +2,6 @@ package com.zybar.bar.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zybar.bar.model.App;
-import com.zybar.bar.model.User;
 import com.zybar.bar.service.AppService;
 import com.zybar.bar.util.FileUtil;
 import com.zybar.bar.util.Result;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author 刘佳昇

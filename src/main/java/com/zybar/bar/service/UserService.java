@@ -10,4 +10,8 @@ import com.zybar.bar.model.User;
 public interface UserService {
 
     int insertUser(User user);
+
+    User findUserById(int parseInt);
+
+    User findByUsername(User user);
 }
