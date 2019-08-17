@@ -24,6 +24,12 @@ public class InveEduController {
     @Autowired
     FileUtil fileUtil;
 
+    /**
+     * 添加投资者教育
+     * @param file
+     * @param inveEdu
+     * @return
+     */
     @PostMapping("/insertInveEdu")
     public Result insertInveEdu(@RequestParam(name = "file") MultipartFile file, InveEdu inveEdu){
         try {
@@ -40,6 +46,11 @@ public class InveEduController {
         }
     }
 
+
+    /**
+     * 获取全部投资者教育
+     * @return
+     */
     @PostMapping("/getAllInveEdu")
     public Result getAllInveEdu(){
         try{
@@ -51,6 +62,11 @@ public class InveEduController {
     }
 
 
+    /**
+     * 删除投资者教育
+     * @param inveEdu
+     * @return
+     */
     @PostMapping("/deleteInveEduById")
     public Result deleteInveEduById(InveEdu inveEdu){
         try {
