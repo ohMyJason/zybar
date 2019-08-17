@@ -30,7 +30,7 @@
         <javaClientGenerator targetPackage="com.zybar.bar.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
         <!--生成表配置，一个表一个table，加入已经生成，则会overwrite-->
-        <table tableName="tb_user" domainObjectName="User"
+        <table tableName="tb_strategy" domainObjectName="Strategy"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
