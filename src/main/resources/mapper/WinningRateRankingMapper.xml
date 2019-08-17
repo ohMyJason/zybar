@@ -108,4 +108,9 @@
       winning_rate_ranking_rate = #{winningRateRankingRate,jdbcType=REAL}
     where winning_rate_ranking_id = #{winningRateRankingId,jdbcType=INTEGER}
   </update>
+  <select id="getAllWinningRateRanking" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_winning_rate_ranking
+  </select>
 </mapper>
