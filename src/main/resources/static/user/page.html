@@ -5,17 +5,19 @@
     <title>交流吧</title>
     <script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
-    <script type="text/javascript" src="layui/layui.js"></script>
+    <!--<script type="text/javascript" src="layui/layui.js"></script>-->
     <script type="text/javascript" src="./js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="./layer/layer.js"></script>
-    <script type="text/javascript" src="./js/skPlayer.min.js"></script>
-    <script type="text/javascript" src="./js/jquery.jplayer.js"></script>
+    <!--<script type="text/javascript" src="./layer/layer.js"></script>-->
+    <!--<script type="text/javascript" src="./js/skPlayer.min.js"></script>-->
+    <!--<script type="text/javascript" src="./js/jquery.jplayer.js"></script>-->
 
     <link rel="stylesheet" type="text/css" href="css/layer.css">
     <link rel="stylesheet" type="text/css" href="css/livecss.css?v=2">
     <link rel="icon" href="img/webtitle.png">
     <!--    <meta name="renderer" content="webkit">-->
     <meta name="renderer" content="ie-comp">
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+    <script src="js/CryptoJS/webSorckt.js"></script>
 </head>
 <body>
 <div class="content ">
@@ -28,17 +30,38 @@
         </div>
         <div id="user">
             <div id="user-information">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+
             </div>
             <div id="lq-btn">
-                <button id="login" class="layui-btn layui-btn-primary">登录</button>
-                <button id="quit" class="layui-btn layui-btn-primary" style="display: none">退出</button>
+
+                <button id="login" class="layui-btn layui-btn-primary"><a href="/user/login.html">登录</a></button>
+                <button id="quit" class="layui-btn layui-btn-primary" style="display: none"><a href="/user/login.html">退出</a>
+                </button>
+
             </div>
         </div>
+        <script>
+            $(function () {
+                if ($.cookie("token") != null) {
+                    $.ajax({
+                        url: "/testGetUserId",
+                        headers: {
+                            "token": $.cookie("token")
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#user-information").append("<ul><li>" + data.data.username + "</li><li>等级:5</li><li></li></ul>")
+                            $.cookie("username", data.data.username, {expires: 1, path: '/'})
+                            $("#login").css("display", "none");
+                            $("#quit").css("display", "block");
+                        }
+                    })
+                } else {
+
+                }
+            })
+        </script>
     </div>
     <div class="nav-head">
         <button class="nav nav1 layui-btn layui-btn-fluid">
@@ -68,7 +91,7 @@
                 <button class="nav-btn layui-btn layui-btn-radius" style="color: white">状元之声</button>
                 <button class="nav-btn layui-btn layui-btn-radius">机构研报</button>
                 <button class="nav-btn layui-btn layui-btn-radius">手机app</button>
-                <button class="nav-btn layui-btn layui-btn-radius">尖儿货</button>
+                <button class="nav-btn layui-btn layui-btn-radius">状元视角</button>
                 <button class="nav-btn layui-btn layui-btn-radius">操盘经典</button>
                 <button class="nav-btn layui-btn layui-btn-radius">布局计划</button>
                 <button class="nav-btn layui-btn layui-btn-radius">投资者教育</button>
@@ -81,7 +104,6 @@
 
                     <meta charset="UTF-8">
                     <title>Title</title>
-                    <script src="./js/jquery.cookie.js"></script>
                     <script src="./js/skPlayer.min.js"></script>
 
                     <style>
@@ -146,135 +168,60 @@
                             </li>
 
 
-
                         </ul>
                     </div>
-
-                    <script>
-                        $(function () {
-                            if ($.cookie("user") != null && $.cookie("user") != "null") {
-                                var user_information = JSON.parse($.cookie("user"));
-                            } else {
-                                var user_information = ""
-                            }
-                            songs = new Array();
-                            var res;
-                            var player;
-                            var musicId = "";
-                            $.ajax({
-                                url: api_url + "/rests/common/audio_list",
-                                type: "post",
-                                async: false,
-                                data: {"member_id": user_information.id},
-                                success: function (result) {
-                                    res = result;
-                                    for (var i = 0; i < result.data.length; i++) {
-                                        // console.log(result.data[i].title);
-                                        var song = {
-                                            "name": result.data[i].title,
-                                            "author": result.data[i].upload_name,
-                                            "src": result.data[i].content_url,
-                                            "cover": result.data[i].headimg
-                                        };
-                                        songs.push(song);
-                                        // console.log(song)
-                                    }
-                                }
-                            })
-                            player = new skPlayer({
-                                //可选项配置同上
-                                music: {
-                                    type: 'file',
-                                    //必需项,自配置文件方式指定填'file'
-                                    source: songs
-                                }
-                            });
-                            console.log(player);
-                            for (var i = 0; i < res.data.length; i++) {
-                                $(".skPlayer-list>li").eq(i).attr("data-id", res.data[i].id).attr("data-total", res.data[i].total).attr("data-status", res.data[i].status);
-                                if ($(".skPlayer-list>li").eq(i).attr("data-status") == 0) {
-                                    $(".skPlayer-list>li").eq(i).css("background-color", "#ef8f88")
-                                    // .css("pointer-events","none")
-                                }
-                            }
-                            // $(".skPlayer-list>li").click(function () {
-                            //     if (user_information == "" || user_information == null) {
-                            //         layer.msg("请先登入")
-                            //     } else if (user_information.grade == 0) {
-                            //         layer.msg("抱歉，该内容只有会员才能查看")
-                            //     }
-                            //     else {
-                            //         $.ajax({
-                            //             url: api_url + "/rests/common/play_count",
-                            //             type: "post",
-                            //             data: {"id": $(this).attr("data-id"), "type": 1},
-                            //             success: function (res) {
-                            //             }
-                            //         })
-                            //     }
-                            //
-                            // })
-
-                        })
-                    </script>
 
 
                 </div>
                 <!--                    机构研报-->
-                <div id="research-report"></div>
+                <div id="research-report">
+                    <div class="report-title">机构研报</div>
+
+
+
+                </div>
+                <script>
+                    $(function () {
+                        $.ajax({
+                            url: "/getAllPaper",
+                            type: "post",
+                            dataType: "json",
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+                                    $("#research-report").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
+                                        "                        <div class=\"researchReport-news\" >\n" +
+                                        "                            <a href=\""+data.data[i].pdfUrl+"\">"+data.data[i].paperName+"</a></div>\n" +
+                                        "                        <span class=\"researchReport-news-date\">"+data.data[i].updateTime+"</span></div>")
+                                }
+
+                            },
+
+                        })
+                    })
+                </script>
 
                 <!--    手机app-->
                 <div id="mobile-app" style="overflow:hidden">
                     <div>
-                        <div class="mobile-app-img">
-                            <div style="float: left;height:100%;width: 50%;text-align: center">
-                                <p>创盈小助手</p>
-                                <img src="img/app/cy.png" height="75%">
-                            </div>
-                            <div style="float: left;height:100%;text-align: center;width: 50%">
-                                <p>瑞达期货</p>
-                                <img src="img/app/app2.png" height="75%">
-                            </div>
-                        </div>
+
                         <div class="mobile-app-img">
                             <p>华鑫期货</p>
                             <div class="mobile-app-img-div">
-                                <p>华鑫期货恒生app</p><img src="img/app/hx1.png">
+                                <!--<p>华鑫期货恒生app</p><img src="img/app/hx1.png">-->
                             </div>
                             <div class="mobile-app-img-div">
-                                <p>华鑫星途app</p><img src="img/app/hx2.jpg">
-                            </div>
-                        </div>
-                        <div class="mobile-app-img">
-                            <p>东证</p>
-                            <div class="mobile-app-img-div">
-                                <p>东证博易大师</p><img src="img/app/dzby.png">
-                            </div>
-                            <div class="mobile-app-img-div">
-                                <p>东证赢家</p><img src="img/app/dzyj.png">
-                            </div>
-                        </div>
-                        <div class="mobile-app-img">
-                            <p>金控期货</p>
-                            <div class="mobile-app-img-div">
-                                <p>Android</p><img src="img/app/jk1.png" height="100%">
-                            </div>
-                            <div class="mobile-app-img-div">
-                                <p>IOS</p><img src="img/app/jk2.png">
-                            </div>
-                        </div>
-                        <div class="mobile-app-img">
-                            <p>山金期货</p>
-                            <div class="mobile-app-img-div">
-                                <p>Android</p><img src="img/app/sj1.png">
-                            </div>
-                            <div class="mobile-app-img-div">
-                                <p>IOS</p><img src="img/app/sj2.png">
+                                <!--<p>华鑫星途app</p><img src="img/app/hx2.jpg">-->
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--                    尖儿货-->
+                <script>
+
+                </script>
+                <!--                    状元视角-->
                 <div id="Top-cargo">
                     <div id="Top-cargo-content"></div>
                 </div>
@@ -402,8 +349,6 @@
                 <!--                    市场数据-->
                 <iframe frameborder="0" width="105%" height="273" scrolling="yes"
                         src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>
-                <iframe frameborder="0" width="100%" height="558px" scrolling="yes"
-                        src="https://www.jin10.com/example/jin10.com.html?fontSize=10px&backgroundColor=fff&color=31a1ec"></iframe>
                 -->
             </div>
             <div class="odds">
@@ -424,7 +369,7 @@
             </div>
         </div>
         <div class="expert-message">
-            <div id="xf" style="left: 74.6%;"><img width="75px" src="img/jrgd.png"></div>
+            <!--<div id="xf" style="left: 74.6%;"><img width="75px" src="img/jrgd.png"></div>-->
             <div id="live-nav">
                 <button class="btn-selected layui-btn layui-btn-radius" data-room="0" style="margin-left: 6%">直播大厅
                 </button>
@@ -437,10 +382,10 @@
                 <div class="expert-strategy">
                     <p>策略仅供参考，不作为买卖依据</p>
                     <!--                    <div class="expert-strategy-div" style="border-left: none"></div>-->
-                    <div class="huifu"><img src="img/xiala.png"></div>
-                    <div class="yincang"><img src="img/shangla.png"></div>
-                    <div class="xiala"><img src="img/xiala.png"></div>
-                    <div class="shangla"><img src="img/shangla.png"></div>
+                    <!--<div class="huifu"><img src="img/xiala.png"></div>-->
+                    <!--<div class="yincang"><img src="img/shangla.png"></div>-->
+                    <!--<div class="xiala"><img src="img/xiala.png"></div>-->
+                    <!--<div class="shangla"><img src="img/shangla.png"></div>-->
                     <!--                    <div class="expert-strategy-div"></div>-->
 
                 </div>
@@ -448,7 +393,7 @@
             <div class="expert-content-white">
 
             </div>
-            <p id="getqx">请激活后查看</p>
+            <!--<p id="getqx">请激活后查看</p>-->
             <div class="expert-content">
 
             </div>
@@ -464,21 +409,37 @@
 
             </div>
             <div id="div-iframe">
-                <iframe name="iframename" id="ifram1" scrolling="no" class="iframe" width="200%" height="200%"
-                        frameborder="0" src=""></iframe>
+                <!--<iframe name="iframename" id="ifram1" scrolling="no" class="iframe" width="200%" height="200%"-->
+                <!--frameborder="0" src=""></iframe>-->
             </div>
         </div>
         <div class="order-message">
             <!--                网友互动-->
             <div class="order-content-white"></div>
-            <div class="order-content">
+            <div class="order-content" id="order-content">
+                <!--<h1 id="message"></h1>-->
+                <!--<div class="chat-item" id="hallUsers" style="display: block;">-->
+                <!--<div class="chat-left"><img src="http://image.find37.com/150950665859f93e62b5b32.png" +="" -live="">-->
+                <!--</div>-->
+                <!--<div class="chat-right"><p class="time">14:48:12</p>-->
+                <!--<div class="chat-user"><img class="imgLogo" src="http://image.find37.com/grade1.png" +=""-->
+                <!-- -live="">投资大亨_1461-->
+                <!--</div>-->
+                <!--<div class="chat-message">qqweqweqwe</div>-->
+                <!--</div>-->
+                <!--</div>-->
 
             </div>
+
             <div style="height: 25%;margin-top: 8%">
                 <p id="has-message">我有话要说</p>
-                <textarea class="text-area"></textarea>
+                <!--<textarea class="text-area" id="message-aera"></textarea>-->
+                <textarea style="width: 90%;height: 80%;margin-left: 5%;border-radius: 0 0 7px 7px;background: white;"
+                          id="message-aera"></textarea>
+
                 <button id="send" class="layui-btn layui-btn-primary layui-btn-radius">发送</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -488,41 +449,41 @@
 <!--<div id="jplayer3"></div>-->
 
 <!--<script type="text/javascript">-->
-    <!--console.log(screen.height)-->
-    <!--console.log(screen.width)-->
-    <!--// $('#audio').load('music.html');-->
-    <!--$(".nav-btn").click(function () {-->
-        <!--$(".report>button").text($(this).text())-->
-    <!--})-->
-    <!--layui.use('form', function () {-->
-        <!--var form = layui.form;-->
+<!--console.log(screen.height)-->
+<!--console.log(screen.width)-->
+<!--// $('#audio').load('music.html');-->
+<!--$(".nav-btn").click(function () {-->
+<!--$(".report>button").text($(this).text())-->
+<!--})-->
+<!--layui.use('form', function () {-->
+<!--var form = layui.form;-->
 
-        <!--//监听提交-->
-        <!--// form.on('submit(formDemo)', function(data){-->
-        <!--//     layer.msg(JSON.stringify(data.field));-->
-        <!--//     return false;-->
-        <!--// });-->
-    <!--});-->
-    <!--// 注意：导航 依赖 element 模块，否则无法进行功能性操作-->
-    <!--layui.use('element', function () {-->
-        <!--var element = layui.element;-->
+<!--//监听提交-->
+<!--// form.on('submit(formDemo)', function(data){-->
+<!--//     layer.msg(JSON.stringify(data.field));-->
+<!--//     return false;-->
+<!--// });-->
+<!--});-->
+<!--// 注意：导航 依赖 element 模块，否则无法进行功能性操作-->
+<!--layui.use('element', function () {-->
+<!--var element = layui.element;-->
 
-        <!--//…-->
-    <!--});-->
+<!--//…-->
+<!--});-->
 
-    <!--// $(function () {-->
-    <!--//     // $(".content").slideDown(500)-->
-    <!--//     $(".content").animate({left:0,opacity:'show'},1000)-->
-    <!--// })-->
+<!--// $(function () {-->
+<!--//     // $(".content").slideDown(500)-->
+<!--//     $(".content").animate({left:0,opacity:'show'},1000)-->
+<!--// })-->
 
 
 <!--</script>-->
-<script type="text/javascript" src="./js/user_information.js" +Math.random()></script>
-<script type="text/javascript" src="./js/login.js"></script>
-<script type="text/javascript" src="./js/webscork.js"></script>
-<script type="text/javascript" src="./js/data.js"></script>
-<script type="text/javascript" src="./js/news.js"></script>
-<script type="text/javascript" src="./js/odds.js"></script>
+<!--<script type="text/javascript" src="./js/user_information.js" +Math.random()></script>-->
+<!--<script type="text/javascript" src="./js/login.js"></script>-->
+<!--<script type="text/javascript" src="./js/webscork.js"></script>-->
+<!--<script type="text/javascript" src="./js/data.js"></script>-->
+<!--<script type="text/javascript" src="./js/news.js"></script>-->
+<!--<script type="text/javascript" src="./js/odds.js"></script>-->
 <script type="text/javascript" src="js/information.js"></script>
 
 </body>

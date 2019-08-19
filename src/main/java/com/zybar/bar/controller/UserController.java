@@ -26,8 +26,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-
     @Autowired
     TokenService tokenService;
 
@@ -61,11 +59,12 @@ public class UserController {
     }
 
     @UserLoginToken
-    @PostMapping("testGetUserId")
+    @PostMapping("/testGetUserId")
     public Result testGetUserId(HttpServletRequest httpServletRequest){
         String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
         String userId = JWT.decode(token).getAudience().get(0);
-        return Result.createSuccessResult(userId);
+        User user = userService.findUserById(Integer.parseInt(userId));
+        return Result.createSuccessResult(user);
     }
 
 
