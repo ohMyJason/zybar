@@ -31,23 +31,29 @@ public class PaperController {
     @Autowired
     PaperMapper paperMapper;
 
+
+
+
+    @PostMapping("/insertPaper")
+    public Result insertPaper(Paper paper){
+        if (paperService.insertPaper(paper.getPdfUrl(),paper.getPaperName())!=0){
+            return Result.createSuccessResult();
+        }else {
+            return Result.createByFailure("添加失败，请联系管理员");
+        }
+    }
+
     /**
      * 上传pdf文件
      * @param file 文件对象
-     * @param paper  paper实体对象，主要为了得到文件名也就是标题
      * @return
      */
     @PostMapping("/uploadPaperFile")
     @ResponseBody
-    public Result uploadFile(@RequestParam("fileName") MultipartFile file, Paper paper) {
+    public Result uploadFile(@RequestParam("file") MultipartFile file) {
         String filePath = fileUtil.fileUpload(file,1);
         if (!filePath.equals("-1")&&!filePath.equals("-2")&&!filePath.equals("-3")){
-
-            if (paperService.insertPaper(filePath,paper.getPaperName())==0){
-                return Result.createSuccessResult();
-            }else {
-                return Result.createByFailure("上传失败，请联系管理员");
-            }
+            return Result.createSuccessResult(filePath);
         }else{
             return Result.createByFailure("pdf文件上传错误，请重试。");
         }
@@ -75,7 +81,8 @@ public class PaperController {
      */
     @PostMapping("/getAllPaper")
     public Result getAllPaper(){
-        return  Result.createSuccessResult(paperService.selectAllPaper());
+        List<Paper> papers = paperService.selectAllPaper();
+        return  Result.createSuccessResult(papers.size(),papers);
     }
 
     /**
