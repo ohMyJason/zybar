@@ -39,20 +39,20 @@
       from tb_paper
       <where>
         <if test="paperName!=null">
-          paper_name like '%#{paperName}%'
+          paper_name like '%${paperName}%'
         </if>
       </where>
       LIMIT #{start},#{limit}
   </select>
 
-  <select id="getCount" resultType="java.lang.Integer">
+  <select id="getCount" parameterType="String" resultType="java.lang.Integer">
     SELECT
     COUNT(paper_id)
     from
     tb_paper
     <where>
       <if test="paperName!=null">
-        paper_name like '%#{paperName}%'
+        paper_name like '%${paperName}%'
       </if>
     </where>
   </select>

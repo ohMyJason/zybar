@@ -60,5 +60,4 @@ public interface PaperMapper {
 
     int getCount(@Param("paperName") String paperName);
 
-    int getCount();
 }

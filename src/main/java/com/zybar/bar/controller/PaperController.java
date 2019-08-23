@@ -80,7 +80,7 @@ public class PaperController {
      * @return
      */
     @PostMapping("/getAllPaper")
-    public Result getAllPaper(String paperName,int page,int limit ){
+    public Result getAllPaper(int page,int limit,String paperName){
         Result result = paperService.selectAllPaper(paperName, page, limit);
         return  result;
     }
