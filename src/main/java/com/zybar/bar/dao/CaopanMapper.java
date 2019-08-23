@@ -2,6 +2,7 @@ package com.zybar.bar.dao;
 
 import com.zybar.bar.model.Caopan;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,5 +56,7 @@ public interface CaopanMapper {
      */
     int updateByPrimaryKey(Caopan record);
 
-    List<Caopan> selectAll();
+    List<Caopan> selectAll(@Param("name") String name,@Param("start") int start,@Param("limit") int limit);
+
+    int getCount(@Param("name") String name);
 }
