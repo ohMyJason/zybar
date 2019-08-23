@@ -122,5 +122,22 @@
 
   <select id="getAllZyView" resultMap="BaseResultMap">
     select * from tb_zy_view
+    <where>
+      <if test="zyViewName!=null">
+        zy_view_name like '%${zyViewName}%'
+      </if>
+    </where>
+    LIMIT #{start},#{limit}
  </select>
+
+  <select id="getCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    count(zy_view_id)
+    from tb_zy_view
+    <where>
+      <if test="zyViewName!=null">
+        zy_view_name  like '%${zyViewName}%'
+      </if>
+    </where>
+  </select>
 </mapper>

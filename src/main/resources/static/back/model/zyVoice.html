@@ -13,21 +13,19 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="window-header">
-
     </div>
 
     <div class="layui-side layui-bg-black" id="window-left">
-
     </div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
 
         <div  style="margin: 15px;">
-            <button type="button" id="add-zy-view" class="layui-btn">添加状元视角</button>
+            <button type="button" id="add-zy-voice" class="layui-btn">添加状元之声</button>
         </div>
         <script>
-            $("#add-zy-view").click(function () {
+            $("#add-zy-voice").click(function () {
                 layer.open({
                     type: 2,
                     area : ['800px' , '580px'],
@@ -38,12 +36,12 @@
         <div style="padding: 15px;margin-top: 30px">
             <div class="demoTable">
                 <div class="layui-inline">
-                    <input class="layui-input" id="zy-view-name" placeholder="状元视角名" autocomplete="off">
+                    <input class="layui-input" id="zy-voice-name" placeholder="状元之声名" autocomplete="off">
                 </div>
                 <button class="layui-btn" data-type="reload" id="search">搜索</button>
             </div>
 
-            <table class="layui-hide" id="zy-view-table" lay-filter="zy-view-table"></table>
+            <table class="layui-hide" id="zy-voice-table" lay-filter="zy-voice-table"></table>
 
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -63,24 +61,25 @@
                 layui.use('table', function(){
                     var table = layui.table;
                     table.render({
-                        elem: '#zy-view-table'
-                        ,url:'/getAllZyView'
+                        elem: '#zy-voice-table'
+                        ,url:'/getZyVoice'
                         ,toolbar: '#toolbarDemo'
                         ,title: '状元视角'
                         ,method:'post'
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
-                            ,{field:'zyViewId', title:'ID', fixed: 'left',width:150, unresize: true, sort: true}
-                            ,{field:'zyViewUrl', title:'状元视角地址'}
-                            ,{field:'zyViewName', title:'状元视角文章名',sort: true}
-                            ,{field:'zyViewCreatTiome', title:'更新时间'}
+                            ,{field:'voiceId', title:'ID', fixed: 'left',width:150, unresize: true, sort: true}
+                            ,{field:'photoUrl', title:'状元之声头像'}
+                            ,{field:'mp3Url', title:'状元之声地址'}
+                            ,{field:'mp3Name', title:'状元之声名',sort: true}
+                            ,{field:'userId', title:'用户id'}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]]
                         ,page: true
                     });
 
                     //头工具栏事件
-                    table.on('toolbar(zy-view-table)', function(obj){
+                    table.on('toolbar(zy-voice-table)', function(obj){
                         var checkStatus = table.checkStatus(obj.config.id);
                         switch(obj.event){
                             case 'getCheckData':
@@ -98,7 +97,7 @@
                     });
 
                     //监听行工具事件
-                    table.on('tool(zy-view-table)', function(obj){
+                    table.on('tool(zy-voice-table)', function(obj){
                         var data = obj.data;
                         // console.log(obj.data.paperId)
                         // layer.alert(data.paperId);
@@ -124,9 +123,9 @@
                     // 搜索
                     $("#search").click(function () {
                         //重新加载表格
-                        table.reload('zy-view-table' ,{
+                        table.reload('zy-voice-table' ,{
                             where: { //设定异步数据接口的额外参数，任意设
-                                zyViewName : $("#zy-view-name").val()
+                                mp3Name : $("#zy-voice-name").val()
                             },
                             page: {
                                 curr: 1 //重新从第 1 页开始

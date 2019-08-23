@@ -2,6 +2,7 @@ package com.zybar.bar.dao;
 
 import com.zybar.bar.model.ZyView;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -56,5 +57,7 @@ public interface ZyViewMapper {
      */
     int updateByPrimaryKey(ZyView record);
 
-    List<ZyView> getAllZyView();
+    List<ZyView> getAllZyView(@Param("zyViewName") String zyViewName,@Param("start") int start,@Param("limit") int limit );
+
+    int getCount(@Param("zyViewName") String zyViewName);
 }

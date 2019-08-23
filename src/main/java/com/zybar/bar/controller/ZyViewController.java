@@ -3,6 +3,7 @@ package com.zybar.bar.controller;
 import com.zybar.bar.dao.ZyViewMapper;
 import com.zybar.bar.model.ZyView;
 import com.zybar.bar.util.FileUtil;
+import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,10 +51,14 @@ public class ZyViewController {
      * @return
      */
     @PostMapping("/getAllZyView")
-    public Result getAllZyView(){
+    public Result getAllZyView(String zyViewName,int page,int limit){
         try {
-            List<ZyView> allZyView = zyViewMapper.getAllZyView();
-            return Result.createSuccessResult(allZyView.size(),allZyView);
+            page = PageCheck.checkPage(page);
+            limit = PageCheck.checkLimit(limit);
+            int start = PageCheck.calculateStart(page, limit);
+            int count = zyViewMapper.getCount(zyViewName);
+            List<ZyView> allZyView = zyViewMapper.getAllZyView(zyViewName,start,limit);
+            return Result.createSuccessResult(count,allZyView);
         }catch (Exception e){
             return Result.createByFailure("数据错误002，请重试");
         }

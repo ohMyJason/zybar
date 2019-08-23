@@ -2,6 +2,9 @@ package com.zybar.bar.dao;
 
 import com.zybar.bar.model.Zyvoice;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 @Mapper
@@ -53,4 +56,8 @@ public interface ZyvoiceMapper {
      * @mbggenerated Thu Aug 08 17:28:24 CST 2019
      */
     int updateByPrimaryKey(Zyvoice record);
+
+    int getCount(@Param("mp3Name") String mp3Name);
+
+    List<Zyvoice> getAllZyVoice(@Param("mp3Name") String mp3Name,@Param("start") int start,@Param("limit") int limit);
 }
