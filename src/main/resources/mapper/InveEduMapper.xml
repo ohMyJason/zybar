@@ -122,5 +122,21 @@
 
   <select id="selectAll" resultMap="BaseResultMap">
       select * from tb_inve_edu
+      <where>
+        <if test="name!=null">
+          name like '%${name}%'
+        </if>
+      </where>
+      LIMIT #{start},#{limit}
+  </select>
+
+  <select id="getCount" parameterType="java.lang.String" resultType="integer">
+    select count(*)
+    from tb_inve_edu
+    <where>
+      <if test="name!=null">
+        name like '%${name}%'
+      </if>
+    </where>
   </select>
 </mapper>

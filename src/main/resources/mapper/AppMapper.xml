@@ -36,6 +36,22 @@
       select
       <include refid="Base_Column_List"/>
       from tb_app
+      <where>
+        <if test="name!=null">
+          name like '%${name}%'
+        </if>
+      </where>
+      LIMIT #{start},#{limit}
+  </select>
+
+  <select id="getCount" parameterType="java.lang.String" resultType="integer">
+    select count(*)
+    from tb_app
+    <where>
+      <if test="name!=null">
+        name like '%${name}%'
+      </if>
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

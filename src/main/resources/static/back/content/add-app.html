@@ -10,21 +10,24 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>添加操盘经典</legend>
+    <legend>添加App</legend>
 </fieldset>
 <form class="layui-form" >
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <input type="text" name="name" required lay-verify="required" placeholder="请输入操盘经典标题" autocomplete="off"
+            <input type="text" name="name" required lay-verify="required" placeholder="请输入App名" autocomplete="off"
                    class="layui-input">
-            <input type="hidden" name="pdfUrl" id="paperUrl">
+            <input type="hidden" name="photoUrl" id="photoUrl">
         </div>
+
 
         <div class="layui-input-block" style="margin-top: 20px;">
 
             <button type="button" class="layui-btn" id="test1">
-                <i class="layui-icon">&#xe67c;</i>上传PDF
+                <i class="layui-icon">&#xe67c;</i>上传图片
             </button>
+
+            <img id="photo" src="../layui/images/imgInit.png" alt="请上传图片">
 
         </div>
 
@@ -36,10 +39,11 @@
                 //执行实例
                 var uploadInst = upload.render({
                     elem: '#test1' //绑定元素
-                    , url: '/uploadCaopan' //上传接口
-                    ,accept:'file'
+                    , url: '/uploadApp' //上传接口
+                    ,accept:'img'
                     , done: function (res) {
-                        $("#paperUrl").val(res.data);
+                        $("#photoUrl").val(res.data);
+                        $("#photo").attr("src",res.data);
                         layui.use('layer', function(){
                             var layer = layui.layer;
 
@@ -72,7 +76,7 @@
         //监听提交
         form.on('submit(formDemo)', function (data) {
             $.ajax({
-                url:"/insertCaopan",
+                url:"/insertApp",
                 type:"post",
                 data:data.field,
                 dataType:"json",

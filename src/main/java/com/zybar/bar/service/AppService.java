@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 
 public interface AppService {
-    Result insertApp(MultipartFile imgFile, App app);
-    Result selectApp();
+    Result insertApp( App app);
+    Result selectApp(String name, int page, int limit);
     Result deleteApp(Integer id);
 }

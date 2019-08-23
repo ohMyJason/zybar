@@ -4,15 +4,13 @@ import com.zybar.bar.dao.AppMapper;
 import com.zybar.bar.model.App;
 import com.zybar.bar.service.AppService;
 import com.zybar.bar.util.FileUtil;
+import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
-
-import static sun.plugin2.os.windows.OSVERSIONINFOA.size;
 
 /**
  * @author 刘佳昇
@@ -29,27 +27,18 @@ public class AppServiceImpl implements AppService {
 
     /**
      * 插入App
-     * @param imgFile 图片
+
      * @param app
      * @return
      */
     @Override
-    public Result insertApp(MultipartFile imgFile, App app) {
-        try {
-            String url = fileUtil.fileUpload(imgFile, 2);
-            app.setPhotoUrl(url);
-            if (!url.equals("-1")&&!url.equals("-2")&&!url.equals("-3")){
-                int col = appMapper.insertSelective(app);
-                if(col>0) {
-                    return Result.createSuccessResult();
-                }else {
-                    return Result.createByFailure("添加App失败，请联系管理员");
-                }
-            }else {
-                return Result.createByFailure("图片上传错误，请联系管理员");
-            }
-        }catch (Exception e){
-            return Result.createByFailure("出错");
+    public Result insertApp( App app) {
+
+        int col = appMapper.insertSelective(app);
+        if(col>0) {
+            return Result.createSuccessResult();
+        }else {
+            return Result.createByFailure("添加App失败，请联系管理员");
         }
 
     }
@@ -57,12 +46,19 @@ public class AppServiceImpl implements AppService {
     /**
      * 获取全部app
      * @return
+     * @param name
+     * @param page
+     * @param limit
      */
     @Override
-    public Result selectApp() {
-        List<App> apps = appMapper.selectAllApp();
+    public Result selectApp(String name, int page, int limit) {
+        page = PageCheck.checkPage(page);
+        limit = PageCheck.checkLimit(limit);
+        int start = PageCheck.calculateStart(page, limit);
+        int count = appMapper.getCount(name);
+        List<App> apps = appMapper.selectAllApp(name,start,limit);
         if (apps.size()>0){
-            return Result.createSuccessResult(apps);
+            return Result.createSuccessResult(count,apps);
         }else{
             return Result.createByFailure("获取App失败，请联系管理员");
         }

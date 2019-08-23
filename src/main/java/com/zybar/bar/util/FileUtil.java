@@ -60,7 +60,9 @@ public class FileUtil {
                 break;
         }
         //加个时间戳，尽量避免文件名称重复
-        String path = prePath + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+
+        String newFileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        String path = prePath+newFileName;
         File dest = new File(path);
 
         //判断文件是否已经存在
@@ -79,7 +81,7 @@ public class FileUtil {
             return "-3";
         }
 
-        return path;
+        return "/file/img/"+newFileName;
 
     }
 

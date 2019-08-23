@@ -2,6 +2,7 @@ package com.zybar.bar.dao;
 
 import com.zybar.bar.model.InveEdu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -54,5 +55,7 @@ public interface InveEduMapper {
      */
     int updateByPrimaryKey(InveEdu record);
 
-    List<InveEdu> selectAll();
+    List<InveEdu> selectAll(@Param("name") String name,@Param("start") int start,@Param("limit") int limit);
+
+    int getCount(@Param("name") String name);
 }

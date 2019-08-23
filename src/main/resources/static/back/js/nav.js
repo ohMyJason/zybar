@@ -37,11 +37,11 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
     "                        <dd><a href=\"/back/model/zyVoice.html\">状元之声管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/paper.html\">机构研报管理</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">手机App管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/app.html\">手机App管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/zyView.html\">状元视角管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/caoPan.html\">操盘经典管理</a></dd>\n" +
     "                        <dd><a href=\"javascript:;\">布局计划管理</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">投资者教育管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/inveEdu.html\">投资者教育管理</a></dd>\n" +
     "                        <dd><a href=\"javascript:;\">大数据云管理</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +

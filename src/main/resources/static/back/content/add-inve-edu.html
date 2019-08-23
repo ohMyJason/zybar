@@ -10,14 +10,22 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>添加操盘经典</legend>
+    <legend>添加投资者教育</legend>
 </fieldset>
 <form class="layui-form" >
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <input type="text" name="name" required lay-verify="required" placeholder="请输入操盘经典标题" autocomplete="off"
+            <input type="text" name="name" required lay-verify="required" placeholder="请输入投资者教育标题" autocomplete="off"
                    class="layui-input">
-            <input type="hidden" name="pdfUrl" id="paperUrl">
+        </div>
+
+        <div class="layui-input-block" style="margin-top: 15px">
+            <select name="selectName" lay-verify="">
+                <option value="">请选择一个类别</option>
+                <option value="1">防洗钱专栏</option>
+                <option value="2">风险提示</option>
+                <option value="3">基础知识</option>
+            </select>
         </div>
 
         <div class="layui-input-block" style="margin-top: 20px;">
@@ -28,6 +36,8 @@
 
         </div>
 
+        <input type="hidden" name="pdfUrl" id="paperUrl">
+
 
         <script>
             layui.use('upload', function () {
@@ -36,7 +46,7 @@
                 //执行实例
                 var uploadInst = upload.render({
                     elem: '#test1' //绑定元素
-                    , url: '/uploadCaopan' //上传接口
+                    , url: '/uploadInveEdu' //上传接口
                     ,accept:'file'
                     , done: function (res) {
                         $("#paperUrl").val(res.data);
@@ -54,6 +64,7 @@
                 });
             });
         </script>
+
     </div>
 
     <div class="layui-form-item">
@@ -72,7 +83,7 @@
         //监听提交
         form.on('submit(formDemo)', function (data) {
             $.ajax({
-                url:"/insertCaopan",
+                url:"/insertInveEdu",
                 type:"post",
                 data:data.field,
                 dataType:"json",

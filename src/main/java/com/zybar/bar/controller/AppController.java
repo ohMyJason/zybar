@@ -31,13 +31,27 @@ public class AppController {
     /**
      * 插入App
      *
-     * @param imgFile
      * @param app
      * @return
      */
     @PostMapping("/insertApp")
-    public Result insertApp(@RequestParam("imgFile") MultipartFile imgFile, App app) {
-        return appService.insertApp(imgFile, app);
+    public Result insertApp(App app) {
+        return appService.insertApp(app);
+    }
+
+    @PostMapping("/uploadApp")
+    public Result uploadApp(@RequestParam("file") MultipartFile file){
+        try {
+            String url = fileUtil.fileUpload(file, 2);
+
+            if (!url.equals("-1")&&!url.equals("-2")&&!url.equals("-3")){
+                return Result.createSuccessResult(url);
+            }else {
+                return Result.createByFailure("图片上传错误，请联系管理员");
+            }
+        }catch (Exception e){
+            return Result.createByFailure("出错");
+        }
     }
 
     /**
@@ -46,8 +60,8 @@ public class AppController {
      * @return
      */
     @PostMapping("/getAllApp")
-    public Result getAllApp() {
-        return appService.selectApp();
+    public Result getAllApp(String name,int page,int limit) {
+        return appService.selectApp(name,page,limit);
     }
 
 
