@@ -80,13 +80,13 @@ public class PaperController {
      * @return
      */
     @PostMapping("/getAllPaper")
-    public Result getAllPaper(){
-        List<Paper> papers = paperService.selectAllPaper();
-        return  Result.createSuccessResult(papers.size(),papers);
+    public Result getAllPaper(String paperName,int page,int limit ){
+        Result result = paperService.selectAllPaper(paperName, page, limit);
+        return  result;
     }
 
     /**
-     * 待写，文件删除
+     * 文件删除
      */
     @PostMapping("/deletePaper")
     public Result deletePaper(@RequestParam(name = "paperId") Integer paperId){
@@ -94,12 +94,13 @@ public class PaperController {
             Paper paper = paperMapper.selectByPrimaryKey(paperId);
             fileUtil.deleteFile(paper.getPdfUrl());
             int col = paperMapper.deleteByPrimaryKey(paperId);
-            if (col>0){
+            if (col>0) {
                 return Result.createSuccessResult();
-            }else {
+            } else {
                 return Result.createByFailure("删除失败");
             }
         }catch (Exception e){
+             System.out.println(e.getMessage());
             return Result.createByFailure("出错");
         }
     }

@@ -128,10 +128,10 @@
                         ,title: '机构研报'
                         ,method:'post'
                         ,cols: [[
-                            {type: 'checkbox', fixed: 'left'}
+                            {type: 'checkbox', fixed: 'left',width:100}
                             ,{field:'paperId', title:'ID', fixed: 'left', unresize: true, sort: true}
-                            ,{field:'pdfUrl', title:'机构研报地址', edit: 'text'}
-                            ,{field:'paperName', title:'机构研报名', edit: 'text', sort: true}
+                            ,{field:'pdfUrl', title:'机构研报地址'}
+                            ,{field:'paperName', title:'机构研报名',sort: true}
                             ,{field:'updateTime', title:'更新时间'}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]]
@@ -169,7 +169,7 @@
                                     layer.close(index);
                                     layui.use('layer', function(){
                                         var layer = layui.layer;
-                                        layer.load({time:1000}); //又换了种风格，并且设定最长等待10秒
+                                        layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
                                         setTimeout(function(){
                                             layer.msg('删除成功');
                                         }, 1000);

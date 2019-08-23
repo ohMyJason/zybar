@@ -71,18 +71,20 @@
 
         //监听提交
         form.on('submit(formDemo)', function (data) {
-            layer.msg(JSON.stringify(data.field));
-            console.log(data.field);
-            // ajaxPOST("/insertPaper",data,function () {
-            //    alert("ok");
-            // });
             $.ajax({
                 url:"/insertPaper",
                 type:"post",
                 data:data.field,
                 dataType:"json",
                 success:function () {
-                        layer.msg("添加成功");
+                    layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
+                    setTimeout(function(){
+                        layer.msg('添加成功');
+                    }, 1000);
+                    //当你在iframe页面关闭自身时
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                    parent.window.location.reload();
                 },
                 error:function () {
 

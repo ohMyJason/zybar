@@ -2,6 +2,7 @@ package com.zybar.bar.dao;
 
 import com.zybar.bar.model.Paper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,5 +56,9 @@ public interface PaperMapper {
      */
     int updateByPrimaryKey(Paper record);
 
-    List<Paper> selectAllPaper();
+    List<Paper> selectAllPaper(@Param("paperName") String paperName,@Param("start") int start,@Param("limit") int limit);
+
+    int getCount(@Param("paperName") String paperName);
+
+    int getCount();
 }

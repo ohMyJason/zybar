@@ -136,6 +136,10 @@ public class FileUtil {
      * @return
      */
     public String deleteFile(String fileName){
+        if (fileName==null){
+            return "-3";
+        }
+
         File file = new File(fileName);
         if (!file.exists()){
             return "-2";

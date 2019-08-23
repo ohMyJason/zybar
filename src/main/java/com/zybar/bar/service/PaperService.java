@@ -1,6 +1,7 @@
 package com.zybar.bar.service;
 
 import com.zybar.bar.model.Paper;
+import com.zybar.bar.util.Result;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface PaperService {
     Integer insertPaper(String paperPath,String paperName);
 
-    List<Paper> selectAllPaper();
+    Result selectAllPaper(String paperName, int page, int limit);
 }
