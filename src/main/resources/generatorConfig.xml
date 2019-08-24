@@ -30,21 +30,14 @@
         <javaClientGenerator targetPackage="com.zybar.bar.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
         <!--生成表配置，一个表一个table，加入已经生成，则会overwrite-->
-        <table tableName="tb_popular_ranking" domainObjectName="PopularRanking"
+        <table tableName="" domainObjectName="MultiQuanti"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
 
-            <!--<property name="useActualColumnNames" value="false"/>-->
         </table>
+        <!--<property name="useActualColumnNames" value="false"/>-->
 
-        <table tableName="tb_winning_rate_ranking" domainObjectName="WinningRateRanking"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
 
     </context>
 </generatorConfiguration>

@@ -10,25 +10,23 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>添加App</legend>
+    <legend>添加状元之声</legend>
 </fieldset>
 <form class="layui-form" >
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <input type="text" name="name" required lay-verify="required" placeholder="请输入App名" autocomplete="off"
+            <input type="text" name="mp3Name" required lay-verify="required" placeholder="请输入状元之声标题" autocomplete="off"
                    class="layui-input">
-            <input type="hidden" name="photoUrl" id="photoUrl">
-        </div>
+            <input type="hidden" name="mp3Url" id="mp3Url">
 
+        </div>
 
         <div class="layui-input-block" style="margin-top: 20px;">
 
             <button type="button" class="layui-btn" id="test1">
-                <i class="layui-icon">&#xe67c;</i>上传图片
+                <i class="layui-icon">&#xe67c;</i>上传音频文件
             </button>
-
-            <!--<img id="photo" alt="请上传图片">-->
-            <img class="layui-upload-img" src="../layui/images/imgInit.png" id="photo">
+            <span id="fileName" class="layui-badge-rim">未上传文件</span>
 
         </div>
 
@@ -40,15 +38,15 @@
                 //执行实例
                 var uploadInst = upload.render({
                     elem: '#test1' //绑定元素
-                    , url: '/uploadApp' //上传接口
-                    ,accept:'img'
+                    , url: '/uploadZyVoice' //上传接口
+                    ,accept:'file'
                     , done: function (res) {
-                        $("#photoUrl").val(res.data);
-                        $("#photo").attr("src",res.data);
+                        $("#mp3Url").val(res.data);
                         layui.use('layer', function(){
                             var layer = layui.layer;
 
                             layer.msg("上传成功",{time:1000});
+                            $("#fileName").text("已上传文件"+res.data);
                         });
                         //上传完毕回调
 
@@ -64,12 +62,20 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
         </div>
     </div>
 </form>
 
 <script>
+    $(function () {
+        $("#reset").click(function () {
+            layui.use('layer',function () {
+                var layer = layui.layer;
+                layer.msg("重置成功，请重新上传文件");
+            })
+        })
+    })
     //Demo
     layui.use('form', function () {
         var form = layui.form;
@@ -77,7 +83,7 @@
         //监听提交
         form.on('submit(formDemo)', function (data) {
             $.ajax({
-                url:"/insertApp",
+                url:"/insertZyVoice",
                 type:"post",
                 data:data.field,
                 dataType:"json",

@@ -32,7 +32,7 @@ $("#window-header").append("<div class=\"layui-logo\">风口交易吧后台</div
 $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->\n" +
     "            <ul class=\"layui-nav layui-nav-tree\"  lay-filter=\"test\">\n" +
-    "                <li class=\"layui-nav-item layui-nav-itemed\">\n" +
+    "                <li class=\"layui-nav-item\" id=\"super\">\n" +
     "                    <a class=\"\" href=\"javascript:;\">金融超市</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
     "                        <dd><a href=\"/back/model/zyVoice.html\">状元之声管理</a></dd>\n" +
@@ -45,25 +45,24 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                        <dd><a href=\"javascript:;\">大数据云管理</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
-    "                <li class=\"layui-nav-item\">\n" +
+    "                <li class=\"layui-nav-item\" id=\"multi\">\n" +
     "                    <a href=\"javascript:;\">多维量化</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
-    "                        <dd><a href=\"javascript:;\">焦炭</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">甲醛</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">螺纹钢</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">螺纹钢</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">沥青</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">热卷</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">焦煤</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/coke.html\">焦炭</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/formaldehyde.html\">甲醛</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/rebar.html\">螺纹钢</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/asphalt.html\">沥青</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/hotRoll.html\">热卷</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/cokingCoal.html\">焦煤</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
-    "                <li class=\"layui-nav-item\">\n" +
+    "                <li class=\"layui-nav-item\" id=\"viewOnline\">\n" +
     "                    <a href=\"javascript:;\">观点在线</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
     "                        <dd><a href=\"javascript:;\">我要直播</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
-    "                <li class=\"layui-nav-item\">\n" +
+    "                <li class=\"layui-nav-item\" id=\"userAdmin\">\n" +
     "                    <a href=\"javascript:;\">账号管理</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
     "                        <dd><a href=\"javascript:;\">用户管理</a></dd>\n" +

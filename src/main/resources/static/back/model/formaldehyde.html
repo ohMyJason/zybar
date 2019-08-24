@@ -24,40 +24,32 @@
         <!-- 内容主体区域 -->
 
         <div  style="margin: 15px;">
-            <button type="button" id="add-app" class="layui-btn">添加app</button>
+            <button type="button" id="add-paper" class="layui-btn">添加多维量化</button>
         </div>
         <script>
-            $("#add-app").click(function () {
+            $("#add-paper").click(function () {
                 layer.open({
                     type: 2,
                     area : ['800px' , '580px'],
-                    content: '/back/content/add-app.html' //这里content是一个普通的String
+                    content: '/back/content/add-multi-quanti.html' //这里content是一个普通的String
                 });
             })
         </script>
         <div style="padding: 15px;margin-top: 30px">
-            <div class="demoTable">
-                <div class="layui-inline">
-                    <input class="layui-input" id="app-name" placeholder="app名" autocomplete="off">
-                </div>
-                <button class="layui-btn" data-type="reload" id="search">搜索</button>
-            </div>
+            <!--<div class="demoTable">-->
+                <!--<div class="layui-inline">-->
+                    <!--<input class="layui-input" id="paper-name" placeholder="机构研报名" autocomplete="off">-->
+                <!--</div>-->
+                <!--<button class="layui-btn" data-type="reload" id="search">搜索</button>-->
+            <!--</div>-->
 
-            <style type="text/css">
-                .layui-table-cell{
-                    text-align:center;
-                    height: auto;
-                    white-space: normal;
-                }
-            </style>
-
-            <table class="layui-hide" id="app-table" lay-filter="app-table"></table>
+            <table class="layui-hide" id="multi-quanti-table" lay-filter="multi-quanti-table"></table>
 
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
-                    <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>-->
-                    <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>-->
-                    <!--<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
                 </div>
             </script>
 
@@ -67,31 +59,33 @@
             </script>
 
 
-
-
             <script>
                 layui.use('table', function(){
                     var table = layui.table;
                     table.render({
-                        elem: '#app-table'
-                        ,url:'/getAllApp'
+                        elem: '#multi-quanti-table'
+                        ,url:'/getAllMultiQuanti'
                         ,toolbar: '#toolbarDemo'
-                        ,title: 'APP'
+                        ,title: '甲醛'
                         ,method:'post'
                         ,cols: [[
-                            // {type: 'checkbox', fixed: 'left',width:100}
-                            // {field:'appId', title:'ID', fixed: 'left', unresize: true, sort: true}
-                            {field:'photoUrl', title:'二维码',templet:function (d) {
-                                    return "<img src="  +d.photoUrl+  " >"
-                                }}
-                            ,{field:'name', title:'App名',sort: true}
+                            {type: 'checkbox', fixed: 'left',width:100}
+                            ,{field:'multiQuantiId', title:'ID', fixed: 'left', unresize: true, sort: true}
+                            ,{field:'time', title:'时间'}
+                            ,{field:'variety', title:'品种'}
+                            ,{field:'direction', title:'方向'}
+                            ,{field:'point', title:'点位'}
+                            // ,{field:'category', title:'类别'}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]]
                         ,page: true
+                        ,where: { //设定异步数据接口的额外参数，任意设
+                                        category : 2
+                                    }
                     });
 
                     //头工具栏事件
-                    table.on('toolbar(app-table)', function(obj){
+                    table.on('toolbar(multi-quanti-table)', function(obj){
                         var checkStatus = table.checkStatus(obj.config.id);
                         switch(obj.event){
                             case 'getCheckData':
@@ -109,19 +103,19 @@
                     });
 
                     //监听行工具事件
-                    table.on('tool(app-table)', function(obj){
+                    table.on('tool(multi-quanti-table)', function(obj){
                         var data = obj.data;
                         // console.log(obj.data.paperId)
                         // layer.alert(data.paperId);
 
                         if(obj.event === 'del'){
                             layer.confirm('真的删除么', function(index){
-                                ajaxPOST("/deleteApp",{appId:data.appId},function () {
+                                ajaxPOST("/deleteMultiQuanti",{multiQuantiId:data.multiQuantiId},function () {
                                     obj.del();
                                     layer.close(index);
                                     layui.use('layer', function(){
                                         var layer = layui.layer;
-                                        layer.load(3, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
+                                        layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
                                         setTimeout(function(){
                                             layer.msg('删除成功');
                                         }, 1000);
@@ -143,17 +137,17 @@
                     });
 
                     // 搜索
-                    $("#search").click(function () {
-                        //重新加载表格
-                        table.reload('app-table' ,{
-                            where: { //设定异步数据接口的额外参数，任意设
-                                name : $("#app-name").val()
-                            },
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                    });
+                    // $("#search").click(function () {
+                    //     //重新加载表格
+                    //     table.reload('paper-table' ,{
+                    //         where: { //设定异步数据接口的额外参数，任意设
+                    //             paperName : $("#paper-name").val()
+                    //         },
+                    //         page: {
+                    //             curr: 1 //重新从第 1 页开始
+                    //         }
+                    //     });
+                    // });
                 });
             </script>
         </div>
@@ -168,7 +162,9 @@
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
-        $("#super").attr("class","layui-nav-item layui-nav-itemed")
+        $("#multi").attr("class","layui-nav-item layui-nav-itemed")
+
+
     });
 </script>
 </body>

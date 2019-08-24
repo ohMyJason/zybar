@@ -29,7 +29,7 @@
                 layer.open({
                     type: 2,
                     area : ['800px' , '580px'],
-                    content: '/back/content/add-zy-view.html' //这里content是一个普通的String
+                    content: '/back/content/add-zy-voice.html' //这里content是一个普通的String
                 });
             })
         </script>
@@ -104,7 +104,7 @@
 
                         if(obj.event === 'del'){
                             layer.confirm('真的删除么', function(index){
-                                ajaxPOST("/deleteZyView",{zyViewId:data.zyViewId},function () {
+                                ajaxPOST("/deleteZyVoice",{voiceId:data.voiceId},function () {
                                     obj.del();
                                     layer.close(index);
                                     layui.use('layer', function(){
@@ -146,6 +146,7 @@
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
+        $("#super").attr("class","layui-nav-item layui-nav-itemed")
 
     });
 </script>

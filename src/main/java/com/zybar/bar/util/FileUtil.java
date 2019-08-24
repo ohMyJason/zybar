@@ -81,7 +81,14 @@ public class FileUtil {
             return "-3";
         }
 
-        return "/file/img/"+newFileName;
+        if (flag==1){
+
+            return "/file/pdf/"+newFileName;
+        }else if (flag==2){
+            return "/file/img/"+newFileName;
+        }else{
+            return "/file/mp3/"+newFileName;
+        }
 
     }
 
