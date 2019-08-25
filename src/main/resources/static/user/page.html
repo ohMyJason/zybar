@@ -41,22 +41,12 @@
             </div>
         </div>
         <script>
+            // 这里吧用户名显示在右上角
             $(function () {
-                if ($.cookie("token") != null) {
-                    $.ajax({
-                        url: "/testGetUserId",
-                        headers: {
-                            "token": $.cookie("token")
-                        },
-                        type: "post",
-                        dataType: "json",
-                        success: function (data) {
-                            $("#user-information").append("<ul><li>" + data.data.username + "</li><li>等级:5</li><li></li></ul>")
-                            $.cookie("username", data.data.username, {expires: 1, path: '/'})
-                            $("#login").css("display", "none");
-                            $("#quit").css("display", "block");
-                        }
-                    })
+                if ($.cookie("username") != null) {
+                    $("#user-information").append("<ul><li>" + $.cookie("username")+ "</li><li>等级:5</li><li></li></ul>")
+                    $("#login").css("display", "none");
+                    $("#quit").css("display", "block");
                 } else {
 
                 }
@@ -183,7 +173,7 @@
                 <script>
                     $(function () {
                         $.ajax({
-                            url: "/getAllPaper",
+                            url: "/userGetAllPaper",
                             type: "post",
                             dataType: "json",
                             headers: {
@@ -436,7 +426,6 @@
                 <!--<textarea class="text-area" id="message-aera"></textarea>-->
                 <textarea style="width: 90%;height: 80%;margin-left: 5%;border-radius: 0 0 7px 7px;background: white;"
                           id="message-aera"></textarea>
-
                 <button id="send" class="layui-btn layui-btn-primary layui-btn-radius">发送</button>
             </div>
 

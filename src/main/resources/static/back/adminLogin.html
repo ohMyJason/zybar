@@ -18,7 +18,7 @@
     <header class="layui-elip">登录</header>
     <form class="layui-form">
         <div class="layui-input-inline">
-            <input type="text" name="loginName" required lay-verify="required" placeholder="用户名" autocomplete="off"
+            <input type="text" name="userId" required lay-verify="required" placeholder="用户名" autocomplete="off"
                    class="layui-input">
         </div>
         <div class="layui-input-inline">
@@ -45,12 +45,28 @@
         // 操作对象
         var form = layui.form;
         form.on('submit(login)',function (obj) {
-            var data = {};
-            data.admin = JSON.stringify(obj.field);
-            function fun(){
-                window.location.href = "/shop/modules/product/product-list.html";
+            var data = obj.field;
+            // alert(data);
+            function fun(res){
+                if (res.code==0) {
+                    $.cookie("token",res.data[1]);
+                    $.cookie("username",res.data[0].username);
+                    window.location.href = "/back/model/backIndex.html";
+                }else {
+                    layer.msg(res.data);
+                }
+
             }
-            ajaxPOST('/shop/admin/login', data, fun);
+            $.ajax({
+                url: "/login",
+                type: "post",
+                dataType: "json",
+                data: data,
+                success:fun,
+                error:function () {
+                    
+                }
+            })
         });
     });
 </script>

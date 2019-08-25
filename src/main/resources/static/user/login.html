@@ -23,7 +23,7 @@
             </div>
             <div class="form1">
                 <p class="p-input pos">
-                    <input type="text" class="form-control" id="username" placeholder="手机号/账号" required="" />
+                    <input type="text" class="form-control" id="userId" placeholder="手机号/账号" required="" />
                 </p>
                 <p class="p-input pos">
                     <input type="password" class="form-control" id="password" placeholder="请输入密码"  required="" />
@@ -202,32 +202,21 @@
     var layer = '';
 
     $(function(){
-        // var touristHall = localStorage.getItem("touristHall");
-        //
-        // if (touristHall != null && touristHall != undefined) {
-        //     window.location.href="live.html";
-        //     layer.msg('欢迎进入直播大厅！')
-        //
-        //     return false;
-        // }
-
       $("#btn_login").click(function () {
-        alert("cauch");
           $.ajax({
               url:"/login",
               type:"post",
               dataType:"json",
               data:{
-                  username:$("#username").val(),
+                  userId:$("#userId").val(),
                   password:$("#password").val()
 
               },
               success:function (data) {
-                  alert(data);
                   $.cookie("token",data.data[1],{ expires:1,path:'/'});
+                  $.cookie("username",data.data[0].username,{ expires:1,path:'/'});
                   window.location.href="/user/page.html";
               },
-
               error:function () {
                   alert("error");
               }

@@ -10,7 +10,7 @@ $("#window-header").append("<div class=\"layui-logo\">风口交易吧后台</div
     "            <li class=\"layui-nav-item\">\n" +
     "                <a href=\"javascript:;\">其它系统</a>\n" +
     "                <dl class=\"layui-nav-child\">\n" +
-    "                    <dd><a href=\"\">前台</a></dd>\n" +
+    "                    <dd><a href=\"/user/adminLogin.html\">前台</a></dd>\n" +
     "                </dl>\n" +
     "            </li>\n" +
     "        </ul>\n" +
@@ -18,14 +18,14 @@ $("#window-header").append("<div class=\"layui-logo\">风口交易吧后台</div
     "            <li class=\"layui-nav-item\">\n" +
     "                <a href=\"javascript:;\">\n" +
     "                    <img src=\"http://t.cn/RCzsdCq\" class=\"layui-nav-img\">\n" +
-    "                    贤心\n" +
+    "                    "+ $.cookie("username")+"\n" +
     "                </a>\n" +
     "                <dl class=\"layui-nav-child\">\n" +
-    "                    <dd><a href=\"\">基本资料</a></dd>\n" +
-    "                    <dd><a href=\"\">安全设置</a></dd>\n" +
+    // "                    <dd><a href=\"\">基本资料</a></dd>\n" +
+    // "                    <dd><a href=\"\">安全设置</a></dd>\n" +
     "                </dl>\n" +
     "            </li>\n" +
-    "            <li class=\"layui-nav-item\"><a href=\"\">退了</a></li>\n" +
+    "            <li class=\"layui-nav-item\"><a href=\"/back/adminLogin.html\">退了</a></li>\n" +
     "        </ul>")
 
 
@@ -59,7 +59,7 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                <li class=\"layui-nav-item\" id=\"viewOnline\">\n" +
     "                    <a href=\"javascript:;\">观点在线</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
-    "                        <dd><a href=\"javascript:;\">我要直播</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/viewOnline.html\">我要直播</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
     "                <li class=\"layui-nav-item\" id=\"userAdmin\">\n" +

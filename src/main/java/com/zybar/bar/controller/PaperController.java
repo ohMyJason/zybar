@@ -76,11 +76,24 @@ public class PaperController {
 
 
     /**
-     * 返回所有的paper文件
+     * 后台返回所有的paper文件接口
      * @return
      */
     @PostMapping("/getAllPaper")
     public Result getAllPaper(int page,int limit,String paperName){
+        Result result = paperService.selectAllPaper(paperName, page, limit);
+        return  result;
+    }
+
+    /**
+     * 返回所有的paper文件
+     * @return
+     */
+    @PostMapping("/userGetAllPaper")
+    public Result getAllPaper(){
+        int limit =1000;
+        int page =1;
+        String paperName=null;
         Result result = paperService.selectAllPaper(paperName, page, limit);
         return  result;
     }

@@ -5,26 +5,41 @@ $(function () {
 
     $("#send").click(function () {
         var message = $("#message-aera").val();
-        websocket.send($.cookie("username")+"&"+message);
-
+        //通过判断1还是2，来判断是用户发的还是老师发的
+        websocket.send(1+"&*&"+message+"&*&"+$.cookie("username"));
     })
 })
 
+// 保持滚动条在最下面
+function scrollDown(divId) {
+    var content = document.getElementById(divId);
+    content.scrollTop = content.scrollHeight;
+}
 
 function setMessage(event) {
     console.log(event.data);
-    var username=event.data.split("&")[0];
-    var message=event.data.split("&")[1];
-    $("#order-content").append("<div class=\"chat-item\" id=\"hallUsers\" style=\"display: block;\">\n" +
-        "                    <div class=\"chat-left\"><img src=\"http://image.find37.com/150950665859f93e62b5b32.png\" +=\"\" -live=\"\">\n" +
-        "                    </div>\n" +
-        "                    <div class=\"chat-right\"><p class=\"time\">"+new Date().toLocaleTimeString()+"</p>\n" +
-        "                        <div class=\"chat-user\"><img class=\"imgLogo\" src=\"http://image.find37.com/grade1.png\" +=\"\"\n" +
-        "                                                    -live=\"\">"+username+"\n" +
-        "                        </div>\n" +
-        "                        <div class=\"chat-message\">"+message+"</div>\n" +
-        "                    </div>\n" +
-        "                </div>\n");
+    var role=event.data.split("&*&")[0];
+    var message=event.data.split("&*&")[1];
+    var username = event.data.split("&*&")[2];
+    if (role==1){
+        $("#order-content").append("<div class=\"chat-item\" id=\"hallUsers\" style=\"display: block;\">\n" +
+            "                    <div class=\"chat-left\"><img src=\"http://image.find37.com/150950665859f93e62b5b32.png\" +=\"\" -live=\"\">\n" +
+            "                    </div>\n" +
+            "                    <div class=\"chat-right\"><p class=\"time\">"+new Date().toLocaleTimeString()+"</p>\n" +
+            "                        <div class=\"chat-user\"><img class=\"imgLogo\" src=\"http://image.find37.com/grade1.png\" +=\"\"\n" +
+            "                                                    -live=\"\">"+username+"\n" +
+            "                        </div>\n" +
+            "                        <div class=\"chat-message\">"+message+"</div>\n" +
+            "                    </div>\n" +
+            "                </div>\n");
+
+        scrollDown("order-content");
+    }else if (role==2){
+
+    } else {
+
+    }
+
 }
 
 
@@ -76,7 +91,7 @@ function closeWebSocket(){
 }
 
 //发送消息
-function send(){
-    var message = $("#message-aera").val();
-    websocket.send(message);
-}
+// function send(){
+//     var message = $("#message-aera").val();
+//     websocket.send("1&*&"+message+"&*&"+$.cookie("username"));
+// }

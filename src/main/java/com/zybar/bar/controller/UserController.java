@@ -32,7 +32,9 @@ public class UserController {
     //登录 -> 检查用户名密码与数据库中的记录是否匹配
     @PostMapping("/login")
     public Result login(User user) {
-        User userForBase = userService.findByUsername(user);
+//        User userForBase = userService.findByUsername(user);
+//        上面是根据用户名登录，这里是根据id登录
+        User userForBase = userService.findUserById(user.getUserId());
         if (userForBase == null) {
             return Result.createByFailure("登录失败,用户不存在");
         } else {
