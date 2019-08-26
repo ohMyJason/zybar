@@ -2,6 +2,7 @@ package com.zybar.bar.controller;
 
 import com.zybar.bar.dao.PopularRankingMapper;
 import com.zybar.bar.model.PopularRanking;
+import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +33,15 @@ public class PopularRankingController {
 
 
     @PostMapping("/getAllPopularRanking")
-    public  Result getAllPopularRanking(){
+    public  Result getAllPopularRanking(int page,int limit){
         try {
-            List<PopularRanking> popularRankings = popularRankingMapper.selectAllPopularRanking();
+            page = PageCheck.checkPage(page);
+            limit = PageCheck.checkLimit(limit);
+            int start = PageCheck.calculateStart(page,limit);
+            int count = popularRankingMapper.getCount();
+            List<PopularRanking> popularRankings = popularRankingMapper.selectAllPopularRanking(start,limit);
             if (popularRankings.size()>0){
-                return Result.createSuccessResult(popularRankings.size(),popularRankings);
+                return Result.createSuccessResult(count,popularRankings);
             }else{
                 return Result.createSuccessResult(0,null);
             }
@@ -47,9 +52,9 @@ public class PopularRankingController {
     }
 
     @PostMapping("/deletePopularRanking")
-    public Result deletePopularRanking(PopularRanking popularRanking){
+    public Result deletePopularRanking(int popularRankingId){
         try {
-            int col = popularRankingMapper.deleteByPrimaryKey(popularRanking.getPopularRankingId());
+            int col = popularRankingMapper.deleteByPrimaryKey(popularRankingId);
             if (col>0){
                 return Result.createSuccessResult();
             }else {

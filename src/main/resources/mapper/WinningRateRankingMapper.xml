@@ -112,5 +112,12 @@
     select
     <include refid="Base_Column_List"/>
     from tb_winning_rate_ranking
+    ORDER by winning_rate_ranking_rate desc
+    LIMIT #{start},#{limit}
+
+  </select>
+  <select id="getCount" resultType="integer">
+    select count(*)
+    from tb_winning_rate_ranking
   </select>
 </mapper>

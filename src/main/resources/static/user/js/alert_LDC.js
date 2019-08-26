@@ -18,7 +18,7 @@ document.onkeydown = document.onkeyup = document.onkeypress = function(event) {
 }
 function liveHall_LDC() {
     layer.alert('禁止操作！！！', {
-            title : '状元小贴士提醒您',
+            title : '风口小贴士提醒您',
             icon: 2,
             closeBtn : 1
         }

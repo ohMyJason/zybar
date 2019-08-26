@@ -35,14 +35,16 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                <li class=\"layui-nav-item\" id=\"super\">\n" +
     "                    <a class=\"\" href=\"javascript:;\">金融超市</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
-    "                        <dd><a href=\"/back/model/zyVoice.html\">状元之声管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/zyVoice.html\">风口之声管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/paper.html\">机构研报管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/app.html\">手机App管理</a></dd>\n" +
-    "                        <dd><a href=\"/back/model/zyView.html\">状元视角管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/zyView.html\">风口视角管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/caoPan.html\">操盘经典管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/plan.html\">布局计划管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/inveEdu.html\">投资者教育管理</a></dd>\n" +
-    "                        <dd><a href=\"/back/model/big-data.html\">大数据云管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/bigData.html\">大数据云管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/popularRanking.html\">人气排名管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/winRanking.html\">胜率排名管理</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
     "                <li class=\"layui-nav-item\" id=\"multi\">\n" +

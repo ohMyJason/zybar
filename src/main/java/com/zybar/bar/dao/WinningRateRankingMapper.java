@@ -1,6 +1,7 @@
 package com.zybar.bar.dao;
 
 import com.zybar.bar.model.WinningRateRanking;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,5 +54,7 @@ public interface WinningRateRankingMapper {
      */
     int updateByPrimaryKey(WinningRateRanking record);
 
-    List<WinningRateRanking> getAllWinningRateRanking();
+    List<WinningRateRanking> getAllWinningRateRanking(@Param("start") int start,@Param("limit") int limit);
+
+    int getCount();
 }

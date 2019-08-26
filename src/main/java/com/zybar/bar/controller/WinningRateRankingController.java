@@ -2,6 +2,7 @@ package com.zybar.bar.controller;
 
 import com.zybar.bar.dao.WinningRateRankingMapper;
 import com.zybar.bar.model.WinningRateRanking;
+import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +37,15 @@ public class WinningRateRankingController {
     }
 
     @PostMapping("/getAllWinRete")
-    public Result getAllWinningRateRanking(){
+    public Result getAllWinningRateRanking(int page,int limit){
         try {
-            List<WinningRateRanking> allWinningRateRanking = winningRateRankingMapper.getAllWinningRateRanking();
+            page = PageCheck.checkPage(page);
+            limit = PageCheck.checkLimit(limit);
+            int start = PageCheck.calculateStart(page, limit);
+            int count = winningRateRankingMapper.getCount();
+            List<WinningRateRanking> allWinningRateRanking = winningRateRankingMapper.getAllWinningRateRanking(start,limit);
             if (allWinningRateRanking.size()>0){
-                return Result.createSuccessResult(allWinningRateRanking.size(),allWinningRateRanking);
+                return Result.createSuccessResult(count,allWinningRateRanking);
             }else {
                 return Result.createSuccessResult(0,null);
             }
@@ -52,9 +57,9 @@ public class WinningRateRankingController {
 
 
     @PostMapping("/deleteWinRete")
-    public Result deleteWinRete(WinningRateRanking winningRateRanking){
+    public Result deleteWinRete(int winningRateRankingId){
         try {
-            int col = winningRateRankingMapper.deleteByPrimaryKey(winningRateRanking.getWinningRateRankingId());
+            int col = winningRateRankingMapper.deleteByPrimaryKey(winningRateRankingId);
             if (col>0){
                 return Result.createSuccessResult();
             }else {

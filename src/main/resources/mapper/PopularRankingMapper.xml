@@ -113,5 +113,11 @@
     select
     <include refid="Base_Column_List"/>
     from tb_popular_ranking
+    ORDER by popular_ranking_num desc
+    LIMIT #{start},#{limit}
+  </select>
+  <select id="getCount" resultType="integer">
+    select count(*)
+    from tb_popular_ranking
   </select>
 </mapper>

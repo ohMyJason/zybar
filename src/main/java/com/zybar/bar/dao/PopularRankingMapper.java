@@ -1,6 +1,7 @@
 package com.zybar.bar.dao;
 
 import com.zybar.bar.model.PopularRanking;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,5 +54,7 @@ public interface PopularRankingMapper {
      */
     int updateByPrimaryKey(PopularRanking record);
 
-    List<PopularRanking> selectAllPopularRanking();
+    List<PopularRanking> selectAllPopularRanking(@Param("start") int start,@Param("limit") int limit);
+
+    int getCount();
 }

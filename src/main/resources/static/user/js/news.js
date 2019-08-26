@@ -159,7 +159,7 @@ $(function () {
         //                 }
         //                 else {
         //                     var arciteId=$(this).attr("data-id")
-        //                     layer.confirm('您未订阅分析师'+$(this).attr("data-updated_name")+",该文章需花费"+$(this).attr("data-total")+"状元积分才可以观看!", {
+        //                     layer.confirm('您未订阅分析师'+$(this).attr("data-updated_name")+",该文章需花费"+$(this).attr("data-total")+"风口积分才可以观看!", {
         //                         title:"已选中:"+$(this).text(),
         //                         btn: ['确定购买'] //按钮
         //                     }, function(){

@@ -39,6 +39,7 @@ public class BigDataController {
 
     }
 
+
     @PostMapping("/insertBigData")
     public Result insertBigData(BigData bigData){
         try {

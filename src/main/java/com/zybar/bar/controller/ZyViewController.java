@@ -27,7 +27,7 @@ public class ZyViewController {
 
 
     /**
-     * 插入状元视角
+     * 插入风口视角
      * @param zyView
      * @return
      */
@@ -47,7 +47,7 @@ public class ZyViewController {
     }
 
     /**
-     * 获取所有状元视角
+     * 获取所有风口视角
      * @return
      */
     @PostMapping("/getAllZyView")
@@ -78,7 +78,7 @@ public class ZyViewController {
 
 
     /**
-     * 删除状元视角
+     * 删除风口视角
      * @param zyView
      * @return
      */

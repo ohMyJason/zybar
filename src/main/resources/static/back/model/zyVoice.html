@@ -24,7 +24,7 @@
         <!-- 内容主体区域 -->
 
         <div  style="margin: 15px;">
-            <button type="button" id="add-zy-voice" class="layui-btn">添加状元之声</button>
+            <button type="button" id="add-zy-voice" class="layui-btn">添加风口之声</button>
         </div>
         <script>
             $("#add-zy-voice").click(function () {
@@ -38,7 +38,7 @@
         <div style="padding: 15px;margin-top: 30px">
             <div class="demoTable">
                 <div class="layui-inline">
-                    <input class="layui-input" id="zy-voice-name" placeholder="状元之声名" autocomplete="off">
+                    <input class="layui-input" id="zy-voice-name" placeholder="风口之声名" autocomplete="off">
                 </div>
                 <button class="layui-btn" data-type="reload" id="search">搜索</button>
             </div>
@@ -66,14 +66,14 @@
                         elem: '#zy-voice-table'
                         ,url:'/getZyVoice'
                         ,toolbar: '#toolbarDemo'
-                        ,title: '状元视角'
+                        ,title: '风口视角'
                         ,method:'post'
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
                             ,{field:'voiceId', title:'ID', fixed: 'left',width:150, unresize: true, sort: true}
-                            ,{field:'photoUrl', title:'状元之声头像'}
-                            ,{field:'mp3Url', title:'状元之声地址'}
-                            ,{field:'mp3Name', title:'状元之声名',sort: true}
+                            ,{field:'photoUrl', title:'风口之声头像'}
+                            ,{field:'mp3Url', title:'风口之声地址'}
+                            ,{field:'mp3Name', title:'风口之声名',sort: true}
                             ,{field:'userId', title:'用户id'}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]]

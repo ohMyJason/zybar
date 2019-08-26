@@ -7,6 +7,7 @@ $(function () {
         var message = $("#message-aera").val();
         //通过判断1还是2，来判断是用户发的还是老师发的
         websocket.send(1+"&*&"+message+"&*&"+$.cookie("username"));
+        $("#message-aera").val(" ");
         if (websocket.readyState!=1){
             layer.alert("直播间连接错误，请刷新页面重试。");
         }

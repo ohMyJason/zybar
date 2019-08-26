@@ -45,7 +45,7 @@
             // 这里吧用户名显示在右上角
             $(function () {
                 if ($.cookie("username") != null) {
-                    $("#user-information").append("<ul><li>" + $.cookie("username") + "</li><li>等级:5</li><li></li></ul>")
+                    $("#user-information").append("<ul><li>" + $.cookie("username") + "</li><li></li><li></li></ul>")
                     $("#login").css("display", "none");
                     $("#quit").css("display", "block");
                 } else {
@@ -79,17 +79,17 @@
         <!--                论坛资讯-->
         <div class="infomation">
             <div class="nav-content ">
-                <button class="nav-btn layui-btn layui-btn-radius" style="color: white">状元之声</button>
+                <button class="nav-btn layui-btn layui-btn-radius" style="color: white">风口之声</button>
                 <button class="nav-btn layui-btn layui-btn-radius">机构研报</button>
                 <button class="nav-btn layui-btn layui-btn-radius">手机app</button>
-                <button class="nav-btn layui-btn layui-btn-radius">状元视角</button>
+                <button class="nav-btn layui-btn layui-btn-radius">风口视角</button>
                 <button class="nav-btn layui-btn layui-btn-radius">操盘经典</button>
                 <button class="nav-btn layui-btn layui-btn-radius">布局计划</button>
                 <button class="nav-btn layui-btn layui-btn-radius">投资者教育</button>
                 <button class="nav-btn layui-btn layui-btn-radius">大数据云</button>
             </div>
             <div class="report">
-                <!--                                        状元之声-->
+                <!--                                        风口之声-->
                 <div id="audio" style="overflow: hidden; display: block;">
 
 
@@ -344,6 +344,83 @@
 
                         })
 
+
+                        $.ajax({
+                            url: "/getAllBigData",
+                            type: "post",
+                            dataType: "json",
+                            async: false,//同步请求数据,这样就可以写在for循环里了
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            data:{page:1,limit:1000},
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+                                    $("#datum").append("<div style='    float: left;\n" +
+                                        "    height: 40%;\n" +
+                                        "    width: 40%;\n" +
+                                        "    margin-left: 8%;\n" +
+                                        "    margin-top: 7%;\n" +
+                                        "    margin-bottom: 20%;' data-status=\"1\" data-id=\"140\" data-total=\"150\">\n" +
+                                        "                        <img\n" +
+                                        "                            style=\"width: 100%;height: 100%\" src=\"img/zhuan.jpg\">\n" +
+                                        "                        <p style=\"font-size: 12px\">"+data.data[i].name+"</p>\n" +
+                                        "                        <p>上传时间:"+data.data[i].updateTime+"</p></div>\n" +
+                                        "                    <div style=\"display: none;\" id=\"planContent\">                 <div style=\"height: 1050px;overflow: auto\">"+data.data[i].content+"</div>\n</div>")
+                                }
+                            },
+                        })
+
+                        $("#datum>div").click(function () {
+                            // alert(this.html());
+                            console.log($(this).html());
+                            layer.open({
+                                type: 1,
+                                title: false,
+                                closeBtn: 0,
+                                shadeClose: true,
+                                area: ['900', '1050px'],
+                                skin: 'yourclass',
+                                content: $(this).next().html()
+                            });
+
+                        })
+
+
+                        $.ajax({
+                            url: "/getAllPopularRanking",
+                            type: "post",
+                            dataType: "json",
+                            data:{page:1,limit:1000},
+                            async: false,//同步请求数据,这样就可以写在for循环里了
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            data:{page:1,limit:1000},
+                            success: function (data) {
+                                for (var i = 0; i < 2; i++) {
+                                    $("#popularRank").append("<div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">"+(i+1)+"</span><span style=\"margin-left: 4%;color: #666666\">"+data.data[i].popularRankingName+"</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>"+data.data[i].popularRankingNum+"人</span></div></div>\n")
+                                }
+                            },
+                        })
+
+                        $.ajax({
+                            url: "/getAllWinRete",
+                            type: "post",
+                            dataType: "json",
+                            data:{page:1,limit:1000},
+                            async: false,//同步请求数据,这样就可以写在for循环里了
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            data:{page:1,limit:1000},
+                            success: function (data) {
+                                for (var i = 0; i < 3; i++) {
+                                    $("#winRank").append(" <div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">"+(i+1)+"</span><span style=\"margin-left: 4%;color: #666666\">"+data.data[i].winningRateRankingName+"</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>"+data.data[i].winningRateRankingRate+"%</span></div></div>\n")
+                                }
+                            },
+                        })
+
                     })
                 </script>
 
@@ -354,7 +431,7 @@
                 </div>
 
 
-                <!--                    状元视角-->
+                <!--                    风口视角-->
                 <div id="Top-cargo">
                     <div id="Top-cargo-content">
                     </div>
@@ -582,17 +659,24 @@
             </div>
             <div class="market data-body">
                 <!--                    市场数据-->
-                <!--<iframe frameborder="0" width="105%" height="273" scrolling="yes"-->
-                <!--src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>-->
+                <iframe frameborder="0" width="105%" height="273" scrolling="yes"
+                src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>
             </div>
             <div class="odds">
                 <div class="data-body-nav">
                     <div class="data-body-nav-content" style="border-left: #9e9e9e 1px solid">人气排名</div>
                     <div class="data-body-nav-content">胜率排名</div>
                 </div>
-                <div class="data-body-odds"
-                     style="box-shadow: -5px 0px 5px #dad6d6;height: 43%;border-left: #9e9e9e 1px solid;border-bottom: none;border-top-left-radius:0;border-bottom-left-radius:0"></div>
-                <div class="data-body-odds" style="border-bottom-left-radius: 0"></div>
+                <div id="popularRank" class="data-body-odds"
+                     style="box-shadow: -5px 0px 5px #dad6d6;height: 43%;border-left: #9e9e9e 1px solid;border-bottom: none;border-top-left-radius:0;border-bottom-left-radius:0">
+                    <!--<div style="margin-top: 8%"><div class="odds-left"><span class="layui-badge layui-bg-blue">1</span><span style="margin-left: 4%;color: #666666">快乐盈</span></div><div class="odds-right" style="color: #666666"><span>933人</span></div></div>-->
+                    <!--<div style="margin-top: 8%"><div class="odds-left"><span class="layui-badge layui-bg-blue">2</span><span style="margin-left: 4%;color: #666666">快乐盈</span></div><div class="odds-right" style="color: #666666"><span>933人</span></div></div>-->
+                </div>
+                <div id="winRank" class="data-body-odds" style="border-bottom-left-radius: 0">
+                    <!--<div style="margin-top: 8%"><div class="odds-left"><span class="layui-badge layui-bg-blue">1</span><span style="margin-left: 4%;color: #666666">陈新国</span></div><div class="odds-right" style="color: #666666"><span>90.00%</span></div></div>-->
+                    <!--<div style="margin-top: 8%"><div class="odds-left"><span class="layui-badge layui-bg-blue">2</span><span style="margin-left: 4%;color: #666666">陈新国</span></div><div class="odds-right" style="color: #666666"><span>90.00%</span></div></div>-->
+                    <!--<div style="margin-top: 8%"><div class="odds-left"><span class="layui-badge layui-bg-blue">3</span><span style="margin-left: 4%;color: #666666">陈新国</span></div><div class="odds-right" style="color: #666666"><span>90.00%</span></div></div>-->
+                </div>
                 <div class="contact-us">
                     <div class="contact-us-content">
                         <p style="bottom: 8.5%">客服热线:0592-6809325</p>
