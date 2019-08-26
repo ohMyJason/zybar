@@ -259,6 +259,7 @@ body{
     height: 100%;
     width: 100%;
     display: none;
+    overflow: auto;
 }
 /*鎵嬫満app*/
 .mobile-app-img{

@@ -2,6 +2,9 @@ package com.zybar.bar.dao;
 
 import com.zybar.bar.model.Plan;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface PlanMapper {
@@ -52,4 +55,8 @@ public interface PlanMapper {
      * @mbggenerated Thu Aug 08 17:28:24 CST 2019
      */
     int updateByPrimaryKey(Plan record);
+
+    int getCount(@Param("name") String name);
+
+    List<Plan> getAllPlan(@Param("name") String name,@Param("start") int start,@Param("limit") int limit);
 }

@@ -72,7 +72,7 @@
             var websocket = null;
             //判断当前浏览器是否支持WebSocket
             if ('WebSocket' in window) {
-                websocket = new WebSocket("ws://localhost:8080/websocket");
+                websocket = new WebSocket("ws://192.168.1.124:8080/websocket");
             } else {
                 alert('Not support websocket');
             }
@@ -178,12 +178,21 @@
 
                 var index = layedit.build('edit'); //建立编辑器
 
+
+                //发送消息
                 $("#send").click(function () {
                     var content = layedit.getContent(index);
-                    console.log(content);
-                    var message = "2&*&"+content+"&*&"+$.cookie("username")
 
+                    console.log(content);
+                    if (websocket.readyState!=1){
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.alert("直播间连接出现错误,请刷新页面重新连接");
+                        })
+                    }
+                    var message = "2&*&"+content+"&*&"+$.cookie("username")
                     websocket.send(message);
+
 
                 })
 

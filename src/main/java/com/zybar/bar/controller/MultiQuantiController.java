@@ -66,4 +66,22 @@ public class MultiQuantiController {
         }
     }
 
+
+    @PostMapping("/userGetAllMultiQuanti")
+    public Result getAllMultiQuanti(int category){
+        try {
+            int page =1 ;
+            int limit =10000;
+            page = PageCheck.checkPage(page);
+            limit = PageCheck.checkLimit(limit);
+            int start =PageCheck.calculateStart(page,limit);
+            int count = multiQuantiMapper.getCount();
+            List<MultiQuanti> multiQuantis = multiQuantiMapper.selectAll(category,start, limit);
+            return Result.createSuccessResult(count,multiQuantis);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return Result.createByFailure();
+        }
+    }
+
 }

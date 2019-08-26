@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>风口交易吧后台</title>
+    <script src="../../user/js/jquery-3.1.1.min.js"></script>
+    <script src="../../user/js/jquery.cookie.js"></script>
+
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/nav.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" id="window-header">
+
+    </div>
+
+    <div class="layui-side layui-bg-black" id="window-left">
+
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+
+        <div  style="margin: 15px;">
+            <button type="button" id="add-paper" class="layui-btn">添加布局计划</button>
+        </div>
+        <script>
+            $("#add-paper").click(function () {
+                window.location.href="/back/model/add-plan-html";
+            })
+        </script>
+        <div style="padding: 15px;margin-top: 30px">
+            <div class="demoTable">
+                <div class="layui-inline">
+                    <input class="layui-input" id="paper-name" placeholder="机构研报名" autocomplete="off">
+                </div>
+                <button class="layui-btn" data-type="reload" id="search">搜索</button>
+            </div>
+
+            <table class="layui-hide" id="paper-table" lay-filter="paper-table"></table>
+
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                </div>
+            </script>
+
+            <script type="text/html" id="barDemo">
+                <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+
+
+            <script>
+                layui.use('table', function(){
+                    var table = layui.table;
+                    table.render({
+                        elem: '#paper-table'
+                        ,url:'/getAllPaper'
+                        ,toolbar: '#toolbarDemo'
+                        ,title: '机构研报'
+                        ,method:'post'
+                        ,cols: [[
+                            {type: 'checkbox', fixed: 'left',width:100}
+                            ,{field:'paperId', title:'ID', fixed: 'left', unresize: true, sort: true}
+                            ,{field:'pdfUrl', title:'机构研报地址'}
+                            ,{field:'paperName', title:'机构研报名',sort: true}
+                            ,{field:'updateTime', title:'更新时间'}
+                            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                        ]]
+                        ,page: true
+                    });
+
+                    //头工具栏事件
+                    table.on('toolbar(paper-table)', function(obj){
+                        var checkStatus = table.checkStatus(obj.config.id);
+                        switch(obj.event){
+                            case 'getCheckData':
+                                var data = checkStatus.data;
+                                layer.alert(JSON.stringify(data));
+                                break;
+                            case 'getCheckLength':
+                                var data = checkStatus.data;
+                                layer.msg('选中了：'+ data.length + ' 个');
+                                break;
+                            case 'isAll':
+                                layer.msg(checkStatus.isAll ? '全选': '未全选');
+                                break;
+                        };
+                    });
+
+                    //监听行工具事件
+                    table.on('tool(paper-table)', function(obj){
+                        var data = obj.data;
+                        // console.log(obj.data.paperId)
+                        // layer.alert(data.paperId);
+
+                        if(obj.event === 'del'){
+                            layer.confirm('真的删除么', function(index){
+                                ajaxPOST("/deletePaper",{paperId:data.paperId},function () {
+                                    obj.del();
+                                    layer.close(index);
+                                    layui.use('layer', function(){
+                                        var layer = layui.layer;
+                                        layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
+                                        setTimeout(function(){
+                                            layer.msg('删除成功');
+                                        }, 1000);
+                                    });
+                                })
+
+                            });
+                        } else if(obj.event === 'edit'){
+                            layer.prompt({
+                                formType: 2
+                                ,value: data.email
+                            }, function(value, index){
+                                obj.update({
+                                    email: value
+                                });
+                                layer.close(index);
+                            });
+                        }
+                    });
+
+                    // 搜索
+                    $("#search").click(function () {
+                        //重新加载表格
+                        table.reload('paper-table' ,{
+                            where: { //设定异步数据接口的额外参数，任意设
+                                paperName : $("#paper-name").val()
+                            },
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 风口交易吧
+    </div>
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+        $("#super").attr("class","layui-nav-item layui-nav-itemed")
+
+    });
+</script>
+</body>
+</html>

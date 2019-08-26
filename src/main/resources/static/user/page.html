@@ -5,9 +5,9 @@
     <title>交流吧</title>
     <script type="text/javascript" src="./js/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
-    <!--<script type="text/javascript" src="layui/layui.js"></script>-->
+    <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="./js/jquery.cookie.js"></script>
-    <!--<script type="text/javascript" src="./layer/layer.js"></script>-->
+    <script type="text/javascript" src="./layer/layer.js"></script>
     <!--<script type="text/javascript" src="./js/skPlayer.min.js"></script>-->
     <!--<script type="text/javascript" src="./js/jquery.jplayer.js"></script>-->
 
@@ -229,8 +229,8 @@
                                         "\n" +
                                         "                                </div>\n" +
                                         "                                <!--<p></p>-->\n" +
-                                        "                                <a href=\""+data.data[i].zyViewUrl+"\" target=\"_blank\" >"+data.data[i].zyViewName+"</a></div>\n" +
-                                        "                            <span class=\"researchReport-news-date\">"+data.data[i].zyViewCreatTiome+"</span>\n" +
+                                        "                                <a href=\"" + data.data[i].zyViewUrl + "\" target=\"_blank\" >" + data.data[i].zyViewName + "</a></div>\n" +
+                                        "                            <span class=\"researchReport-news-date\">" + data.data[i].zyViewCreatTiome + "</span>\n" +
                                         "                        </div>");
                                 }
 
@@ -253,9 +253,7 @@
                                         "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
                                         "                        <span class=\"researchReport-news-date\">" + data.data[i].updateTime + "</span></div>");
                                 }
-
                             },
-
                         })
 
                         $.ajax({
@@ -267,30 +265,49 @@
                             },
                             success: function (data) {
                                 for (var i = 0; i < data.data.length; i++) {
-                                    if (data.data[i].selectName==1){
+                                    if (data.data[i].selectName == 1) {
                                         $("#edu-1").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
                                             "                        <div class=\"researchReport-news\" >\n" +
                                             "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
                                             "                       </div>");
-                                    } else if (data.data[i].selectName==2){
+                                    } else if (data.data[i].selectName == 2) {
                                         $("#edu-2").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
                                             "                        <div class=\"researchReport-news\" >\n" +
                                             "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
                                             "                        </div>");
-                                    } else if (data.data[i].selectName==3){
+                                    } else if (data.data[i].selectName == 3) {
                                         $("#edu-3").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
                                             "                        <div class=\"researchReport-news\" >\n" +
                                             "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
                                             "                        </div>");
                                     } else {
-
                                     }
-
                                 }
-
                             },
-
                         })
+
+
+                        //有6种多维量化，所以请求6次
+                        for (var j = 1; j <= 6; j++) {
+
+                            $.ajax({
+                                url: "/userGetAllMultiQuanti",
+                                type: "post",
+                                dataType: "json",
+                                data: {category: j},
+                                async: false,//同步请求数据,这样就可以写在for循环里了
+                                headers: {
+                                    "token": $.cookie("token")
+                                },
+                                success: function (data) {
+                                    for (var i = 0; i < data.data.length; i++) {
+                                        $("#tb-contain-" + j).append("  <tr><td>" + data.data[i].time.substr(5, 16) + "</td><td>" + data.data[i].variety + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].direction + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].point + "</td></tr>");
+                                    }
+                                },
+                            })
+
+                        }
+
 
                     })
                 </script>
@@ -312,45 +329,56 @@
                     <!--<div style="text-align: center"></div>-->
                 </div>
                 <!--                    布局计划-->
-                <div id="Layout-plan"></div>
+                <div id="Layout-plan">
+                    <div data-status="1" data-id="140" data-total="150">
+                        <img
+                            style="width: 100%;height: 100%" src="img/zhuan.jpg">
+                        <p style="font-size: 12px">一波行云流水的大行情</p>
+                        <p>上传者:隋治铭</p>
+                        <p>上传时间:2019-03-05 18:25:45</p></div>
+
+
+                </div>
                 <!--                                        投资者教育-->
                 <div id="investor-education">
                     <div id="investor-btns">
-                        <button class="selected-btn-color investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" onclick="checkOutEdu(1)">
+                        <button class="selected-btn-color investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm"
+                                onclick="checkOutEdu(1)">
                             防洗钱专栏
                         </button>
-                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" onclick="checkOutEdu(2)">风险提示
+                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm"
+                                onclick="checkOutEdu(2)">风险提示
                         </button>
-                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" onclick="checkOutEdu(3)">基础知识
+                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm"
+                                onclick="checkOutEdu(3)">基础知识
                         </button>
                     </div>
                     <div class="investor-news" id="edu-1" style="display: block">
 
                     </div>
-                    <div class="investor-news" id="edu-2" >
+                    <div class="investor-news" id="edu-2">
 
                     </div>
-                    <div class="investor-news" id="edu-3" >
+                    <div class="investor-news" id="edu-3">
 
 
                     </div>
                 </div>
                 <script>
-
                     //根据flag决定显示哪个div
                     function checkOutEdu(eduFlag) {
-                        if (eduFlag==1){
-                            $("#edu-1").css("display","block");
-                            $("#edu-2").css("display","none");
-                            $("#edu-3").css("display","none");
-                        } else if (eduFlag==2){
-                            $("#edu-1").css("display","none");
-                            $("#edu-2").css("display","block");
-                            $("#edu-3").css("display","none");
-                        } else if (eduFlag==3){
-                            $("#edu-1").css("display","none");
-                            $("#edu-2").css("display","none");
-                            $("#edu-3").css("display","block");
+                        if (eduFlag == 1) {
+                            $("#edu-1").css("display", "block");
+                            $("#edu-2").css("display", "none");
+                            $("#edu-3").css("display", "none");
+                        } else if (eduFlag == 2) {
+                            $("#edu-1").css("display", "none");
+                            $("#edu-2").css("display", "block");
+                            $("#edu-3").css("display", "none");
+                        } else if (eduFlag == 3) {
+                            $("#edu-1").css("display", "none");
+                            $("#edu-2").css("display", "none");
+                            $("#edu-3").css("display", "block");
                         } else {
 
                         }
@@ -364,14 +392,115 @@
             <div class=" take data-body">
                 <div id="suspension">
                     <div class="layui-btn-group" style="width: 100% ;height: 30px">
-                        <button class="layui-btn layui-btn-sm" style="border-top-left-radius: 5px;color:#666666">焦炭
+                        <button id="multi-button-1" class="layui-btn layui-btn-sm" onclick="checkOutMulti(1)"
+                                style="border-top-left-radius: 5px;color:#666666">焦炭
                         </button>
-                        <button class="layui-btn layui-btn-sm">甲醇</button>
-                        <button class="layui-btn layui-btn-sm">螺纹钢</button>
-                        <button class="layui-btn layui-btn-sm">沥青</button>
-                        <button class="layui-btn layui-btn-sm">热卷</button>
-                        <button class="layui-btn layui-btn-sm" style="border-top-right-radius: 5px">焦煤</button>
+                        <button id="multi-button-2" class="layui-btn layui-btn-sm" onclick="checkOutMulti(2)">甲醇
+                        </button>
+                        <button id="multi-button-3" class="layui-btn layui-btn-sm" onclick="checkOutMulti(3)">螺纹钢
+                        </button>
+                        <button id="multi-button-4" class="layui-btn layui-btn-sm" onclick="checkOutMulti(4)">沥青
+                        </button>
+                        <button id="multi-button-5" class="layui-btn layui-btn-sm" onclick="checkOutMulti(5)">热卷
+                        </button>
+                        <button id="multi-button-6" class="layui-btn layui-btn-sm" onclick="checkOutMulti(6)"
+                                style="border-top-right-radius: 5px">焦煤
+                        </button>
                     </div>
+                    <script>
+                        //这堆代码是用来切换表格的
+                        function checkOutMulti(multiFlag) {
+                            if (multiFlag == 1) {
+                                $("#multi-button-1").css("border-top-left-radius", "5px");
+                                $("#multi-button-1").css("color", "#666666");
+                                $("#multi-button-2").css("color", "#ffffff");
+                                $("#multi-button-3").css("color", "#ffffff");
+                                $("#multi-button-4").css("color", "#ffffff");
+                                $("#multi-button-5").css("color", "#ffffff");
+                                $("#multi-button-6").css("color", "#ffffff");
+                                $("#tb-contain-1").css("display", "block");
+                                $("#tb-contain-2").css("display", "none");
+                                $("#tb-contain-3").css("display", "none");
+                                $("#tb-contain-4").css("display", "none");
+                                $("#tb-contain-5").css("display", "none");
+                                $("#tb-contain-6").css("display", "none");
+
+
+                            } else if (multiFlag == 2) {
+                                $("#multi-button-2").css("border-top-left-radius", "5px");
+                                $("#multi-button-1").css("color", "#ffffff");
+                                $("#multi-button-2").css("color", "#666666");
+                                $("#multi-button-3").css("color", "#ffffff");
+                                $("#multi-button-4").css("color", "#ffffff");
+                                $("#multi-button-5").css("color", "#ffffff");
+                                $("#multi-button-6").css("color", "#ffffff");
+                                $("#tb-contain-1").css("display", "none");
+                                $("#tb-contain-2").css("display", "block");
+                                $("#tb-contain-3").css("display", "none");
+                                $("#tb-contain-4").css("display", "none");
+                                $("#tb-contain-5").css("display", "none");
+                                $("#tb-contain-6").css("display", "none");
+                            } else if (multiFlag == 3) {
+                                $("#multi-button-3").css("border-top-left-radius", "5px");
+                                $("#multi-button-1").css("color", "#ffffff");
+                                $("#multi-button-2").css("color", "#ffffff");
+                                $("#multi-button-3").css("color", "#666666");
+                                $("#multi-button-4").css("color", "#ffffff");
+                                $("#multi-button-5").css("color", "#ffffff");
+                                $("#multi-button-6").css("color", "#ffffff");
+                                $("#tb-contain-1").css("display", "none");
+                                $("#tb-contain-2").css("display", "none");
+                                $("#tb-contain-3").css("display", "block");
+                                $("#tb-contain-4").css("display", "none");
+                                $("#tb-contain-5").css("display", "none");
+                                $("#tb-contain-6").css("display", "none");
+                            } else if (multiFlag == 4) {
+                                $("#multi-button-4").css("border-top-left-radius", "5px");
+                                $("#multi-button-1").css("color", "#ffffff");
+                                $("#multi-button-2").css("color", "#ffffff");
+                                $("#multi-button-3").css("color", "#ffffff");
+                                $("#multi-button-4").css("color", "#666666");
+                                $("#multi-button-5").css("color", "#ffffff");
+                                $("#multi-button-6").css("color", "#ffffff");
+                                $("#tb-contain-1").css("display", "none");
+                                $("#tb-contain-2").css("display", "none");
+                                $("#tb-contain-3").css("display", "none");
+                                $("#tb-contain-4").css("display", "block");
+                                $("#tb-contain-5").css("display", "none");
+                                $("#tb-contain-6").css("display", "none");
+                            } else if (multiFlag == 5) {
+                                $("#multi-button-5").css("border-top-left-radius", "5px");
+                                $("#multi-button-1").css("color", "#ffffff");
+                                $("#multi-button-2").css("color", "#ffffff");
+                                $("#multi-button-3").css("color", "#ffffff");
+                                $("#multi-button-4").css("color", "#ffffff");
+                                $("#multi-button-5").css("color", "#666666");
+                                $("#multi-button-6").css("color", "#ffffff");
+                                $("#tb-contain-1").css("display", "none");
+                                $("#tb-contain-2").css("display", "none");
+                                $("#tb-contain-3").css("display", "none");
+                                $("#tb-contain-4").css("display", "none");
+                                $("#tb-contain-5").css("display", "block");
+                                $("#tb-contain-6").css("display", "none");
+                            } else if (multiFlag == 6) {
+                                $("#multi-button-6").css("border-top-left-radius", "5px");
+                                $("#multi-button-1").css("color", "#ffffff");
+                                $("#multi-button-2").css("color", "#ffffff");
+                                $("#multi-button-3").css("color", "#ffffff");
+                                $("#multi-button-4").css("color", "#ffffff");
+                                $("#multi-button-5").css("color", "#ffffff");
+                                $("#multi-button-6").css("color", "#666666");
+                                $("#tb-contain-1").css("display", "none");
+                                $("#tb-contain-2").css("display", "none");
+                                $("#tb-contain-3").css("display", "none");
+                                $("#tb-contain-4").css("display", "none");
+                                $("#tb-contain-5").css("display", "none");
+                                $("#tb-contain-6").css("display", "block");
+                            } else {
+
+                            }
+                        }
+                    </script>
                     <table class="layui-table" lay-size="sm" lay-skin="nob" style="margin: 0">
                         <thead>
                         <tr>
@@ -379,24 +508,36 @@
                             <td style="text-align: center">品种</td>
                             <td style="text-align: center">方向</td>
                             <td style="text-align: center">点位</td>
-
                         </tr>
 
                         </thead>
 
                     </table>
                     <div class="suspension-white"></div>
-                    <div id="suspension-mohu" style="overflow: hidden;height: 71%;filter: blur(7px)">
+                    <div id="suspension-mohu" style="overflow: hidden;height: 71%;filter: blur(0px)">
                         <div style="overflow: auto;height: 100%; margin-right: -5%">
                             <table id="data-table" class="layui-table " lay-size="sm" lay-skin="nob">
                                 <colgroup>
                                     <col width="25%">
-                                    <col width="22%">
+                                    <col width="80%">
                                     <col width="20%">
                                     <col width="16%">
                                 </colgroup>
-                                <tbody id="tb-contain">
+                                <tbody id="tb-contain-1" style="display: block">
+                                <!--<tr><td>08-23 21:09:59</td><td>J01</td><td>卖</td><td>1943.5</td></tr>-->
                                 </tbody>
+                                <tbody id="tb-contain-2" style="display: none">
+                                </tbody>
+                                <tbody id="tb-contain-3" style="display: none">
+                                </tbody>
+                                <tbody id="tb-contain-4" style="display: none">
+                                </tbody>
+                                <tbody id="tb-contain-5" style="display: none">
+                                </tbody>
+                                <tbody id="tb-contain-6" style="display: none">
+                                </tbody>
+
+
                             </table>
                         </div>
                     </div>
@@ -405,7 +546,7 @@
             <div class="market data-body">
                 <!--                    市场数据-->
                 <!--<iframe frameborder="0" width="105%" height="273" scrolling="yes"-->
-                        <!--src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>-->
+                <!--src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>-->
             </div>
             <div class="odds">
                 <div class="data-body-nav">
@@ -455,14 +596,14 @@
 
                 <!--模版-->
                 <!--<div class="expert-chat-item" style="display: block">-->
-                    <!--<div class="expert-chat-left"><img src="http://image.find37.com/15507171295c6e10c9899cf.png" +=""-->
-                                                       <!-- -live=""></div>-->
-                    <!--<div class="expert-chat-right"><p class="expert-time"><span style="color: #666666">庄友滋</span>&nbsp;&nbsp;15:32:48-->
-                    <!--</p>-->
-                        <!--<div class="expert-chat-message"><p><br></p>-->
-                            <!--<p>一贯坚持在那些最有可能成功的交易上下赌注。这是一个胜算和概率的问题。有些市场情况或价格形态你可能非常有感觉，而且以前同样的情形曾经获利过几次，那么不要错过这种出手的机会。</p>-->
-                            <!--<p><br></p></div>-->
-                    <!--</div>-->
+                <!--<div class="expert-chat-left"><img src="http://image.find37.com/15507171295c6e10c9899cf.png" +=""-->
+                <!-- -live=""></div>-->
+                <!--<div class="expert-chat-right"><p class="expert-time"><span style="color: #666666">庄友滋</span>&nbsp;&nbsp;15:32:48-->
+                <!--</p>-->
+                <!--<div class="expert-chat-message"><p><br></p>-->
+                <!--<p>一贯坚持在那些最有可能成功的交易上下赌注。这是一个胜算和概率的问题。有些市场情况或价格形态你可能非常有感觉，而且以前同样的情形曾经获利过几次，那么不要错过这种出手的机会。</p>-->
+                <!--<p><br></p></div>-->
+                <!--</div>-->
                 <!--</div>-->
 
 

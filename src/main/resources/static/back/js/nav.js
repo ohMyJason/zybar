@@ -40,7 +40,7 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                        <dd><a href=\"/back/model/app.html\">手机App管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/zyView.html\">状元视角管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/caoPan.html\">操盘经典管理</a></dd>\n" +
-    "                        <dd><a href=\"javascript:;\">布局计划管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/add-plan.html\">布局计划管理</a></dd>\n" +
     "                        <dd><a href=\"/back/model/inveEdu.html\">投资者教育管理</a></dd>\n" +
     "                        <dd><a href=\"javascript:;\">大数据云管理</a></dd>\n" +
     "                    </dl>\n" +

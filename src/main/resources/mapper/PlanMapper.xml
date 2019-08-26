@@ -130,4 +130,25 @@
       content = #{content,jdbcType=VARCHAR}
     where plan_id = #{planId,jdbcType=INTEGER}
   </update>
+
+  <select id="getCount" parameterType="java.lang.String" resultType="integer">
+    select count(*)
+    from tb_plan
+    <where>
+      <if test="name!=null">
+        name like '%${name}%'
+      </if>
+    </where>
+  </select>
+
+  <select id="getAllPlan" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from tb_plan
+    <where>
+      <if test="name!=null">
+        name like '%${name}%'
+      </if>
+    </where>
+    LIMIT #{start},#{limit}
+  </select>
 </mapper>
