@@ -78,6 +78,7 @@ public class FileUtil {
         try {
             file.transferTo(dest); //保存文件
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return "-3";
         }
 

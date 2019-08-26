@@ -78,6 +78,26 @@ public class CaopanController {
     }
 
     /**
+     * 用户端获取
+     * @return
+     */
+    @PostMapping("/userGetAllCaopan")
+    public Result getAllCaoPan() {
+        int page = 1;
+        int limit =1000;
+        String name = null;
+        page = PageCheck.checkPage(page);
+        limit = PageCheck.checkLimit(limit);
+        int start = PageCheck.calculateStart(page, limit);
+        List<Caopan> caopans = caopanMapper.selectAll(name, start, limit);
+        if (caopans.size() > 0) {
+            return Result.createSuccessResult(caopanMapper.getCount(name), caopans);
+        } else {
+            return Result.createByFailure("没有数据");
+        }
+    }
+
+    /**
      * 删除操盘经典
      *
      * @param caopanId

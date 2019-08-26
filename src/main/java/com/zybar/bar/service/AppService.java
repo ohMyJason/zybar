@@ -13,4 +13,6 @@ public interface AppService {
     Result insertApp( App app);
     Result selectApp(String name, int page, int limit);
     Result deleteApp(Integer id);
+
+    Result selectApp();
 }

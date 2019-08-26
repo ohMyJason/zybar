@@ -44,7 +44,7 @@
             // 这里吧用户名显示在右上角
             $(function () {
                 if ($.cookie("username") != null) {
-                    $("#user-information").append("<ul><li>" + $.cookie("username")+ "</li><li>等级:5</li><li></li></ul>")
+                    $("#user-information").append("<ul><li>" + $.cookie("username") + "</li><li>等级:5</li><li></li></ul>")
                     $("#login").css("display", "none");
                     $("#quit").css("display", "block");
                 } else {
@@ -168,7 +168,6 @@
                     <div class="report-title">机构研报</div>
 
 
-
                 </div>
                 <script>
                     $(function () {
@@ -183,112 +182,180 @@
                                 for (var i = 0; i < data.data.length; i++) {
                                     $("#research-report").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
                                         "                        <div class=\"researchReport-news\" >\n" +
-                                        "                            <a href=\""+data.data[i].pdfUrl+"\">"+data.data[i].paperName+"</a></div>\n" +
-                                        "                        <span class=\"researchReport-news-date\">"+data.data[i].updateTime+"</span></div>")
+                                        "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].paperName + "</a></div>\n" +
+                                        "                        <span class=\"researchReport-news-date\">" + data.data[i].updateTime + "</span></div>");
                                 }
 
                             },
 
                         })
+
+                        $.ajax({
+                            url: "/userGetAllApp",
+                            type: "post",
+                            dataType: "json",
+                            // headers: {
+                            //     "token": $.cookie("token")
+                            // },
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+
+                                    $("#app-content").append("<div class=\"mobile-app-img\">\n" +
+                                        "                            <p>" + data.data[i].name + "</p>\n" +
+                                        "                            <div class=\"mobile-app-img-div\">\n" +
+                                        "                              <img src=\"" + data.data[i].photoUrl + "\">\n" +
+                                        "                            </div>\n" +
+                                        "                        </div>");
+                                }
+
+                            },
+
+                        })
+
+
+                        $.ajax({
+                            url: "/userGetZyView",
+                            type: "post",
+                            dataType: "json",
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+                                    $("#Top-cargo-content").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%;margin-left: 0px;width: 100%\" >\n" +
+                                        "                            <div class=\"researchReport-news\" data-id=\"1263\" data-updated_name=\"杨权\" data-total=\"0\"\n" +
+                                        "                                 data-type=\"6\" data-status=\"2\">\n" +
+                                        "                                <div class=\"display-content\" style=\"display: none\">\n" +
+                                        "\n" +
+                                        "                                </div>\n" +
+                                        "                                <!--<p></p>-->\n" +
+                                        "                                <a href=\""+data.data[i].zyViewUrl+"\" target=\"_blank\" >"+data.data[i].zyViewName+"</a></div>\n" +
+                                        "                            <span class=\"researchReport-news-date\">"+data.data[i].zyViewCreatTiome+"</span>\n" +
+                                        "                        </div>");
+                                }
+
+                            },
+
+                        })
+
+
+                        $.ajax({
+                            url: "/userGetAllCaopan",
+                            type: "post",
+                            dataType: "json",
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+                                    $("#Traders-classic").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
+                                        "                        <div class=\"researchReport-news\" >\n" +
+                                        "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
+                                        "                        <span class=\"researchReport-news-date\">" + data.data[i].updateTime + "</span></div>");
+                                }
+
+                            },
+
+                        })
+
+                        $.ajax({
+                            url: "/userGetAllInveEdu",
+                            type: "post",
+                            dataType: "json",
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+                                    if (data.data[i].selectName==1){
+                                        $("#edu-1").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
+                                            "                        <div class=\"researchReport-news\" >\n" +
+                                            "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
+                                            "                       </div>");
+                                    } else if (data.data[i].selectName==2){
+                                        $("#edu-2").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
+                                            "                        <div class=\"researchReport-news\" >\n" +
+                                            "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
+                                            "                        </div>");
+                                    } else if (data.data[i].selectName==3){
+                                        $("#edu-3").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
+                                            "                        <div class=\"researchReport-news\" >\n" +
+                                            "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
+                                            "                        </div>");
+                                    } else {
+
+                                    }
+
+                                }
+
+                            },
+
+                        })
+
                     })
                 </script>
 
                 <!--    手机app-->
                 <div id="mobile-app" style="overflow:hidden">
-                    <div>
-
-                        <div class="mobile-app-img">
-                            <p>华鑫期货</p>
-                            <div class="mobile-app-img-div">
-                                <!--<p>华鑫期货恒生app</p><img src="img/app/hx1.png">-->
-                            </div>
-                            <div class="mobile-app-img-div">
-                                <!--<p>华鑫星途app</p><img src="img/app/hx2.jpg">-->
-                            </div>
-                        </div>
+                    <div id="app-content">
                     </div>
                 </div>
-                <script>
 
-                </script>
+
                 <!--                    状元视角-->
                 <div id="Top-cargo">
-                    <div id="Top-cargo-content"></div>
+                    <div id="Top-cargo-content">
+                    </div>
                 </div>
                 <!--                    操盘经典-->
                 <div id="Traders-classic">
-                    <div style="text-align: center"></div>
+                    <!--<div style="text-align: center"></div>-->
                 </div>
                 <!--                    布局计划-->
                 <div id="Layout-plan"></div>
                 <!--                                        投资者教育-->
                 <div id="investor-education">
                     <div id="investor-btns">
-                        <button class="selected-btn-color investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">
+                        <button class="selected-btn-color investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" onclick="checkOutEdu(1)">
                             防洗钱专栏
                         </button>
-                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">风险提示
+                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" onclick="checkOutEdu(2)">风险提示
                         </button>
-                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">基础知识
+                        <button class="investor-btns layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" onclick="checkOutEdu(3)">基础知识
                         </button>
                     </div>
-                    <div class="investor-news" style="display: block">
-                        <p><a href="investor/反洗钱专栏/反洗钱宣传折页.pdf" target="_blank">反洗钱宣传折页</a></p>
-                        <p><a href="investor/反洗钱专栏/反洗钱知识26问.pdf" target="_blank">反洗钱知识26问</a></p>
-                        <p><a href="investor/反洗钱专栏/朗朗乾坤除黑恶，清风正气谱新篇.pdf" target="_blank">朗朗乾坤除黑恶，清风正气谱新篇</a></p>
-                        <p><a href="investor/反洗钱专栏/反洗钱普及小视频.mp4" target="_blank">反洗钱普及小视频</a></p>
+                    <div class="investor-news" id="edu-1" style="display: block">
+
                     </div>
-                    <div class="investor-news">
-                        <p><a href="investor/风险提示/风险揭示.pdf" target="_blank">风险揭示</a></p>
-                        <p><a href="investor/风险提示/关于发布《郑州商品交易所实际控制关系账户管理办法》的公告20180824.pdf" target="_blank">关于发布《郑州商品交易所实际控制关系账户管理办法》的公告20180824</a>
-                        </p>
-                        <p><a href="investor/风险提示/关于发布《郑州商品交易所异常交易行为管理办法》的公告20180824.pdf" target="_blank">关于发布《郑州商品交易所异常交易行为管理办法》的公告20180824</a>
-                        </p>
-                        <p><a href="investor/风险提示/期货风险要点总结.pdf" target="_blank">期货风险要点总结</a></p>
-                        <p><a href="investor/风险提示/大连商品交易所实际控制关系账户 管理办法20180528.doc" target="_blank">大连商品交易所实际控制关系账户
-                            管理办法20180528</a></p>
-                        <p><a href="investor/风险提示/关于发布《上海期货交易所异常交易行为 管理办法》和《上海期货交易所实际 控制关系账户管理办法》的公告20180511.doc"
-                              target="_blank">关于发布《上海期货交易所异常交易行为 管理办法》和《上海期货交易所实际 控制关系账户管理办法》的公告20180511</a></p>
-                        <p><a href="investor/风险提示/上海国际能源交易中心异常交易行为管理细则20180320.doc" target="_blank">上海国际能源交易中心异常交易行为管理细则20180320</a>
-                        </p>
+                    <div class="investor-news" id="edu-2" >
+
                     </div>
-                    <div class="investor-news">
-                        <p><a href="http://audio.find37.com/06.12%20黑色金属期货分析方法与技巧%20蔡跃辉.mp4" target="_blank">06.12
-                            黑色金属期货分析方法与技巧 蔡跃辉</a></p>
-                        <p><a href="http://audio.find37.com/06.12%20化工品种调研务实%20张锡莹.mp4" target="_blank">06.12 化工品种调研务实
-                            张锡莹</a></p>
-                        <p><a href="http://audio.find37.com/06.11%20期货基础知识%20%20林聪明.mp4" target="_blank">06.11 期货基础知识
-                            林聪明</a></p>
-                        <p><a href="http://audio.find37.com/06.12%20期货基础知识与交易制度%20%20林聪明.mp4" target="_blank">06.12
-                            期货基础知识与交易制度 林聪明</a></p>
-                        <p><a href="http://audio.find37.com/06.12%20浅析期货交易方法.mp4" target="_blank">06.12 浅析期货交易方法</a></p>
-                        <p><a href="http://audio.find37.com/06.11%20K线及其组合%20%20肖永志.mp4" target="_blank">06.11 K线及其组合
-                            肖永志</a></p>
-                        <p><a href="http://audio.find37.com/06.11%20商品基本面交易分析体系%20尤名胜.mp4" target="_blank">06.11
-                            商品基本面交易分析体系 尤名胜</a></p>
-                        <p><a href="http://audio.find37.com/06.11%20指标分析与训练%20肖永志.mp4" target="_blank">06.11 指标分析与训练
-                            肖永志</a></p>
-                        <p><a href="http://audio.find37.com/06.11%20金属品种调研务实%20蔡跃辉.mp4" target="_blank">06.11 金属品种调研务实
-                            蔡跃辉</a></p>
-                        <p><a href="http://audio.find37.com/06.12%20股指行情展望%20王俊翔.mp4" target="_blank">06.12 股指行情展望
-                            王俊翔</a></p>
-                        <p><a href="http://audio.find37.com/06.12商品价格分析体系.mp4" target="_blank">06.12商品价格分析体系</a></p>
-                        <p><a href="http://audio.find37.com/06.12%20期权基础知识.mp4" target="_blank">06.12 期权基础知识</a></p>
-                        <p><a href="investor/基础知识/豆粕期权.pdf" target="_blank">豆粕期权</a></p>
-                        <p><a href="investor/基础知识/红枣期货宣传册.pdf" target="_blank">红枣期货宣传册</a></p>
-                        <p><a href="investor/基础知识/基本面分析.pdf" target="_blank">基本面分析</a></p>
-                        <p><a href="investor/基础知识/技术分析.pdf" target="_blank">技术分析</a></p>
-                        <p><a href="investor/基础知识/苹果期货介绍材料.pdf" target="_blank">苹果期货介绍材料</a></p>
-                        <p><a href="investor/基础知识/苹果期货宣传册.pdf" target="_blank">苹果期货宣传册</a></p>
-                        <p><a href="investor/基础知识/期货交易时间汇总（更新20190401）.pdf" target="_blank">期货交易时间汇总（更新20190401）</a></p>
-                        <p><a href="investor/基础知识/期货结算.pdf" target="_blank">期货结算</a></p>
-                        <p><a href="investor/基础知识/期货术语.pdf" target="_blank">期货术语</a></p>
-                        <p><a href="investor/基础知识/玉米期权.pdf" target="_blank">玉米期权</a></p>
-                        <p><a href="investor/基础知识/原油期货100问.pdf" target="_blank">原油期货100问</a></p>
-                        <p><a href="investor/基础知识/告诉你什么是深100ETF期权-东证期货.mp4" target="_blank">告诉你什么是深100ETF期权-东证期货</a></p>
+                    <div class="investor-news" id="edu-3" >
+
 
                     </div>
                 </div>
+                <script>
+
+                    //根据flag决定显示哪个div
+                    function checkOutEdu(eduFlag) {
+                        if (eduFlag==1){
+                            $("#edu-1").css("display","block");
+                            $("#edu-2").css("display","none");
+                            $("#edu-3").css("display","none");
+                        } else if (eduFlag==2){
+                            $("#edu-1").css("display","none");
+                            $("#edu-2").css("display","block");
+                            $("#edu-3").css("display","none");
+                        } else if (eduFlag==3){
+                            $("#edu-1").css("display","none");
+                            $("#edu-2").css("display","none");
+                            $("#edu-3").css("display","block");
+                        } else {
+
+                        }
+                    }
+                </script>
                 <!--                                        大数据云-->
                 <div id="datum"></div>
             </div>
@@ -337,9 +404,8 @@
             </div>
             <div class="market data-body">
                 <!--                    市场数据-->
-                <iframe frameborder="0" width="105%" height="273" scrolling="yes"
-                        src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>
-                -->
+                <!--<iframe frameborder="0" width="105%" height="273" scrolling="yes"-->
+                        <!--src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>-->
             </div>
             <div class="odds">
                 <div class="data-body-nav">
@@ -353,7 +419,7 @@
                     <div class="contact-us-content">
                         <p style="bottom: 8.5%">客服热线:0592-6809325</p>
                         <p style="bottom: 4.7%;">客服微信:k688918</p>
-                        <p style="bottom: 1%;font-size: 12.4px;">意见邮箱:kefubu@jin808.com</p>
+                        <!--<p style="bottom: 1%;font-size: 6.4px;">意见邮箱:kefubu@jin808.com</p>-->
                     </div>
                 </div>
             </div>
@@ -384,7 +450,21 @@
 
             </div>
             <!--<p id="getqx">请激活后查看</p>-->
-            <div class="expert-content">
+            <div class="expert-content" id="teacherOnline">
+
+
+                <!--模版-->
+                <!--<div class="expert-chat-item" style="display: block">-->
+                    <!--<div class="expert-chat-left"><img src="http://image.find37.com/15507171295c6e10c9899cf.png" +=""-->
+                                                       <!-- -live=""></div>-->
+                    <!--<div class="expert-chat-right"><p class="expert-time"><span style="color: #666666">庄友滋</span>&nbsp;&nbsp;15:32:48-->
+                    <!--</p>-->
+                        <!--<div class="expert-chat-message"><p><br></p>-->
+                            <!--<p>一贯坚持在那些最有可能成功的交易上下赌注。这是一个胜算和概率的问题。有些市场情况或价格形态你可能非常有感觉，而且以前同样的情形曾经获利过几次，那么不要错过这种出手的机会。</p>-->
+                            <!--<p><br></p></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
 
             </div>
             <div class="clbg">
@@ -407,18 +487,6 @@
             <!--                网友互动-->
             <div class="order-content-white"></div>
             <div class="order-content" id="order-content">
-                <!--<h1 id="message"></h1>-->
-                <!--<div class="chat-item" id="hallUsers" style="display: block;">-->
-                <!--<div class="chat-left"><img src="http://image.find37.com/150950665859f93e62b5b32.png" +="" -live="">-->
-                <!--</div>-->
-                <!--<div class="chat-right"><p class="time">14:48:12</p>-->
-                <!--<div class="chat-user"><img class="imgLogo" src="http://image.find37.com/grade1.png" +=""-->
-                <!-- -live="">投资大亨_1461-->
-                <!--</div>-->
-                <!--<div class="chat-message">qqweqweqwe</div>-->
-                <!--</div>-->
-                <!--</div>-->
-
             </div>
 
             <div style="height: 25%;margin-top: 8%">
@@ -432,47 +500,7 @@
         </div>
     </div>
 </div>
-<!--    提示音播放插件-->
-<!--<div id="jplayer1"></div>-->
-<!--<div id="jplayer2"></div>-->
-<!--<div id="jplayer3"></div>-->
 
-<!--<script type="text/javascript">-->
-<!--console.log(screen.height)-->
-<!--console.log(screen.width)-->
-<!--// $('#audio').load('music.html');-->
-<!--$(".nav-btn").click(function () {-->
-<!--$(".report>button").text($(this).text())-->
-<!--})-->
-<!--layui.use('form', function () {-->
-<!--var form = layui.form;-->
-
-<!--//监听提交-->
-<!--// form.on('submit(formDemo)', function(data){-->
-<!--//     layer.msg(JSON.stringify(data.field));-->
-<!--//     return false;-->
-<!--// });-->
-<!--});-->
-<!--// 注意：导航 依赖 element 模块，否则无法进行功能性操作-->
-<!--layui.use('element', function () {-->
-<!--var element = layui.element;-->
-
-<!--//…-->
-<!--});-->
-
-<!--// $(function () {-->
-<!--//     // $(".content").slideDown(500)-->
-<!--//     $(".content").animate({left:0,opacity:'show'},1000)-->
-<!--// })-->
-
-
-<!--</script>-->
-<!--<script type="text/javascript" src="./js/user_information.js" +Math.random()></script>-->
-<!--<script type="text/javascript" src="./js/login.js"></script>-->
-<!--<script type="text/javascript" src="./js/webscork.js"></script>-->
-<!--<script type="text/javascript" src="./js/data.js"></script>-->
-<!--<script type="text/javascript" src="./js/news.js"></script>-->
-<!--<script type="text/javascript" src="./js/odds.js"></script>-->
 <script type="text/javascript" src="js/information.js"></script>
 
 </body>

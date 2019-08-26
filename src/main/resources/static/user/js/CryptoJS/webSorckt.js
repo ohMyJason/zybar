@@ -35,7 +35,14 @@ function setMessage(event) {
 
         scrollDown("order-content");
     }else if (role==2){
-
+        $("#teacherOnline").append("<div class=\"expert-chat-item\" style=\"display: block\" >\n" +
+            "                    <div class=\"expert-chat-left\"><img src=\"http://image.find37.com/15507171295c6e10c9899cf.png\" +=\"\"\n" +
+            "                                                       -live=\"\"></div>\n" +
+            "                    <div class=\"expert-chat-right\"><p class=\"expert-time\"><span style=\"color: #666666\">"+username+"</span>&nbsp;&nbsp;"+new Date().toLocaleTimeString()+"\n" +
+            "                    </p>\n" +
+            "                        <div class=\"expert-chat-message\">"+message+"</div>\n" +
+            "                    </div>\n" +
+            "                </div>")
     } else {
 
     }

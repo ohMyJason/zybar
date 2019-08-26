@@ -64,6 +64,18 @@ public class ZyViewController {
         }
     }
 
+    @PostMapping("/userGetZyView")
+    public Result userGetZyView(){
+        int page = 1;
+        int limit = 1000;
+        String zyViewName = null;
+        //接口要个参数，我这里懒得重写一个了，mapper动态sql会判断无name
+        int start = PageCheck.calculateStart(page, limit);
+        int count = zyViewMapper.getCount(zyViewName);
+        List<ZyView> allZyView = zyViewMapper.getAllZyView(zyViewName,start,limit);
+        return Result.createSuccessResult(count,allZyView);
+    }
+
 
     /**
      * 删除状元视角

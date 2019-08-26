@@ -84,7 +84,12 @@
                 var message = event.data.split("&*&")[1];
                 var username = event.data.split("&*&")[2];
                 if (role == 2) {
-                    $("#teacherChat").append(message);
+                    $("#teacherChat").append("<div class=\"layui-card\">\n" +
+                        "                        <div class=\"layui-card-header\">"+username+"</div>\n" +
+                        "                        <div class=\"layui-card-body\">\n" +
+                        message +
+                        "                        </div>\n" +
+                        "                    </div>");
                     scrollDown("teacherChat");
                 }else if (role==1){
                     $("#userChat").append("<div class=\"layui-card\">\n" +
@@ -176,12 +181,7 @@
                 $("#send").click(function () {
                     var content = layedit.getContent(index);
                     console.log(content);
-                    var message = "2&*&<div class=\"layui-card\" id=\"chatModel\">\n" +
-                        "                        <div class=\"layui-card-header\">" + $.cookie("username") + "</div>\n" +
-                        "                        <div class=\"layui-card-body\">\n" +
-                        content +
-                        "                        </div>\n" +
-                        "                    </div>&*&"+$.cookie("username")
+                    var message = "2&*&"+content+"&*&"+$.cookie("username")
 
                     websocket.send(message);
 

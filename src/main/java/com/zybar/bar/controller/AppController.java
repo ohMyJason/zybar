@@ -64,6 +64,11 @@ public class AppController {
         return appService.selectApp(name,page,limit);
     }
 
+    @PostMapping("/userGetAllApp")
+    public Result userGetAllApp(){
+        return appService.selectApp();
+    }
+
 
     /**
      * 删除app

@@ -81,6 +81,27 @@ public class InveEduController {
         }
     }
 
+    /**
+     * 用户端获取
+     * @return
+     */
+    @PostMapping("/userGetAllInveEdu")
+    public Result getAllInveEdu() {
+        int page = 1;
+        int limit =1000;
+        String name = null;
+        try {
+            page = PageCheck.checkPage(page);
+            limit = PageCheck.checkLimit(limit);
+            int start = PageCheck.calculateStart(page, limit);
+            List<InveEdu> inveEdus = inveEduMapper.selectAll(name, start, limit);
+            return Result.createSuccessResult(inveEduMapper.getCount(name), inveEdus);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Result.createByFailure("数据错误-003，联系管理员");
+        }
+    }
+
 
     /**
      * 删除投资者教育

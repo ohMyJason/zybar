@@ -84,4 +84,19 @@ public class AppServiceImpl implements AppService {
                 return Result.createByFailure("出错");
         }
     }
+
+    @Override
+    public Result selectApp() {
+        int page =1 ;
+        int limit =1000;
+        String name = null;
+        int start = PageCheck.calculateStart(page, limit);
+        int count = appMapper.getCount(name);
+        List<App> apps = appMapper.selectAllApp(name,start,limit);
+        if (apps.size()>0){
+            return Result.createSuccessResult(count,apps);
+        }else{
+            return Result.createByFailure("获取App失败，请联系管理员");
+        }
+    }
 }
