@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
     <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="./js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="./layer/layer.js"></script>
+
     <!--<script type="text/javascript" src="./js/skPlayer.min.js"></script>-->
     <!--<script type="text/javascript" src="./js/jquery.jplayer.js"></script>-->
 
@@ -18,6 +18,7 @@
     <meta name="renderer" content="ie-comp">
     <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
     <script src="js/CryptoJS/webSorckt.js"></script>
+    <script src="layer/layer.js"></script>
 </head>
 <body>
 <div class="content ">
@@ -170,6 +171,7 @@
 
                 </div>
                 <script>
+                    // 这里请求金融超市的数据
                     $(function () {
                         $.ajax({
                             url: "/userGetAllPaper",
@@ -307,7 +309,40 @@
                             })
 
                         }
+                        $.ajax({
+                            url: "/userGetAllPlan",
+                            type: "post",
+                            dataType: "json",
+                            async: false,//同步请求数据,这样就可以写在for循环里了
+                            headers: {
+                                "token": $.cookie("token")
+                            },
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length; i++) {
+                                    $("#Layout-plan").append("<div data-status=\"1\" data-id=\"140\" data-total=\"150\">\n" +
+                                        "                        <img\n" +
+                                        "                            style=\"width: 100%;height: 100%\" src=\"img/zhuan.jpg\">\n" +
+                                        "                        <p style=\"font-size: 12px\">"+data.data[i].name+"</p>\n" +
+                                        "                        <p>上传时间:"+data.data[i].updateTime+"</p></div>\n" +
+                                        "                    <div style=\"display: none;\" id=\"planContent\">                 <div style=\"height: 1050px;overflow: auto\">"+data.data[i].content+"</div>\n</div>")
+                                }
+                            },
+                        })
 
+                        $("#Layout-plan>div").click(function () {
+                            // alert(this.html());
+                            console.log($(this).html());
+                            layer.open({
+                                type: 1,
+                                title: false,
+                                closeBtn: 0,
+                                shadeClose: true,
+                                area: ['900', '1050px'],
+                                skin: 'yourclass',
+                                content: $(this).next().html()
+                            });
+
+                        })
 
                     })
                 </script>
@@ -330,12 +365,14 @@
                 </div>
                 <!--                    布局计划-->
                 <div id="Layout-plan">
-                    <div data-status="1" data-id="140" data-total="150">
-                        <img
-                            style="width: 100%;height: 100%" src="img/zhuan.jpg">
-                        <p style="font-size: 12px">一波行云流水的大行情</p>
-                        <p>上传者:隋治铭</p>
-                        <p>上传时间:2019-03-05 18:25:45</p></div>
+                    <!--布局计划模版-->
+                    <!--<div data-status="1" data-id="140" data-total="150">-->
+                        <!--<img-->
+                            <!--style="width: 100%;height: 100%" src="img/zhuan.jpg">-->
+                        <!--<p style="font-size: 12px">一波行云流水的大行情</p>-->
+                        <!--<p>上传者:隋治铭</p>-->
+                        <!--<p>上传时间:2019-03-05 18:25:45</p></div>-->
+                    <!--<div style="display: none;" id="planContent"> </div>-->
 
 
                 </div>

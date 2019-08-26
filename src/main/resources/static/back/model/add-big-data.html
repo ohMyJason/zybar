@@ -27,9 +27,9 @@
 
 
         <fieldset class="layui-elem-field">
-            <legend>提交布局计划</legend>
+            <legend>提交大数据云</legend>
             <div class="layui-field-box">
-                <blockquote class="layui-elem-quote">请在下方编辑您的布局计划</blockquote>
+                <blockquote class="layui-elem-quote">请在下方编辑大数据云</blockquote>
             </div>
         </fieldset>
 
@@ -54,6 +54,7 @@
                 var layedit = layui.layedit;
                 layedit.set({
                     uploadImage: {
+                        // todo 把文章的上传图片接口和聊天的分离吧
                         url: '/uploadChatImg' //接口url
                         , type: 'post' //默认post
                     }
@@ -68,12 +69,12 @@
                 $("#submit").click(function () {
                     var content = layedit.getContent(index);
                     console.log(content);
-                    ajaxPOST("/insertPlan",{
+                    ajaxPOST("/insertBigData",{
                         content:content,
                         name:$("#name").val()
                     },function (data) {
                         layer.alert("上传成功");
-                        window.location.href="/back/model/plan.html";
+                        window.location.href="/back/model/big-data.html";
                     })
 
                 })

@@ -26,11 +26,11 @@
         <!-- 内容主体区域 -->
 
         <div  style="margin: 15px;">
-            <button type="button" id="add-paper" class="layui-btn">添加布局计划</button>
+            <button type="button" id="add-big-data" class="layui-btn">添加大数据云</button>
         </div>
         <script>
-            $("#add-paper").click(function () {
-                window.location.href="/back/model/add-plan.html";
+            $("#add-big-data").click(function () {
+                window.location.href="/back/model/add-big-data.html";
             })
         </script>
         <div style="padding: 15px;margin-top: 30px">
@@ -61,8 +61,9 @@
                 layui.use('table', function(){
                     var table = layui.table;
                     table.render({
+                        // 懒得改id了，和plan一样
                         elem: '#plan-table'
-                        ,url:'/getAllPlan'
+                        ,url:'/getAllBigData'
                         ,toolbar: '#toolbarDemo'
                         ,title: '布局计划'
                         ,method:'post'
@@ -102,7 +103,7 @@
 
                         if(obj.event === 'del'){
                             layer.confirm('真的删除么', function(index){
-                                ajaxPOST("/deletePlan",{planId:data.planId},function () {
+                                ajaxPOST("/deleteBigData",{bigDataId:data.bigDataId},function () {
                                     obj.del();
                                     layer.close(index);
                                     layui.use('layer', function(){
