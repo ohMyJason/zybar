@@ -56,7 +56,7 @@ function setMessage(event) {
 
 //判断当前浏览器是否支持WebSocket
 if('WebSocket' in window){
-    websocket = new WebSocket("ws://192.168.1.124:8080/websocket");
+    websocket = new WebSocket("ws://172.28.221.94:8080/websocket");
 }
 else{
     alert('Not support websocket');
