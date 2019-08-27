@@ -25,6 +25,7 @@
             <button type="button" class="layui-btn" id="test1">
                 <i class="layui-icon">&#xe67c;</i>上传PDF
             </button>
+            <a href="" id="fileUrl" target="_blank"></a>
 
         </div>
 
@@ -45,6 +46,8 @@
 
                             layer.msg("上传成功",{time:1000});
                         });
+                        $("#fileUrl").attr("href",res.data);
+                        $("#fileUrl").text("点击可查看："+res.data);
                         //上传完毕回调
 
                     }
@@ -59,12 +62,24 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="reset"  id="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
 
 <script>
+    $(function () {
+        $("#reset").click(function () {
+            layui.use('layer',function () {
+                var layer = layui.layer;
+                layer.msg("重置成功，请重新上传文件");
+            })
+
+            $("#fileUrl").text("");
+
+
+        })
+    })
     //Demo
     layui.use('form', function () {
         var form = layui.form;

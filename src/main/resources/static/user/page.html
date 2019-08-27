@@ -7,18 +7,14 @@
     <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
     <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="./js/jquery.cookie.js"></script>
-
-    <!--<script type="text/javascript" src="./js/skPlayer.min.js"></script>-->
-    <!--<script type="text/javascript" src="./js/jquery.jplayer.js"></script>-->
-
     <link rel="stylesheet" type="text/css" href="css/layer.css">
     <link rel="stylesheet" type="text/css" href="css/livecss.css?v=2">
     <link rel="icon" href="img/webtitle.png">
     <!--    <meta name="renderer" content="webkit">-->
     <meta name="renderer" content="ie-comp">
-    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
     <script src="js/CryptoJS/webSorckt.js"></script>
     <script src="layer/layer.js"></script>
+    <script src="skPlayer-3.0/dist/skPlayer.min.js"></script>
 </head>
 <body>
 <div class="content ">
@@ -91,12 +87,8 @@
             <div class="report">
                 <!--                                        风口之声-->
                 <div id="audio" style="overflow: hidden; display: block;">
-
-
                     <meta charset="UTF-8">
                     <title>Title</title>
-                    <script src="./js/skPlayer.min.js"></script>
-
                     <style>
                         #skPlayer .skPlayer-list {
                             max-height: 80%;
@@ -118,52 +110,43 @@
 
 
                     <div id="skPlayer" style="height:100%;width: 100%" class="skPlayer-list-on">
-                        <audio class="skPlayer-source" src="https://audio.qzy77.com/15635271225d3187d2b926a.m4a"
-                               preload="auto"></audio>
-                        <div class="skPlayer-picture">
-                            <img class="skPlayer-cover" src="http://image.find37.com/15572135375cd131619d491.png"
-                                 alt="">
-                            <a href="javascript:;" class="skPlayer-play-btn">
-                                <span class="skPlayer-left"></span>
-                                <span class="skPlayer-right"></span>
-                            </a>
-                        </div>
-                        <div class="skPlayer-control">
-                            <p class="skPlayer-name">7.19行情回顾后市展望</p>
-                            <p class="skPlayer-author">蒋迦南</p>
-                            <div class="skPlayer-percent">
-                                <div class="skPlayer-line-loading" style="width: 100%;"></div>
-                                <div class="skPlayer-line"></div>
-                            </div>
-                            <p class="skPlayer-time">
-                                <span class="skPlayer-cur">00:00</span>/<span class="skPlayer-total">04:09</span>
-                            </p>
-                            <div class="skPlayer-volume" style="">
-                                <i class="skPlayer-icon"></i>
-                                <div class="skPlayer-percent">
-                                    <div class="skPlayer-line" style="width: 60.19%;"></div>
-                                </div>
-                            </div>
-                            <div class="skPlayer-list-switch">
-                                <i class="skPlayer-list-icon"></i>
-                            </div>
-                            <i class="skPlayer-mode"></i>
-                        </div>
-                        <ul class="skPlayer-list">
-
-                            <li data-index="0" class="skPlayer-curMusic" data-id="261" data-total="0">
-                                <i class="skPlayer-list-sign"></i>
-                                <span class="skPlayer-list-index">1</span>
-                                <span class="skPlayer-list-name" title="7.19行情回顾后市展望">7.19行情回顾后市展望</span>
-                                <span class="skPlayer-list-author" title="蒋迦南">蒋迦南</span>
-                            </li>
-
-
-                        </ul>
                     </div>
 
 
                 </div>
+                <script>
+                    $.ajax({
+                        url:"/getZyVoice",
+                        type:"post",
+                        data:{page:1,limit:1000,flag:1},
+                        dataType:"",
+                        success:fun,
+                        error:function () {
+
+                        }
+                    })
+                    function fun(data) {
+                        voices=data.data;
+                        var player = new skPlayer({
+                            autoplay: false,
+                            //可选项,自动播放,默认为false,true/false
+                            listshow: true,
+                            //可选项,列表显示,默认为true,true/false
+                            mode: 'listloop',
+                            //可选项,循环模式,默认为'listloop'
+                            //'listloop',列表循环
+                            //'singleloop',单曲循环
+                            music: {
+                                //必需项,音乐配置
+                                type: 'file',
+                                //必需项,自配置文件方式指定填'file'
+                                source: data.data
+                            }
+                        });
+                    }
+
+
+                </script>
                 <!--                    机构研报-->
                 <div id="research-report">
                     <div class="report-title">机构研报</div>

@@ -56,7 +56,7 @@ function setMessage(event) {
 
 //判断当前浏览器是否支持WebSocket
 if('WebSocket' in window){
-    websocket = new WebSocket("ws://172.28.221.94:8080/websocket");
+    websocket = new WebSocket("ws://localhost:8080/websocket");
 }
 else{
     alert('Not support websocket');
@@ -67,7 +67,8 @@ else{
 websocket.onerror = function(){
     // setMessageInnerHTML("error");
     // layer.alert("连接发生错误,请刷新");
-    alert("error");
+    layer.alert("直播间连接失败");
+
 };
 
 //连接成功建立的回调方法

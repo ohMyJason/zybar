@@ -23,14 +23,14 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
 
-        <div  style="margin: 15px;">
+        <div style="margin: 15px;">
             <button type="button" id="add-zy-voice" class="layui-btn">添加风口之声</button>
         </div>
         <script>
             $("#add-zy-voice").click(function () {
                 layer.open({
                     type: 2,
-                    area : ['800px' , '580px'],
+                    area: ['800px', '580px'],
                     content: '/back/content/add-zy-voice.html' //这里content是一个普通的String
                 });
             })
@@ -60,59 +60,63 @@
 
 
             <script>
-                layui.use('table', function(){
+                layui.use('table', function () {
                     var table = layui.table;
                     table.render({
                         elem: '#zy-voice-table'
-                        ,url:'/getZyVoice'
-                        ,toolbar: '#toolbarDemo'
-                        ,title: '风口视角'
-                        ,method:'post'
-                        ,cols: [[
-                            {type: 'checkbox', fixed: 'left',width:100}
-                            ,{field:'voiceId', title:'ID', fixed: 'left',width:150, unresize: true, sort: true}
-                            ,{field:'photoUrl', title:'风口之声头像'}
-                            ,{field:'mp3Url', title:'风口之声地址'}
-                            ,{field:'mp3Name', title:'风口之声名',sort: true}
-                            ,{field:'userId', title:'用户id'}
-                            ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                        , url: '/getZyVoice'
+                        , toolbar: '#toolbarDemo'
+                        , title: '风口视角'
+                        , method: 'post'
+                        , where: { //设定异步数据接口的额外参数，任意设
+                            flag: 2
+                        }
+                        , cols: [[
+                            {type: 'checkbox', fixed: 'left', width: 100}
+                            , {field: 'voiceId', title: 'ID', fixed: 'left', width: 150, unresize: true, sort: true}
+                            , {field: 'photoUrl', title: '风口之声头像'}
+                            , {field: 'mp3Url', title: '风口之声地址'}
+                            , {field: 'mp3Name', title: '风口之声名', sort: true}
+                            , {field: 'userId', title: '用户id'}
+                            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                         ]]
-                        ,page: true
+                        , page: true
                     });
 
                     //头工具栏事件
-                    table.on('toolbar(zy-voice-table)', function(obj){
+                    table.on('toolbar(zy-voice-table)', function (obj) {
                         var checkStatus = table.checkStatus(obj.config.id);
-                        switch(obj.event){
+                        switch (obj.event) {
                             case 'getCheckData':
                                 var data = checkStatus.data;
                                 layer.alert(JSON.stringify(data));
                                 break;
                             case 'getCheckLength':
                                 var data = checkStatus.data;
-                                layer.msg('选中了：'+ data.length + ' 个');
+                                layer.msg('选中了：' + data.length + ' 个');
                                 break;
                             case 'isAll':
-                                layer.msg(checkStatus.isAll ? '全选': '未全选');
+                                layer.msg(checkStatus.isAll ? '全选' : '未全选');
                                 break;
-                        };
+                        }
+                        ;
                     });
 
                     //监听行工具事件
-                    table.on('tool(zy-voice-table)', function(obj){
+                    table.on('tool(zy-voice-table)', function (obj) {
                         var data = obj.data;
                         // console.log(obj.data.paperId)
                         // layer.alert(data.paperId);
 
-                        if(obj.event === 'del'){
-                            layer.confirm('真的删除么', function(index){
-                                ajaxPOST("/deleteZyVoice",{voiceId:data.voiceId},function () {
+                        if (obj.event === 'del') {
+                            layer.confirm('真的删除么', function (index) {
+                                ajaxPOST("/deleteZyVoice", {voiceId: data.voiceId}, function () {
                                     obj.del();
                                     layer.close(index);
-                                    layui.use('layer', function(){
+                                    layui.use('layer', function () {
                                         var layer = layui.layer;
-                                        layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
-                                        setTimeout(function(){
+                                        layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
+                                        setTimeout(function () {
                                             layer.msg('删除成功');
                                         }, 1000);
                                     });
@@ -125,9 +129,9 @@
                     // 搜索
                     $("#search").click(function () {
                         //重新加载表格
-                        table.reload('zy-voice-table' ,{
+                        table.reload('zy-voice-table', {
                             where: { //设定异步数据接口的额外参数，任意设
-                                mp3Name : $("#zy-voice-name").val()
+                                mp3Name: $("#zy-voice-name").val()
                             },
                             page: {
                                 curr: 1 //重新从第 1 页开始
@@ -146,9 +150,9 @@
 </div>
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
-        $("#super").attr("class","layui-nav-item layui-nav-itemed")
+        $("#super").attr("class", "layui-nav-item layui-nav-itemed")
 
     });
 </script>
