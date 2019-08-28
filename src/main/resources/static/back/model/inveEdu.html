@@ -73,7 +73,9 @@
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
                             ,{field:'paperId', title:'ID', fixed: 'left', unresize: true, sort: true,width:100}
-                            ,{field:'pdfUrl', title:'投资者教育URL'}
+                            ,{field:'pdfUrl', title:'投资者教育URL',templet:function (d) {
+                                    return "<a href=\""+d.pdfUrl+"\" target=\"_blank\">"+d.pdfUrl+"</a>\n"
+                                }}
                             ,{field:'name', title:'投资者教育名',sort: true}
                             ,{field:'selectName', title:'投资者教育类别',templet: function(d){
                                     var selectName;

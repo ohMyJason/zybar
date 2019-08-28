@@ -18,7 +18,12 @@
             <input type="text" name="mp3Name" required lay-verify="required" placeholder="请输入风口之声标题" autocomplete="off"
                    class="layui-input">
             <input type="hidden" name="mp3Url" id="mp3Url">
+        </div>
 
+        <div class="layui-input-block" style="margin-top: 15px">
+            <select id="selectUser" name="userId" lay-verify="">
+                <option  value="">请选择上传用户</option>
+            </select>
         </div>
 
         <div class="layui-input-block" style="margin-top: 20px;">
@@ -28,10 +33,55 @@
             </button>
             <a href="" id="fileUrl" target="_blank"></a>
 
+
         </div>
 
 
         <script>
+            $.ajax({
+                url:"/getAllUser",
+                dataType:"json",
+                type: "post",
+                success:function (data) {
+                    console.log(data.data);
+                    for (var i = 0; i < data.data.length; i++) {
+                        $("#selectUser").append("<option value=\""+data.data[i].userId+"\">"+data.data[i].username+"</option>")
+                    }
+
+                    //Demo
+                    layui.use('form', function () {
+                        var form = layui.form;
+
+                        //监听提交
+                        form.on('submit(formDemo)', function (data) {
+                            $.ajax({
+                                url:"/insertZyVoice",
+                                type:"post",
+                                data:data.field,
+                                dataType:"json",
+                                success:function () {
+                                    layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
+                                    setTimeout(function(){
+                                        layer.msg('添加成功');
+                                    }, 1000);
+                                    //当你在iframe页面关闭自身时
+                                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                    parent.layer.close(index); //再执行关闭
+                                    parent.window.location.reload();
+                                },
+                                error:function () {
+
+                                }
+                            })
+                            return false;
+                        });
+                    });
+                },
+                error:function () {
+
+                }
+            })
+
             layui.use('upload', function () {
                 var upload = layui.upload;
 
@@ -51,6 +101,7 @@
                         $("#fileUrl").attr("href",res.data);
                         $("#fileUrl").text("点击可查看："+res.data);
                         //上传完毕回调
+
 
                     }
                     , error: function () {
@@ -79,34 +130,7 @@
             $("#fileUrl").text("");
         })
     })
-    //Demo
-    layui.use('form', function () {
-        var form = layui.form;
 
-        //监听提交
-        form.on('submit(formDemo)', function (data) {
-            $.ajax({
-                url:"/insertZyVoice",
-                type:"post",
-                data:data.field,
-                dataType:"json",
-                success:function () {
-                    layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒
-                    setTimeout(function(){
-                        layer.msg('添加成功');
-                    }, 1000);
-                    //当你在iframe页面关闭自身时
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                    parent.window.location.reload();
-                },
-                error:function () {
-
-                }
-            })
-            return false;
-        });
-    });
 </script>
 </body>
 </html>

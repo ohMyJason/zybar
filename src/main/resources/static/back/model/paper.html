@@ -73,7 +73,9 @@
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
                             ,{field:'paperId', title:'ID', fixed: 'left', unresize: true, sort: true}
-                            ,{field:'pdfUrl', title:'机构研报地址'}
+                            ,{field:'pdfUrl', title:'机构研报地址',templet:function (d) {
+                                    return "<a href=\""+d.pdfUrl+"\" target=\"_blank\">"+d.pdfUrl+"</a>\n"
+                                }}
                             ,{field:'paperName', title:'机构研报名',sort: true}
                             ,{field:'updateTime', title:'更新时间'}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}

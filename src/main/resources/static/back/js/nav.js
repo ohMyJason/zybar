@@ -21,7 +21,7 @@ $("#window-header").append("<div class=\"layui-logo\">风口交易吧后台</div
     "                    "+ $.cookie("username")+"\n" +
     "                </a>\n" +
     "                <dl class=\"layui-nav-child\">\n" +
-    // "                    <dd><a href=\"\">基本资料</a></dd>\n" +
+    "                    <dd><a href=\"#\" id='alertUserInfo'>基本资料</a></dd>\n" +
     // "                    <dd><a href=\"\">安全设置</a></dd>\n" +
     "                </dl>\n" +
     "            </li>\n" +
@@ -75,5 +75,13 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "            </ul>\n" +
     "        </div>")
 
+    
+    $("#alertUserInfo").click(function () {
+        layer.open({
+            type: 2,
+            area : ['800px' , '580px'],
+            content: '/back/content/userInfo.html' //这里content是一个普通的String
+        });
+    })
 
 })

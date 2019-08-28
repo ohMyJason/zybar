@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../../user/js/jquery-3.1.1.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../../user/js/jquery.cookie.js"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>用户信息</legend>
+</fieldset>
+<form class="layui-form">
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">用户ID</h2>
+            <div class="layui-colla-content" id="userId">
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">用户名</h2>
+            <div class="layui-colla-content" id="userName">
+                <label style="margin-left: 0px" class="layui-form-label">更改用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" required placeholder="请输入新的用户名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">电话</h2>
+            <div class="layui-colla-content" id="userPhone">
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">头像</h2>
+            <div class="layui-colla-content" id="userImg">
+                <div class="layui-input-block" style="margin-top: 20px;">
+                    <button type="button" class="layui-btn" id="test1">
+                        <i class="layui-icon">&#xe67c;</i>上传头像
+                    </button>
+                    <input type="hidden" name="photoUrl" id="photoUrl">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/getUserByToken",
+                type: "post",
+                dataType: "json",
+                headers: {token: $.cookie("token")},
+                success: function (data) {
+                    $("#userId").prepend(" <p>" + data.data.userId + "</p>")
+                    $("#userName").prepend(" <p>" + data.data.username + "</p>")
+                    $("#userPhone").prepend(" <p>" + data.data.phone + "</p>")
+                    $("#userImg").prepend("<img id='photo' src=\"" + data.data.photoUrl + "\" alt=\"无头像\">\n")
+                }
+            })
+        })
+        layui.use(['element', 'layer'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+
+            //监听折叠
+            element.on('collapse(test)', function (data) {
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#reset").click(function () {
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg("重置成功，请重新上传文件");
+                })
+                $("#photo").attr("src", "../layui/images/imgInit.png");
+            })
+        })
+        layui.use('upload', function () {
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#test1' //绑定元素
+                , url: '/uploadUserImg' //上传接口
+                , accept: 'img'
+                , done: function (res) {
+                    $("#photoUrl").val(res.data);
+                    $("#photo").attr("src", res.data);
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg("上传成功", {time: 1000});
+                    });
+
+                    //上传完毕回调
+                }
+                , error: function () {
+                    //请求异常回调
+                }
+            });
+        });
+    </script>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交更改</button>
+            <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url: "/updateUserByToken",
+                type: "post",
+                data: data.field,
+                dataType: "json",
+                async:false,
+                headers: {token: $.cookie("token")},
+                success: function () {
+                    layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
+                    setTimeout(function () {
+                        layer.msg('修改成功');
+                    }, 1000);
+
+                    $.ajax({
+                        url:"/getUserByToken",
+                        type:"post",
+                        headers:{token:$.cookie("token")},
+                        dataType:"json",
+                        async:false,
+                        success:function (data) {
+                            console.log("success");
+
+                            $.cookie('username',null);
+                            $.cookie("username",data.data.username,{path:"/"});
+                        }
+                    })
+
+                    window.location.reload();
+                },
+                error: function () {
+
+                }
+            })
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

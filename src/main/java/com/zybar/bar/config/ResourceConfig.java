@@ -15,12 +15,27 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class ResourceConfig implements WebMvcConfigurer {
+    @Value("${img.path}")
+    public String imgPath;
+
+    @Value("${pdf.path}")
+    public String pdfPath;
+
+    @Value("${mp3.path}")
+    public String mp3Path;
+
+    @Value("${chatImg.path}")
+    public String chatImgPath;
+
+    @Value("${userImg.path}")
+    public String userImgPath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/file/img/**").addResourceLocations("D:/working/bar/src/main/resources/static/file/img/");
-        registry.addResourceHandler("/file/pdf/**").addResourceLocations("D:/working/bar/src/main/resources/static/file/pdf/");
-        registry.addResourceHandler("/file/mp3/**").addResourceLocations("D:/working/bar/src/main/resources/static/file/mp3/");
-        registry.addResourceHandler("/file/chatImg/**").addResourceLocations("D:/working/bar/src/main/resources/static/file/chatImg/");
-        registry.addResourceHandler("/file/userImg/**").addResourceLocations("D:/working/bar/src/main/resources/static/file/userImg/");
+        registry.addResourceHandler("/file/img/**").addResourceLocations("file:"+imgPath);
+        registry.addResourceHandler("/file/pdf/**").addResourceLocations("file:"+pdfPath);
+        registry.addResourceHandler("/file/mp3/**").addResourceLocations("file:"+mp3Path);
+        registry.addResourceHandler("/file/chatImg/**").addResourceLocations("file:"+chatImgPath);
+        registry.addResourceHandler("/file/userImg/**").addResourceLocations("file:"+userImgPath);
     }
 }

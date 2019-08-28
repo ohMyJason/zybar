@@ -3,13 +3,17 @@ package com.zybar.bar.controller;
 
 import com.auth0.jwt.JWT;
 import com.zybar.bar.annotations.UserLoginToken;
+import com.zybar.bar.dao.UserMapper;
 import com.zybar.bar.model.User;
 import com.zybar.bar.service.TokenService;
 import com.zybar.bar.service.UserService;
+import com.zybar.bar.util.FileUtil;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -28,6 +32,11 @@ public class UserController {
     UserService userService;
     @Autowired
     TokenService tokenService;
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    FileUtil fileUtil;
+
 
     //登录 -> 检查用户名密码与数据库中的记录是否匹配
     @PostMapping("/login")
@@ -67,6 +76,60 @@ public class UserController {
         String userId = JWT.decode(token).getAudience().get(0);
         User user = userService.findUserById(Integer.parseInt(userId));
         return Result.createSuccessResult(user);
+    }
+
+
+
+    @PostMapping("/getAllUser")
+    public Result getAllUser(){
+       return  Result.createSuccessResult(userMapper.getAllUser());
+    }
+
+    @PostMapping("/getUserByToken")
+    public Result getUserById(HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader("token");
+        String userId = JWT.decode(token).getAudience().get(0);
+        User user = userMapper.selectByPrimaryKey(Integer.parseInt(userId));
+        return Result.createSuccessResult(user);
+    }
+
+
+    @PostMapping("/uploadUserImg")
+    public Result uploadUserImg(@RequestParam(name = "file")MultipartFile file){
+        try {
+            String url = fileUtil.fileUpload(file, 5);
+            return Result.createSuccessResult(url);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return Result.createByFailure();
+        }
+    }
+
+    @PostMapping("/updateUserByToken")
+    public Result updateUser(User user,HttpServletRequest httpServletRequest){
+        String token =httpServletRequest.getHeader("token");
+        String userId = JWT.decode(token).getAudience().get(0);
+        user.setUserId(Integer.parseInt(userId));
+        User baseUser = userMapper.selectByPrimaryKey(user.getUserId());
+        if (user.getUsername()==null||user.getUsername().equals("")){
+            user.setUsername(baseUser.getUsername());
+        }else if (user.getPhotoUrl()==null||user.getPhotoUrl().equals("")){
+            user.setPhotoUrl(baseUser.getPhotoUrl());
+        }else {
+
+        }
+
+        try {
+            int col = userMapper.updateByPrimaryKeySelective(user);
+            if (col>0){
+                return Result.createSuccessResult();
+            }else {
+                return Result.createByFailure();
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return Result.createByFailure("异常");
+        }
     }
 
 

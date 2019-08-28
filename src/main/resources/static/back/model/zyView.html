@@ -73,7 +73,9 @@
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
                             ,{field:'zyViewId', title:'ID', fixed: 'left',width:150, unresize: true, sort: true}
-                            ,{field:'zyViewUrl', title:'风口视角地址'}
+                            ,{field:'zyViewUrl', title:'风口视角地址',templet:function (d) {
+                                    return "<a href=\""+d.zyViewUrl+"\" target=\"_blank\">"+d.zyViewUrl+"</a>\n"
+                                }}
                             ,{field:'zyViewName', title:'风口视角文章名',sort: true}
                             ,{field:'zyViewCreatTiome', title:'更新时间'}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}

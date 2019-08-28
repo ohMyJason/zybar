@@ -75,7 +75,9 @@
                             {type: 'checkbox', fixed: 'left', width: 100}
                             , {field: 'voiceId', title: 'ID', fixed: 'left', width: 150, unresize: true, sort: true}
                             , {field: 'photoUrl', title: '风口之声头像'}
-                            , {field: 'mp3Url', title: '风口之声地址'}
+                            , {field: 'mp3Url', title: '风口之声地址',templet:function (d) {
+                                    return "<a href=\""+d.mp3Url+"\" target=\"_blank\">"+d.mp3Url+"</a>\n"
+                                }}
                             , {field: 'mp3Name', title: '风口之声名', sort: true}
                             , {field: 'userId', title: '用户id'}
                             , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
