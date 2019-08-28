@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Component
 public class FileUtil {
-//    图片路径
+    //    图片路径
     @Value("${img.path}")
     public String imgPath;
 
@@ -26,13 +26,18 @@ public class FileUtil {
 
     @Value("${mp3.path}")
     public String mp3Path;
+
+    @Value("${chatImg.path}")
+    public String chatImgPath;
+
+    @Value("${userImg.path}")
+    public String userImgPath;
+
     /**
      * 文件上传
      *
      * @param file
-     * @return
-     * flag 1-pdf 2-img 3-mp3
-     *
+     * @return flag 1-pdf 2-img 3-mp3 4-chatImg 5-userImg
      */
     public String fileUpload(MultipartFile file, Integer flag) {
         //判断文件是否为空
@@ -42,27 +47,35 @@ public class FileUtil {
 
         String fileName = file.getOriginalFilename();
 
-        String prePath ="";
+        String prePath = "";
 
 
-        switch(flag){
+        switch (flag) {
             case 1:
 //                pdf
-                prePath=this.pdfPath;
+                prePath = this.pdfPath;
                 break;
             case 2:
 //                img
-                prePath=this.imgPath;
+                prePath = this.imgPath;
                 break;
             case 3:
 //                mp3
-                prePath=this.mp3Path;
+                prePath = this.mp3Path;
+                break;
+            case 4:
+//                chatImg
+                prePath = this.chatImgPath;
+                break;
+            case 5:
+//                uerImg
+                prePath = this.userImgPath;
                 break;
         }
         //加个时间戳，尽量避免文件名称重复
-
         String newFileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
-        String path = prePath+newFileName;
+        //用来当做返回的url，必须和resourceConfig中的配置一致
+        String path = prePath + newFileName;
         File dest = new File(path);
 
         //判断文件是否已经存在
@@ -82,13 +95,19 @@ public class FileUtil {
             return "-3";
         }
 
-        if (flag==1){
+        if (flag == 1) {
 
-            return "/file/pdf/"+newFileName;
-        }else if (flag==2){
-            return "/file/img/"+newFileName;
+            return "/file/pdf/" + newFileName;
+        } else if (flag == 2) {
+            return "/file/img/" + newFileName;
+        } else if (flag==3){
+            return "/file/mp3/" + newFileName;
+        }else if (flag==4){
+            return "/file/chatImg/" +newFileName;
+        }else if (flag==5){
+            return "/file/userImg/"+newFileName;
         }else{
-            return "/file/mp3/"+newFileName;
+            throw new RuntimeException("上传flag出现异常");
         }
 
     }
@@ -110,7 +129,7 @@ public class FileUtil {
         response.setHeader("Content-Disposition", "attachment;fileName=" + filePathName);
 
 //        jdk7新写法，由于实现了autucloseable接口，定义在try中的流会自动关闭
-        try(OutputStream os = response.getOutputStream()) {
+        try (OutputStream os = response.getOutputStream()) {
             InputStream inStream = new FileInputStream(filePathName);
 //            OutputStream os = response.getOutputStream();
 
@@ -133,30 +152,32 @@ public class FileUtil {
 
     /**
      * 获取当前时间
+     *
      * @return
      */
-    public String getCurrTime(){
+    public String getCurrTime() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 
 
     /**
      * 删除文件
+     *
      * @param fileName
      * @return
      */
-    public String deleteFile(String fileName){
-        if (fileName==null){
+    public String deleteFile(String fileName) {
+        if (fileName == null) {
             return "-3";
         }
 
         File file = new File(fileName);
-        if (!file.exists()){
+        if (!file.exists()) {
             return "-2";
         }
-        if (file.delete()){
+        if (file.delete()) {
             return "0";
-        }else {
+        } else {
             return "-1";
         }
 

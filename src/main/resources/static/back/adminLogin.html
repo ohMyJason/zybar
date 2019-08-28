@@ -49,9 +49,13 @@
             // alert(data);
             function fun(res){
                 if (res.code==0) {
-                    $.cookie("token",res.data[1]);
-                    $.cookie("username",res.data[0].username);
-                    window.location.href = "/back/model/backIndex.html";
+                    if (res.data[0].role==2){
+                        $.cookie("token",res.data[1]);
+                        $.cookie("username",res.data[0].username);
+                        window.location.href = "/back/model/backIndex.html";
+                    }else {
+                        layer.alert("您不是管理员，请登录管理员账号。")
+                    }
                 }else {
                     layer.msg(res.data);
                 }

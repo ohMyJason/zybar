@@ -22,7 +22,7 @@ public class ChatController {
 
     @PostMapping("/uploadChatImg")
     public Result uploadChatImg(@RequestParam(name = "file")MultipartFile file){
-        String url = fileUtil.fileUpload(file, 2);
+        String url = fileUtil.fileUpload(file, 4);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("src",url);
         return Result.createSuccessResult(jsonObject);
