@@ -23,7 +23,7 @@
             </div>
             <div class="form1">
                 <p class="p-input pos">
-                    <input type="text" class="form-control" id="userId" placeholder="手机号/账号" required="" />
+                    <input type="text" class="form-control" id="userId" placeholder="账号" required="" />
                 </p>
                 <p class="p-input pos">
                     <input type="password" class="form-control" id="password" placeholder="请输入密码"  required="" />
@@ -213,12 +213,16 @@
 
               },
               success:function (data) {
-                  $.cookie("token",data.data[1],{ expires:1,path:'/'});
-                  $.cookie("username",data.data[0].username,{ expires:1,path:'/'});
-                  window.location.href="/user/page.html";
+                  if (data.code==0){
+
+                      $.cookie("token",data.data[1],{ expires:1,path:'/'});
+                      $.cookie("username",data.data[0].username,{ expires:1,path:'/'});
+                      window.location.href="/user/page.html";
+                  }else {
+                      layer.msg("账号或密码错误");
+                  }
               },
-              error:function () {
-                  alert("error");
+              error:function (){
               }
           })
 

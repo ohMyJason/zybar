@@ -59,7 +59,7 @@
                     $("#userId").prepend(" <p>" + data.data.userId + "</p>")
                     $("#userName").prepend(" <p>" + data.data.username + "</p>")
                     $("#userPhone").prepend(" <p>" + data.data.phone + "</p>")
-                    $("#userImg").prepend("<img id='photo' src=\"" + data.data.photoUrl + "\" alt=\"无头像\">\n")
+                    $("#userImg").prepend("<img style='width: 80%' id='photo' src=\"" + data.data.photoUrl + "\" alt=\"无头像\">\n")
                 }
             })
         })
@@ -110,7 +110,7 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交更改</button>
-            <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+            <!--<button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>-->
         </div>
     </div>
 </form>

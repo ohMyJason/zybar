@@ -53,6 +53,7 @@ function ajaxPOST(url, data, func){
         dataType: 'json',
         // contentType: "application/json; charset=utf-8",
         data: data,
+        headers:{token:$.cookie("token")},
         success: function (data) {
             if(data.code == 0){
                 //执行传入的函数

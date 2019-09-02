@@ -25,6 +25,7 @@ function setMessage(event) {
     var role=event.data.split("&*&")[0];
     var message=event.data.split("&*&")[1];
     var username = event.data.split("&*&")[2];
+    var photoUrl = event.data.split("&*&")[3];
     if (role==1){
         $("#order-content").append("<div class=\"chat-item\" id=\"hallUsers\" style=\"display: block;\">\n" +
             "                    <div class=\"chat-left\"><img src=\"http://image.find37.com/150950665859f93e62b5b32.png\" +=\"\" -live=\"\">\n" +
@@ -40,11 +41,11 @@ function setMessage(event) {
         scrollDown("order-content");
     }else if (role==2){
         $("#teacherOnline").append("<div class=\"expert-chat-item\" style=\"display: block\" >\n" +
-            "                    <div class=\"expert-chat-left\"><img src=\"http://image.find37.com/15507171295c6e10c9899cf.png\" +=\"\"\n" +
+            "                    <div class=\"expert-chat-left\"><img src=\""+photoUrl+"\" +=\"\"\n" +
             "                                                       -live=\"\"></div>\n" +
             "                    <div class=\"expert-chat-right\"><p class=\"expert-time\"><span style=\"color: #666666\">"+username+"</span>&nbsp;&nbsp;"+new Date().toLocaleTimeString()+"\n" +
             "                    </p>\n" +
-            "                        <div class=\"expert-chat-message\">"+message+"</div>\n" +
+            "                        <div class=\"expert-chat-message\"><b>"+message+"</b></div>\n" +
             "                    </div>\n" +
             "                </div>")
     } else {

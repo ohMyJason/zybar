@@ -6,18 +6,18 @@ $("#window-header").append("<div class=\"layui-logo\">风口交易吧后台</div
     "        <!-- 头部区域（可配合layui已有的水平导航） -->\n" +
     "        <ul class=\"layui-nav layui-layout-left\">\n" +
     "            <li class=\"layui-nav-item\"><a href=\"\"></a></li>\n" +
-    "            <li class=\"layui-nav-item\"><a href=\"\">用户</a></li>\n" +
+    // "            <li class=\"layui-nav-item\"><a href=\"\">用户</a></li>\n" +
     "            <li class=\"layui-nav-item\">\n" +
     "                <a href=\"javascript:;\">其它系统</a>\n" +
     "                <dl class=\"layui-nav-child\">\n" +
-    "                    <dd><a href=\"/user/adminLogin.html\">前台</a></dd>\n" +
+    "                    <dd><a href=\"/user/page.html\">前台</a></dd>\n" +
     "                </dl>\n" +
     "            </li>\n" +
     "        </ul>\n" +
     "        <ul class=\"layui-nav layui-layout-right\">\n" +
     "            <li class=\"layui-nav-item\">\n" +
     "                <a href=\"javascript:;\">\n" +
-    "                    <img src=\"http://t.cn/RCzsdCq\" class=\"layui-nav-img\">\n" +
+    "                    <img src=\""+$.cookie("photoUrl")+"\" class=\"layui-nav-img\">\n" +
     "                    "+ $.cookie("username")+"\n" +
     "                </a>\n" +
     "                <dl class=\"layui-nav-child\">\n" +
@@ -62,6 +62,9 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                    <a href=\"javascript:;\">观点在线</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
     "                        <dd><a href=\"/back/model/viewOnline.html\">我要直播</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/hjStrategy.html\">黑金战队策略</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/jjStrategy.html\">狙击战队策略</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/fyStrategy.html\">风云战队策略</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
     "                <li class=\"layui-nav-item\" id=\"userAdmin\">\n" +

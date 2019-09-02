@@ -85,12 +85,18 @@ public class UserController {
        return  Result.createSuccessResult(userMapper.getAllUser());
     }
 
+
     @PostMapping("/getUserByToken")
     public Result getUserById(HttpServletRequest httpServletRequest){
         String token = httpServletRequest.getHeader("token");
         String userId = JWT.decode(token).getAudience().get(0);
         User user = userMapper.selectByPrimaryKey(Integer.parseInt(userId));
         return Result.createSuccessResult(user);
+    }
+
+    @PostMapping("/getUserById")
+    public Result getUserById(int userId){
+        return Result.createSuccessResult(userMapper.selectByPrimaryKey(userId));
     }
 
 
@@ -111,12 +117,11 @@ public class UserController {
         String userId = JWT.decode(token).getAudience().get(0);
         user.setUserId(Integer.parseInt(userId));
         User baseUser = userMapper.selectByPrimaryKey(user.getUserId());
+
         if (user.getUsername()==null||user.getUsername().equals("")){
             user.setUsername(baseUser.getUsername());
         }else if (user.getPhotoUrl()==null||user.getPhotoUrl().equals("")){
             user.setPhotoUrl(baseUser.getPhotoUrl());
-        }else {
-
         }
 
         try {

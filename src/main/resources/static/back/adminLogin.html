@@ -52,7 +52,8 @@
                     if (res.data[0].role==2){
                         $.cookie("token",res.data[1]);
                         $.cookie("username",res.data[0].username);
-                        window.location.href = "/back/model/backIndex.html";
+                        $.cookie("photoUrl",res.data[0].photoUrl);
+                        window.location.href = "/back/model/paper.html";
                     }else {
                         layer.alert("您不是管理员，请登录管理员账号。")
                     }

@@ -5,6 +5,7 @@ import com.zybar.bar.dao.StrategyMapper;
 import com.zybar.bar.model.Strategy;
 import com.zybar.bar.service.TokenService;
 import com.zybar.bar.util.FileUtil;
+import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,14 +63,14 @@ public class StrategyController {
     }
 
     @PostMapping("/getAllStrategy")
-    public Result getAllStrategy(){
+    public Result getAllStrategy(int page,int limit,Integer userId,Integer selectName){
         try {
-            List<Strategy> allStrategy = strategyMapper.getAllStrategy();
-            if (allStrategy.size()>0){
-                return Result.createSuccessResult(allStrategy.size(),allStrategy);
-            }else {
-                return Result.createSuccessResult(0,null);
-            }
+            page = PageCheck.checkPage(page);
+            limit = PageCheck.checkLimit(limit);
+            int start = PageCheck.calculateStart(page, limit);
+            List<Strategy> allStrategy = strategyMapper.getAllStrategy(limit,start,userId,selectName);
+            int count = strategyMapper.getCount(selectName,userId);
+            return Result.createSuccessResult(count,allStrategy);
         }catch (Exception e){
             System.out.println(e.getMessage());
             return Result.createByFailure("获取数据错误，请重试");

@@ -78,7 +78,7 @@
                                         layer.alert("直播间连接出现错误,请刷新页面重新连接");
                                     })
                                 }else {
-                                    var message = "2&*&" + content + "&*&" + $.cookie("username")
+                                    var message = "2&*&" + content + "&*&" + $.cookie("username")+"&*&"+$.cookie("photoUrl");
                                     websocket.send(message);
 
                                     layer.msg('发送成功');

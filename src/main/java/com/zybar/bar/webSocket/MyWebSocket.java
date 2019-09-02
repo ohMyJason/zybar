@@ -1,7 +1,6 @@
 package com.zybar.bar.webSocket;
 
 import org.springframework.stereotype.Component;
-
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;

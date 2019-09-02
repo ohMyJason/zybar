@@ -16,8 +16,8 @@
     <script src="layer/layer.js"></script>
     <script src="skPlayer-3.0/dist/skPlayer.min.js"></script>
     <style>
-        body{
-            zoom:75%;
+        body {
+            zoom: 80%;
         }
     </style>
 </head>
@@ -31,11 +31,9 @@
                 策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，也不会降低金融产品的固有风险，不作为买卖依据，建议投资者自主决定交易，自负风险。市场有风险，入市需谨慎！</p>
         </div>
         <div id="user">
-            <div id="user-information">
-
+            <div id="user-information" style="height: 100%">
             </div>
             <div id="lq-btn">
-
                 <button id="login" class="layui-btn layui-btn-primary"><a href="/user/login.html">登录</a></button>
                 <button id="quit" class="layui-btn layui-btn-primary" style="display: none"><a href="/user/login.html">退出</a>
                 </button>
@@ -52,6 +50,18 @@
                 } else {
 
                 }
+
+                $("#user").click(function () {
+                    layer.open({
+                        type: 2,
+                        title: false,
+                        closeBtn: 0,
+                        area: ['700px', '350px'],
+                        shadeClose: true,
+                        skin: 'yourclass',
+                        content: 'userInfo.html'
+                    });
+                })
             })
         </script>
     </div>
@@ -65,16 +75,29 @@
             多维量化
         </div>
         <!--            <p></p>-->
-        <div class="nav nav5 layui-btn layui-btn-fluid">
+        <div class="nav nav5 layui-btn layui-btn-fluid" id="videoOnline">
             <!--                数据一览改视频直播-->
             视频直播
         </div>
-        <div class="nav nav3 layui-btn layui-btn-fluid" style="color: white">
+        <div class="nav nav3 layui-btn layui-btn-fluid" id="viewOnline">
             观点在线
         </div>
         <div class="nav nav4 layui-btn layui-btn-fluid">
             网友互动
         </div>
+        <script>
+            $("#videoOnline").click(function () {
+                $(".expert-message").css("display", "none");
+                $(".data-view").css("display", "block");
+            })
+
+            $("#viewOnline").click(function () {
+                $(".expert-message").css("display", "block");
+                $(".data-view").css("display", "none");
+            })
+        </script>
+
+
     </div>
     <div class="content-body  layui-anim layui-anim-scale">
         <!--                论坛资讯-->
@@ -94,61 +117,63 @@
                 <div id="audio" style="overflow: hidden; display: block;">
                     <meta charset="UTF-8">
                     <title>Title</title>
-                    <style>
-                        #skPlayer .skPlayer-list {
-                            max-height: 80%;
-                        }
+                    <!--<style>-->
+                    <!--#skPlayer .skPlayer-list {-->
+                    <!--max-height: 80%;-->
+                    <!--}-->
 
-                        #skPlayer .skPlayer-picture {
-                            width: 28%;
-                        }
+                    <!--#skPlayer .skPlayer-picture {-->
+                    <!--width: 28%;-->
+                    <!--}-->
 
-                        #skPlayer .skPlayer-control {
-                            width: 70%;
-                            padding: 10px 0px 15px;
-                        }
+                    <!--#skPlayer .skPlayer-control {-->
+                    <!--width: 70%;-->
+                    <!--padding: 10px 0px 15px;-->
+                    <!--}-->
 
-                        #skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {
-                            width: 86%;
-                        }
-                    </style>
+                    <!--#skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {-->
+                    <!--width: 86%;-->
+                    <!--}-->
+                    <!--</style>-->
 
 
+                    <!--<div id="skPlayer" style="height:100%;width: 100%" class="skPlayer-list-on">-->
+                    <!--</div>-->
                     <div id="skPlayer" style="height:100%;width: 100%" class="skPlayer-list-on">
                     </div>
 
 
                 </div>
                 <script>
+
+
                     $.ajax({
-                        url:"/getZyVoice",
-                        type:"post",
-                        data:{page:1,limit:1000,flag:1},
-                        dataType:"",
-                        success:fun,
-                        error:function () {
+                        url: "/getZyVoice",
+                        type: "post",
+                        data: {page: 1, limit: 1000, flag: 1},
+                        dataType: "",
+                        success: function (data) {
+                            voices = data.data;
+                            var player = new skPlayer({
+                                autoplay: false,
+                                //可选项,自动播放,默认为false,true/false
+                                listshow: true,
+                                //可选项,列表显示,默认为true,true/false
+                                mode: 'listloop',
+                                //可选项,循环模式,默认为'listloop'
+                                //'listloop',列表循环
+                                //'singleloop',单曲循环
+                                music: {
+                                    //必需项,音乐配置
+                                    type: 'file',
+                                    //必需项,自配置文件方式指定填'file'
+                                    source: data.data
+                                }
+                            })
+
 
                         }
                     })
-                    function fun(data) {
-                        voices=data.data;
-                        var player = new skPlayer({
-                            autoplay: false,
-                            //可选项,自动播放,默认为false,true/false
-                            listshow: true,
-                            //可选项,列表显示,默认为true,true/false
-                            mode: 'listloop',
-                            //可选项,循环模式,默认为'listloop'
-                            //'listloop',列表循环
-                            //'singleloop',单曲循环
-                            music: {
-                                //必需项,音乐配置
-                                type: 'file',
-                                //必需项,自配置文件方式指定填'file'
-                                source: data.data
-                            }
-                        });
-                    }
 
 
                 </script>
@@ -291,7 +316,7 @@
                                 },
                                 success: function (data) {
                                     for (var i = 0; i < data.data.length; i++) {
-                                        $("#tb-contain-" + j).append("  <tr><td>" + data.data[i].time.substr(5, 16) + "</td><td>" + data.data[i].variety + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].direction + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].point + "</td></tr>");
+                                        $("#tb-contain-" + j).append("  <tr><td>" + data.data[i].time.substr(5, 11) + "</td><td>" + data.data[i].variety + "&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].direction + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].point + "</td></tr>");
                                     }
                                 },
                             })
@@ -310,9 +335,9 @@
                                     $("#Layout-plan").append("<div data-status=\"1\" data-id=\"140\" data-total=\"150\">\n" +
                                         "                        <img\n" +
                                         "                            style=\"width: 100%;height: 100%\" src=\"img/zhuan.jpg\">\n" +
-                                        "                        <p style=\"font-size: 12px\">"+data.data[i].name+"</p>\n" +
-                                        "                        <p>上传时间:"+data.data[i].updateTime+"</p></div>\n" +
-                                        "                    <div style=\"display: none;\" id=\"planContent\">                 <div style=\"height: 1050px;overflow: auto\">"+data.data[i].content+"</div>\n</div>")
+                                        "                        <p style=\"font-size: 12px\">" + data.data[i].name + "</p>\n" +
+                                        "                        <p>上传时间:" + data.data[i].updateTime + "</p></div>\n" +
+                                        "                    <div style=\"display: none;\" id=\"planContent\">                 <div style=\"height: 1050px;overflow: auto\">" + data.data[i].content + "</div>\n</div>")
                                 }
                             },
                         })
@@ -325,7 +350,7 @@
                                 title: false,
                                 closeBtn: 0,
                                 shadeClose: true,
-                                area: ['900', '1050px'],
+                                area: ['900', '600px'],
                                 skin: 'yourclass',
                                 content: $(this).next().html()
                             });
@@ -341,7 +366,7 @@
                             headers: {
                                 "token": $.cookie("token")
                             },
-                            data:{page:1,limit:1000},
+                            data: {page: 1, limit: 1000},
                             success: function (data) {
                                 for (var i = 0; i < data.data.length; i++) {
                                     $("#datum").append("<div style='    float: left;\n" +
@@ -352,9 +377,9 @@
                                         "    margin-bottom: 20%;' data-status=\"1\" data-id=\"140\" data-total=\"150\">\n" +
                                         "                        <img\n" +
                                         "                            style=\"width: 100%;height: 100%\" src=\"img/zhuan.jpg\">\n" +
-                                        "                        <p style=\"font-size: 12px\">"+data.data[i].name+"</p>\n" +
-                                        "                        <p>上传时间:"+data.data[i].updateTime+"</p></div>\n" +
-                                        "                    <div style=\"display: none;\" id=\"planContent\">                 <div style=\"height: 1050px;overflow: auto\">"+data.data[i].content+"</div>\n</div>")
+                                        "                        <p style=\"font-size: 12px\">" + data.data[i].name + "</p>\n" +
+                                        "                        <p>上传时间:" + data.data[i].updateTime + "</p></div>\n" +
+                                        "                    <div style=\"display: none;\" id=\"planContent\">                 <div style=\"height: 1050px;overflow: auto\">" + data.data[i].content + "</div>\n</div>")
                                 }
                             },
                         })
@@ -367,7 +392,7 @@
                                 title: false,
                                 closeBtn: 0,
                                 shadeClose: true,
-                                area: ['900', '1050px'],
+                                area: ['900', '600px'],
                                 skin: 'yourclass',
                                 content: $(this).next().html()
                             });
@@ -379,15 +404,15 @@
                             url: "/getAllPopularRanking",
                             type: "post",
                             dataType: "json",
-                            data:{page:1,limit:1000},
+                            data: {page: 1, limit: 1000},
                             async: false,//同步请求数据,这样就可以写在for循环里了
                             headers: {
                                 "token": $.cookie("token")
                             },
-                            data:{page:1,limit:1000},
+                            data: {page: 1, limit: 1000},
                             success: function (data) {
                                 for (var i = 0; i < 2; i++) {
-                                    $("#popularRank").append("<div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">"+(i+1)+"</span><span style=\"margin-left: 4%;color: #666666\">"+data.data[i].popularRankingName+"</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>"+data.data[i].popularRankingNum+"人</span></div></div>\n")
+                                    $("#popularRank").append("<div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].popularRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].popularRankingNum + "人</span></div></div>\n")
                                 }
                             },
                         })
@@ -396,17 +421,75 @@
                             url: "/getAllWinRete",
                             type: "post",
                             dataType: "json",
-                            data:{page:1,limit:1000},
+                            data: {page: 1, limit: 1000},
                             async: false,//同步请求数据,这样就可以写在for循环里了
                             headers: {
                                 "token": $.cookie("token")
                             },
-                            data:{page:1,limit:1000},
+                            data: {page: 1, limit: 1000},
                             success: function (data) {
                                 for (var i = 0; i < 3; i++) {
-                                    $("#winRank").append(" <div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">"+(i+1)+"</span><span style=\"margin-left: 4%;color: #666666\">"+data.data[i].winningRateRankingName+"</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>"+data.data[i].winningRateRankingRate+"%</span></div></div>\n")
+                                    $("#winRank").append(" <div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].winningRateRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].winningRateRankingRate + "%</span></div></div>\n")
                                 }
                             },
+                        })
+
+                        $.ajax({
+                            url: "/getAllStrategy",
+                            type: "post",
+                            dataType: "json",
+                            data: {page:1,limit:10000},
+                            headers: {token:$.cookie("token")},
+                            async: false,//同步请求数据,这样就可以写在for循环里了
+                            success: function (data) {
+                                for (var i = 0; i < data.data.length ; i++) {
+                                    var photoUrl;
+                                    $.ajax({
+                                        url:"/getUserById",
+                                        data:{userId:data.data[i].userId},
+                                        type:"post",
+                                        async: false,//同步请求数据,这样就可以写在for循环里了
+                                        success:function (res) {
+                                            photoUrl=res.data.photoUrl;
+                                        }
+                                    })
+
+                                    if (data.data[i].operating=="卖出平仓"){
+                                        var model = "<div class=\"exert-strategy-div-l\" style=\"border: none\">\n" +
+                                            "                        <div class=\"expert-strategy-div-left\"><img\n" +
+                                            "                                src=\""+photoUrl+"\"></div>\n" +
+                                            "                        <div class=\"expert-strategy-div-center\"><p>"+data.data[i].stockName+"</p>\n" +
+                                            "                            <p>"+data.data[i].updateTime+"</p>\n" +
+                                            "                            <p><span>点位：</span><span style=\"font-size: 16px;color: red\">"+data.data[i].point+"</span>&nbsp;附近</p>\n" +
+                                            "                            <p><span>策略来源：</span><a target=\"_blank\"\n" +
+                                            "                                                    href=\"http://journal.qzy77.com/15670682645d679068bcc04.docx\">"+data.data[i].source+"</a>\n" +
+                                            "                            </p></div>\n" +
+                                            "                        <div class=\"expert-strategy-div-right\" style=\"background-color: green;\">"+data.data[i].operating+"</div>\n" +
+                                            "                    </div>";
+                                    }else {
+                                        var model = "<div class=\"exert-strategy-div-l\" style=\"border: none\">\n" +
+                                            "                        <div class=\"expert-strategy-div-left\"><img\n" +
+                                            "                                src=\""+photoUrl+"\"></div>\n" +
+                                            "                        <div class=\"expert-strategy-div-center\"><p>"+data.data[i].stockName+"</p>\n" +
+                                            "                            <p>"+data.data[i].updateTime+"</p>\n" +
+                                            "                            <p><span>点位：</span><span style=\"font-size: 16px;color: red\">"+data.data[i].point+"</span>&nbsp;附近</p>\n" +
+                                            "                            <p><span>策略来源：</span><a target=\"_blank\"\n" +
+                                            "                                                    href=\"http://journal.qzy77.com/15670682645d679068bcc04.docx\">"+data.data[i].source+"</a>\n" +
+                                            "                            </p></div>\n" +
+                                            "                        <div class=\"expert-strategy-div-right\" style=\"background-color: red;\">"+data.data[i].operating+"</div>\n" +
+                                            "                    </div>";
+                                    }
+
+                                    if (data.data[i].selectName==1){
+                                        $("#expert-strategy-1-1").append(model);
+                                    }else if (data.data[i].selectName==2) {
+                                        $("#expert-strategy-2-2").append(model);
+                                    }else if (data.data[i].selectName==3){
+                                        $("#expert-strategy-3-3").append(model);
+
+                                    }
+                                }
+                            }
                         })
 
                     })
@@ -432,11 +515,11 @@
                 <div id="Layout-plan">
                     <!--布局计划模版-->
                     <!--<div data-status="1" data-id="140" data-total="150">-->
-                        <!--<img-->
-                            <!--style="width: 100%;height: 100%" src="img/zhuan.jpg">-->
-                        <!--<p style="font-size: 12px">一波行云流水的大行情</p>-->
-                        <!--<p>上传者:隋治铭</p>-->
-                        <!--<p>上传时间:2019-03-05 18:25:45</p></div>-->
+                    <!--<img-->
+                    <!--style="width: 100%;height: 100%" src="img/zhuan.jpg">-->
+                    <!--<p style="font-size: 12px">一波行云流水的大行情</p>-->
+                    <!--<p>上传者:隋治铭</p>-->
+                    <!--<p>上传时间:2019-03-05 18:25:45</p></div>-->
                     <!--<div style="display: none;" id="planContent"> </div>-->
 
 
@@ -647,8 +730,8 @@
             </div>
             <div class="market data-body">
                 <!--                    市场数据-->
-                <iframe frameborder="0" width="105%" height="273" scrolling="yes"
-                src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>
+                <iframe frameborder="0" width="105%" height="100%" scrolling="yes"
+                        src="https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white"></iframe>
             </div>
             <div class="odds">
                 <div class="data-body-nav">
@@ -667,35 +750,103 @@
                 </div>
                 <div class="contact-us">
                     <div class="contact-us-content">
-                        <p style="bottom: 8.5%">客服热线:0592-6809325</p>
-                        <p style="bottom: 4.7%;">客服微信:k688918</p>
+                        <p style="bottom: 8.5%">客服qq:911023920</p>
                         <!--<p style="bottom: 1%;font-size: 6.4px;">意见邮箱:kefubu@jin808.com</p>-->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="expert-message">
+        <div class="expert-message" style="display: block">
             <!--<div id="xf" style="left: 74.6%;"><img width="75px" src="img/jrgd.png"></div>-->
             <div id="live-nav">
-                <button class="btn-selected layui-btn layui-btn-radius" data-room="0" style="margin-left: 6%">直播大厅
+                <button class="btn-selected layui-btn layui-btn-radius" id="zbdt" data-room="0" style="margin-left: 6%">直播大厅
                 </button>
-                <button class="layui-btn layui-btn-radius"></button>
-                <button class="layui-btn layui-btn-radius"></button>
-                <button class="layui-btn layui-btn-radius"></button>
+                <button class="layui-btn layui-btn-radius" id="zd-1">黑金战队</button>
+                <button class="layui-btn layui-btn-radius" id="zd-2">狙击战队</button>
+                <button class="layui-btn layui-btn-radius" id="zd-3">风云战队</button>
                 <!--                    <button class="layui-btn layui-btn-radius" data-room="7">测试专栏</button>-->
             </div>
-            <div class="expert-strategy-overflow">
-                <div class="expert-strategy">
-                    <p>策略仅供参考，不作为买卖依据</p>
-                    <!--                    <div class="expert-strategy-div" style="border-left: none"></div>-->
-                    <!--<div class="huifu"><img src="img/xiala.png"></div>-->
-                    <!--<div class="yincang"><img src="img/shangla.png"></div>-->
-                    <!--<div class="xiala"><img src="img/xiala.png"></div>-->
-                    <!--<div class="shangla"><img src="img/shangla.png"></div>-->
-                    <!--                    <div class="expert-strategy-div"></div>-->
+            <!--<div id="xf" style="left: 74.6%; filter: opacity(0.7); display: block;"><img width="75px"-->
+                                                                                         <!--src="img/jrgd.png"></div>-->
+
+            <script>
+                $(function () {
+                    $("#xf").click(function () {
+                        // if ($(".expert-strategy").css("display")=="none"){
+                        //     $(".expert-strategy").css("display","block");
+                        // }else {
+                        //     $(".expert-strategy").css("display","none");
+                        //
+                        // }
+                    })
+                    $("#zd-1").click(function () {
+                        if ($("#expert-strategy-1").css("display") == "none") {
+                            $("#expert-strategy-1").css("display", "block");
+                            $("#expert-strategy-2").css("display", "none");
+                            $("#expert-strategy-3").css("display", "none");
+                        } else {
+                            $("#expert-strategy-1").css("display", "none");
+                        }
+                    })
+                    $("#zd-2").click(function () {
+                        if ($("#expert-strategy-2").css("display") == "none") {
+                            $("#expert-strategy-1").css("display", "none");
+                            $("#expert-strategy-2").css("display", "block");
+                            $("#expert-strategy-3").css("display", "none");
+                        } else {
+                            $("#expert-strategy-2").css("display", "none");
+                        }
+                    })
+                    $("#zd-3").click(function () {
+                        if ($("#expert-strategy-3").css("display") == "none") {
+                            $("#expert-strategy-1").css("display", "none");
+                            $("#expert-strategy-2").css("display", "none");
+                            $("#expert-strategy-3").css("display", "block");
+                        } else {
+                            $("#expert-strategy-3").css("display", "none");
+                        }
+                    })
+                    $("#zbdt").click(function () {
+                        $("#expert-strategy-1").css("display", "none");
+                        $("#expert-strategy-2").css("display", "none");
+                        $("#expert-strategy-3").css("display", "none");
+                    })
+                })
+            </script>
+            <div class="expert-strategy" id="expert-strategy-1" style="overflow: scroll;display: none">
+                <p>策略仅供参考，不作为买卖依据</p>
+
+                <div id="expert-strategy-1-1" class="expert-strategy-div" style="height: 17%">
+                    <!--模版-->
+                    <!--<div class="exert-strategy-div-l" style="border: none">-->
+                        <!--<div class="expert-strategy-div-left"><img-->
+                                <!--src="http://image.find37.com/15635197975d316b35869db.png-live"></div>-->
+                        <!--<div class="expert-strategy-div-center"><p>PTA<span>2001</span></p>-->
+                            <!--<p>2019-08-30 22:36:04</p>-->
+                            <!--<p><span>点位：</span><span style="font-size: 16px;color: red">5080</span>&nbsp;附近</p>-->
+                            <!--<p><span>策略来源：</span><a target="_blank"-->
+                                                    <!--href="http://journal.qzy77.com/15670682645d679068bcc04.docx">山金期货</a>-->
+                            <!--</p></div>-->
+                        <!--<div class="expert-strategy-div-right" style="background-color: rgb(64, 211, 64);">卖出平仓</div>-->
+                    <!--</div>-->
 
                 </div>
             </div>
+            <div class="expert-strategy" id="expert-strategy-2" style="overflow: scroll;display: none">
+                <p>策略仅供参考，不作为买卖依据</p>
+
+                <div class="expert-strategy-div" id="expert-strategy-2-2" style="height: 17%">
+
+                </div>
+            </div>
+            <div class="expert-strategy" id="expert-strategy-3" style="overflow: scroll;display: none">
+                <p>策略仅供参考，不作为买卖依据</p>
+
+                <div class="expert-strategy-div" id="expert-strategy-3-3" style="height: 17%">
+                </div>
+            </div>
+
+
             <div class="expert-content-white">
 
             </div>
@@ -718,19 +869,48 @@
 
             </div>
             <div class="clbg">
-                策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，也不会降低金融产品的固有风险，不作为买卖依据，建议投资者自主决定交易，自负风险。市场有风险，入市需谨慎！
-
+                策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，建议投资者自主决定交易，自负风险。市场有风险，入市谨慎
             </div>
         </div>
-        <div class="data-view">
+        <div class="data-view" style="display: none;">
             <!--                轮播图-->
-            <div class="news layui-carousel">
-                <div carousel-item id="bannerAppend" style="height: 100%;"></div>
+            <div class="news layui-carousel" lay-anim="" lay-indicator="inside" lay-arrow="always"
+                 style="width: 100%; height: 30%;">
+                <div class="layui-carousel" id="test1">
+                    <div carousel-item>
+                        <div class=""><a target="_blank" href="http://mudu.tv/watch/3289725"><img width="100%"
+                                                                                                  height="100%"
+                                                                                                  src="http://image.find37.com/15540966745ca1a222e480f.jpg"></a>
+                        </div>
+                        <div class="layui-this"><a target="_blank" href="http://mudu.tv/watch/3289725"><img width="100%"
+                                                                                                            height="100%"
+                                                                                                            src="http://image.find37.com/15570498765cceb214d5874.jpg"></a>
+                        </div>
+                        <div class=""><a target="_blank" href="http://mudu.tv/watch/3289725"><img width="100%"
+                                                                                                  height="100%"
+                                                                                                  src="http://image.find37.com/15570199515cce3d2f9e725.jpg"></a>
+                        </div>
+                    </div>
+                </div>
 
+
+                <script>
+                    //加载轮播
+                    layui.use('carousel', function () {
+                        var carousel = layui.carousel;
+                        //建造实例
+                        carousel.render({
+                            elem: '#test1'
+                            , width: '100%' //设置容器宽度
+                            , arrow: 'always' //始终显示箭头
+                            //,anim: 'updown' //切换动画方式
+                        });
+                    });
+                </script>
             </div>
             <div id="div-iframe">
-                <!--<iframe name="iframename" id="ifram1" scrolling="no" class="iframe" width="200%" height="200%"-->
-                <!--frameborder="0" src=""></iframe>-->
+                <iframe name="iframename" id="ifram1" scrolling="no" class="iframe" width="200%" height="200%"
+                        frameborder="0" src="http://mudu.tv/watch/3289725"></iframe>
             </div>
         </div>
         <div class="order-message">
