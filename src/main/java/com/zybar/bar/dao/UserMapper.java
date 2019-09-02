@@ -1,6 +1,7 @@
 package com.zybar.bar.dao;
 
 import com.zybar.bar.model.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,5 +56,7 @@ public interface UserMapper {
 
     User selectByUserName(User user);
 
-    List<User> getAllUser();
+    List<User> getAllUser(@Param("start") int start,@Param("limit") int limit,@Param("username") String username);
+
+    int getCount(@Param("username") String username);
 }

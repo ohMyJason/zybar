@@ -51,7 +51,7 @@
 
                 }
 
-                $("#user").click(function () {
+                $("#user-information").click(function () {
                     layer.open({
                         type: 2,
                         title: false,
@@ -316,7 +316,7 @@
                                 },
                                 success: function (data) {
                                     for (var i = 0; i < data.data.length; i++) {
-                                        $("#tb-contain-" + j).append("  <tr><td>" + data.data[i].time.substr(5, 11) + "</td><td>" + data.data[i].variety + "&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].direction + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].point + "</td></tr>");
+                                        $("#tb-contain-" + j).append("  <tr><td>" + data.data[i].time.substr(5, 11) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].variety + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].direction + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].point + "</td></tr>");
                                     }
                                 },
                             })
@@ -350,7 +350,7 @@
                                 title: false,
                                 closeBtn: 0,
                                 shadeClose: true,
-                                area: ['900', '600px'],
+                                area: ['400px', '600px'],
                                 skin: 'yourclass',
                                 content: $(this).next().html()
                             });
@@ -392,9 +392,11 @@
                                 title: false,
                                 closeBtn: 0,
                                 shadeClose: true,
-                                area: ['900', '600px'],
+                                area: ['400px', '600px'],
                                 skin: 'yourclass',
                                 content: $(this).next().html()
+
+
                             });
 
                         })

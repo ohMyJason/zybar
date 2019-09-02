@@ -45,7 +45,10 @@
                 success:function (data) {
                     console.log(data.data);
                     for (var i = 0; i < data.data.length; i++) {
-                        $("#selectUser").append("<option value=\""+data.data[i].userId+"\">"+data.data[i].username+"</option>")
+                        if(data.data[i].role==2){
+
+                            $("#selectUser").append("<option value=\""+data.data[i].userId+"\">"+data.data[i].username+"</option>")
+                        }
                     }
 
                     //Demo

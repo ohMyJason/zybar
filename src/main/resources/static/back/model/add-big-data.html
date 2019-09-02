@@ -29,7 +29,7 @@
         <fieldset class="layui-elem-field">
             <legend>提交大数据云</legend>
             <div class="layui-field-box">
-                <blockquote class="layui-elem-quote">请在下方编辑大数据云</blockquote>
+                <blockquote class="layui-elem-quote">请在下方编辑大数据云,为了观看体验，多张图片请换行。</blockquote>
             </div>
         </fieldset>
 
@@ -54,8 +54,7 @@
                 var layedit = layui.layedit;
                 layedit.set({
                     uploadImage: {
-                        // todo 把文章的上传图片接口和聊天的分离吧
-                        url: '/uploadChatImg' //接口url
+                        url: '/uploadCommentImg' //接口url
                         , type: 'post' //默认post
                     }
                 });

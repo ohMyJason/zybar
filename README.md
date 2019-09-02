@@ -12,5 +12,5 @@
 
 [layui](https://www.layui.com/doc/)
 
-
+打包命令：```mvn clean package  -Dmaven.test.skip=true```
 ## 工具

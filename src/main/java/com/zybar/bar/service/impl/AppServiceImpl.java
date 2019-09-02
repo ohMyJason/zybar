@@ -60,7 +60,7 @@ public class AppServiceImpl implements AppService {
         if (apps.size()>0){
             return Result.createSuccessResult(count,apps);
         }else{
-            return Result.createByFailure("获取App失败，请联系管理员");
+            return Result.createByFailure("无app数据");
         }
     }
 

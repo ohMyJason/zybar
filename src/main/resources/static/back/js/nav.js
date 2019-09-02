@@ -70,7 +70,7 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                <li class=\"layui-nav-item\" id=\"userAdmin\">\n" +
     "                    <a href=\"javascript:;\">账号管理</a>\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
-    "                        <dd><a href=\"javascript:;\">用户管理</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/userMange.html\">用户管理</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
     "\n" +

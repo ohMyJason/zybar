@@ -29,7 +29,7 @@
         <fieldset class="layui-elem-field">
             <legend>提交布局计划</legend>
             <div class="layui-field-box">
-                <blockquote class="layui-elem-quote">请在下方编辑您的布局计划</blockquote>
+                <blockquote class="layui-elem-quote">请在下方编辑您的布局计划,为了观看体验，多张图片请换行。</blockquote>
             </div>
         </fieldset>
 
@@ -54,13 +54,14 @@
                 var layedit = layui.layedit;
                 layedit.set({
                     uploadImage: {
-                        url: '/uploadChatImg' //接口url
+                        url: '/uploadCommentImg' //接口url
                         , type: 'post' //默认post
                     }
                 });
 
                 var index = layedit.build('edit',{
-                    height: 700 //设置编辑器高度
+                    height: 700, //设置编辑器高度
+                    width: 400
                 }); //建立编辑器
 
 

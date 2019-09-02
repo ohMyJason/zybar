@@ -118,8 +118,10 @@
                         } else if(obj.event === 'edit'){
                             layer.open({
                                 type: 1,
+                                shadeClose: true,
+                                maxmin: true,
                                 content: data.content, //这里content是一个普通的String
-                                area: ['900', '1050px']
+                                area: ['400', '650px']
                             });
                         }
                     });

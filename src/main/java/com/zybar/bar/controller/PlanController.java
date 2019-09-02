@@ -1,5 +1,6 @@
 package com.zybar.bar.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zybar.bar.dao.PlanMapper;
 import com.zybar.bar.model.Plan;
 import com.zybar.bar.util.FileUtil;
@@ -7,7 +8,9 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -81,6 +84,14 @@ public class PlanController {
             System.out.println(e.getMessage());
             return Result.createByFailure();
         }
+    }
+
+    @PostMapping("/uploadCommentImg")
+    public Result uploadChatImg(@RequestParam(name = "file") MultipartFile file){
+        String url = fileUtil.fileUpload(file, 2);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("src",url);
+        return Result.createSuccessResult(jsonObject);
     }
 
 
