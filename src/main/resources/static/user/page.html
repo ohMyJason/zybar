@@ -345,13 +345,12 @@
                         $("#Layout-plan>div").click(function () {
                             // alert(this.html());
                             console.log($(this).html());
+
                             layer.open({
                                 type: 1,
-                                title: false,
-                                closeBtn: 0,
+                                offset: 't',
                                 shadeClose: true,
-                                area: ['400px', '600px'],
-                                skin: 'yourclass',
+                                area: ['400', '450px'],
                                 content: $(this).next().html()
                             });
 
@@ -389,11 +388,10 @@
                             console.log($(this).html());
                             layer.open({
                                 type: 1,
-                                title: false,
-                                closeBtn: 0,
+                                offset: 't',
                                 shadeClose: true,
-                                area: ['400px', '600px'],
-                                skin: 'yourclass',
+                                area: ['400', '650px'],
+
                                 content: $(this).next().html()
 
 
