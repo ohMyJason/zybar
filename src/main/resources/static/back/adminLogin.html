@@ -53,7 +53,7 @@
                         $.cookie("token",res.data[1]);
                         $.cookie("username",res.data[0].username);
                         $.cookie("photoUrl",res.data[0].photoUrl);
-                        window.location.href = "/back/model/paper.html";
+                        window.location.href = "/back/model/backIndex.html";
                     }else {
                         layer.alert("您不是管理员，请登录管理员账号。")
                     }

@@ -10,89 +10,71 @@
     <link rel="stylesheet" href="../layui/css/layui.css">
     <script src="../layui/layui.js"></script>
     <script src="../js/common.js"></script>
-    <script src="../js/nav.js"></script>
 </head>
 <body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header" id="window-header">
 
-    </div>
-
-    <div class="layui-side layui-bg-black" id="window-left">
-
-    </div>
-
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-
-
-        <fieldset class="layui-elem-field">
-            <legend>提交大数据云</legend>
-            <div class="layui-field-box">
-                <blockquote class="layui-elem-quote">请在下方编辑大数据云,为了观看体验，多张图片请换行。</blockquote>
-            </div>
-        </fieldset>
-
-
-        <form class="layui-form" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">文章标题</label>
-                <div class="layui-input-block">
-                    <input type="text" name="name" id="name" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </form>
-
-
-        <div >
-            <textarea id="edit" style="display: none;"></textarea>
-            <button style="margin-top: 5px;" type="button" class="layui-btn layui-btn-normal" id="submit">提交</button>
+    <!-- 内容主体区域 -->
+    <fieldset class="layui-elem-field">
+        <legend>提交大数据云</legend>
+        <div class="layui-field-box">
+            <blockquote class="layui-elem-quote">请在下方编辑大数据云,为了观看体验，多张图片请换行。</blockquote>
         </div>
-
-        <script>
-            layui.use('layedit', function () {
-                var layedit = layui.layedit;
-                layedit.set({
-                    uploadImage: {
-                        url: '/uploadCommentImg' //接口url
-                        , type: 'post' //默认post
-                    }
-                });
-
-                var index = layedit.build('edit',{
-                    height: 700 //设置编辑器高度
-                }); //建立编辑器
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">文章标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" id="name" required lay-verify="required" placeholder="请输入标题"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </form>
 
 
-                //提交文章
-                $("#submit").click(function () {
-                    var content = layedit.getContent(index);
-                    console.log(content);
-                    ajaxPOST("/insertBigData",{
-                        content:content,
-                        name:$("#name").val()
-                    },function (data) {
-                        layer.alert("上传成功");
-                        window.location.href="/back/model/bigData.html";
-                    })
+    <div>
+        <textarea id="edit" style="display: none;"></textarea>
+        <button style="margin-top: 5px;" type="button" class="layui-btn layui-btn-normal" id="submit">提交</button>
+    </div>
 
+    <script>
+        layui.use('layedit', function () {
+            var layedit = layui.layedit;
+            layedit.set({
+                uploadImage: {
+                    url: '/uploadCommentImg' //接口url
+                    , type: 'post' //默认post
+                }
+            });
+
+            var index = layedit.build('edit', {
+                height: 700 //设置编辑器高度
+            }); //建立编辑器
+
+
+            //提交文章
+            $("#submit").click(function () {
+                var content = layedit.getContent(index);
+                console.log(content);
+                ajaxPOST("/insertBigData", {
+                    content: content,
+                    name: $("#name").val()
+                }, function (data) {
+                    layer.alert("上传成功");
+                    window.location.href = "/back/model/bigData.html";
                 })
 
-            });
-        </script>
+            })
 
-    </div>
+        });
+    </script>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 风口交易吧
-    </div>
-</div>
+
+
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
-        $("#super").attr("class","layui-nav-item layui-nav-itemed")
+        $("#super").attr("class", "layui-nav-item layui-nav-itemed")
 
     });
 </script>
