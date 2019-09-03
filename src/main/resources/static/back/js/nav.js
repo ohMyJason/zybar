@@ -63,8 +63,11 @@ $("#window-left").append("<div class=\"layui-side-scroll\">\n" +
     "                    <dl class=\"layui-nav-child\">\n" +
     "                        <dd><a href=\"/back/model/viewOnline.html\">我要直播</a></dd>\n" +
     "                        <dd><a href=\"/back/model/hjStrategy.html\">黑金战队策略</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/hjOnline.html\">黑金战队直播间</a></dd>\n" +
     "                        <dd><a href=\"/back/model/jjStrategy.html\">狙击战队策略</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/jjOnline.html\">狙击战队直播间</a></dd>\n" +
     "                        <dd><a href=\"/back/model/fyStrategy.html\">风云战队策略</a></dd>\n" +
+    "                        <dd><a href=\"/back/model/fwOnline.html\">风云战队直播间</a></dd>\n" +
     "                    </dl>\n" +
     "                </li>\n" +
     "                <li class=\"layui-nav-item\" id=\"userAdmin\">\n" +

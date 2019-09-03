@@ -13,7 +13,7 @@
     <script src="../js/nav.js"></script>
     <script src="../js/backWebSocket.js"></script>
     <style>
-        #teacherChat img{
+        #fwTeacherChat img{
             width: 80%;
         }
     </style>
@@ -31,17 +31,18 @@
 
 
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>直播间</legend>
+            <legend>风云战队专属直播间</legend>
             <div style="margin-top: 20px">
                 <div style="width: 216px; margin: 0;">
                     <button type="button" id="editMessage" class="layui-btn layui-btn-fluid">发送消息</button>
-                    <input type="hidden" id="selectOnline" value="0">
-
+                    <input type="hidden" id="selectOnline" value="3">
                 </div>
             </div>
             <script>
                 $(function () {
                     $("#editMessage").click(function () {
+
+                        console.log("cauch");
                         layer.open({
                             type: 1,
                             title: "直播间",
@@ -76,6 +77,7 @@
                             //发送消息
                             $("#send").click(function () {
                                 var content = layedit.getContent(index);
+
                                 console.log(content);
                                 if (websocket.readyState != 1) {
                                     layui.use('layer', function () {
@@ -108,7 +110,7 @@
 
         <div style="padding: 20px; background-color: #F2F2F2;">
             <div class="layui-row layui-col-space15">
-                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="teacherChat">
+                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="fwTeacherChat">
                     <!--<div class="layui-card" id="chatModel">-->
                     <!--<div class="layui-card-header">用户名</div>-->
                     <!--<div class="layui-card-body">-->
@@ -117,7 +119,7 @@
                     <!--</div>-->
                     <!--</div>-->
                 </div>
-                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="userChat">
+                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="fwUserChat">
                     <!--<div class="layui-card">-->
                     <!--<div class="layui-card-header">用户名</div>-->
                     <!--<div class="layui-card-body">-->

@@ -132,24 +132,26 @@
                 success: function () {
                     layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
                     setTimeout(function () {
-                        layer.msg('修改成功');
+                        layer.msg('修改成功,请重新登录');
+                        setTimeout(function () {
+                            window.location.reload();
+                        },1000);
                     }, 1000);
 
-                    $.ajax({
-                        url:"/getUserByToken",
-                        type:"post",
-                        headers:{token:$.cookie("token")},
-                        dataType:"json",
-                        async:false,
-                        success:function (data) {
-                            console.log("success");
-
-                            $.cookie('username',null);
-                            $.cookie("username",data.data.username,{path:"/"});
-                        }
-                    })
-
-                    window.location.reload();
+                    // $.ajax({
+                    //     url:"/getUserByToken",
+                    //     type:"post",
+                    //     headers:{token:$.cookie("token")},
+                    //     dataType:"json",
+                    //     async:false,
+                    //     success:function (data) {
+                    //         console.log("success");
+                    //
+                    //         $.cookie('username',null);
+                    //         $.cookie("username",data.data.username,{path:"/"});
+                    //     }
+                    // })
+                    //
                 },
                 error: function () {
 

@@ -57,6 +57,43 @@ public class User {
      *
      * @mbggenerated Sat Aug 17 13:57:43 CST 2019
      */
+    private Integer level;
+    private Integer ifHj;
+    private Integer ifJj;
+    private Integer ifFw;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getIfHj() {
+        return ifHj;
+    }
+
+    public void setIfHj(Integer ifHj) {
+        this.ifHj = ifHj;
+    }
+
+    public Integer getIfJj() {
+        return ifJj;
+    }
+
+    public void setIfJj(Integer ifJj) {
+        this.ifJj = ifJj;
+    }
+
+    public Integer getIfFw() {
+        return ifFw;
+    }
+
+    public void setIfFw(Integer ifFw) {
+        this.ifFw = ifFw;
+    }
+
     public Integer getUserId() {
         return userId;
     }

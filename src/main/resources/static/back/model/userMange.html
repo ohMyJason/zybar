@@ -91,6 +91,28 @@
                                     }
                                 }}
                             // ,{field:'category', title:'类别'}
+                            ,{field:'level', title:'等级'}
+                            ,{field:'ifHj', title:'黑金权限',templet:function (d) {
+                                    if (d.ifHj==0){
+                                        return "否";
+                                    } else {
+                                        return "是";
+                                    }
+                                }}
+                            ,{field:'ifJj', title:'狙击权限',templet:function (d) {
+                                    if (d.ifJj==0){
+                                        return "否";
+                                    } else {
+                                        return "是";
+                                    }
+                                }}
+                            ,{field:'ifFw', title:'风云权限',templet:function (d) {
+                                    if (d.ifFw==0){
+                                        return "否";
+                                    } else {
+                                        return "是";
+                                    }
+                                }}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]]
                         ,page: true
@@ -141,8 +163,8 @@
                             layer.open({
                                 type: 2,
                                 shadeClose: true,
-                                area : ['800px' , '280px'],
-                                content: '/back/content/edit-user.html?username='+data.username+'&password='+data.password+'&userId='+data.userId+'&phone='+data.phone+'&role='+data.role //这里content是一个普通的String
+                                area : ['800px' , '480px'],
+                                content: '/back/content/edit-user.html?username='+data.username+'&password='+data.password+'&userId='+data.userId+'&phone='+data.phone+'&role='+data.role+'&level='+data.level+'&ifHj='+data.ifHj+'&ifJj='+data.ifJj+'&ifFw='+data.ifFw //这里content是一个普通的String
                             });
                         }
                     });

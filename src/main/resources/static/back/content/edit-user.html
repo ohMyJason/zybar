@@ -53,6 +53,54 @@
             </div>
         </div>
     </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">是否能进入黑金战队</label>
+            <div class="layui-input-inline">
+                <select name="ifHj" lay-filter="aihao" id="ifHj">
+                    <option value="">请选择是否能进入黑金战队</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">是否能进入狙击战队</label>
+            <div class="layui-input-inline">
+                <select name="ifJj" lay-filter="aihao" id="ifJj">
+                    <option value="">请选择是否能进入狙击战队</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">是否能进入风云战队</label>
+            <div class="layui-input-inline">
+                <select name="ifFw" lay-filter="aihao" id="ifFw">
+                    <option value="">请选择是否能进入风云战队</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">等级</label>
+            <div class="layui-input-inline">
+                <select name="level" lay-filter="aihao" id="level">
+                    <option value="">请选择等级</option>
+                    <option value="1">等级1</option>
+                    <option value="2">等级2</option>
+                    <option value="3">等级3</option>
+                    <option value="4">等级4</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <input type="hidden" id="userId" name="userId">
     <div class="layui-form-item">
         <div class="layui-input-block">
@@ -84,6 +132,10 @@
         $("#password").val(data.password);
         $("#role").val(data.role);
         $("#phone").val(data.phone);
+        $("#level").val(data.level);
+        $("#ifHj").val(data.ifHj);
+        $("#ifJj").val(data.ifJj);
+        $("#ifFw").val(data.ifFw);
     })
     layui.use('form', function () {
         var form = layui.form;

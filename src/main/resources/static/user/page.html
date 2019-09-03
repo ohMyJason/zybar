@@ -17,7 +17,7 @@
     <script src="skPlayer-3.0/dist/skPlayer.min.js"></script>
     <style>
         body {
-            zoom: 80%;
+            zoom: 95%;
         }
     </style>
 </head>
@@ -213,14 +213,17 @@
                             //     "token": $.cookie("token")
                             // },
                             success: function (data) {
-                                for (var i = 0; i < data.data.length; i++) {
+                                if (data.code==0){
 
-                                    $("#app-content").append("<div class=\"mobile-app-img\">\n" +
-                                        "                            <p>" + data.data[i].name + "</p>\n" +
-                                        "                            <div class=\"mobile-app-img-div\">\n" +
-                                        "                              <img src=\"" + data.data[i].photoUrl + "\">\n" +
-                                        "                            </div>\n" +
-                                        "                        </div>");
+                                    for (var i = 0; i < data.data.length; i++) {
+
+                                        $("#app-content").append("<div class=\"mobile-app-img\">\n" +
+                                            "                            <p>" + data.data[i].name + "</p>\n" +
+                                            "                            <div class=\"mobile-app-img-div\">\n" +
+                                            "                              <img src=\"" + data.data[i].photoUrl + "\">\n" +
+                                            "                            </div>\n" +
+                                            "                        </div>");
+                                    }
                                 }
 
                             },
@@ -411,8 +414,11 @@
                             },
                             data: {page: 1, limit: 1000},
                             success: function (data) {
-                                for (var i = 0; i < 2; i++) {
-                                    $("#popularRank").append("<div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].popularRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].popularRankingNum + "人</span></div></div>\n")
+                                if (data.code==0){
+
+                                    for (var i = 0; i < 2; i++) {
+                                        $("#popularRank").append("<div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].popularRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].popularRankingNum + "人</span></div></div>\n")
+                                    }
                                 }
                             },
                         })
@@ -428,8 +434,11 @@
                             },
                             data: {page: 1, limit: 1000},
                             success: function (data) {
-                                for (var i = 0; i < 3; i++) {
-                                    $("#winRank").append(" <div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].winningRateRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].winningRateRankingRate + "%</span></div></div>\n")
+                                if (data.code==0){
+
+                                    for (var i = 0; i < 3; i++) {
+                                        $("#winRank").append(" <div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].winningRateRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].winningRateRankingRate + "%</span></div></div>\n")
+                                    }
                                 }
                             },
                         })
@@ -438,53 +447,53 @@
                             url: "/getAllStrategy",
                             type: "post",
                             dataType: "json",
-                            data: {page:1,limit:10000},
-                            headers: {token:$.cookie("token")},
+                            data: {page: 1, limit: 10000},
+                            headers: {token: $.cookie("token")},
                             async: false,//同步请求数据,这样就可以写在for循环里了
                             success: function (data) {
-                                for (var i = 0; i < data.data.length ; i++) {
+                                for (var i = 0; i < data.data.length; i++) {
                                     var photoUrl;
                                     $.ajax({
-                                        url:"/getUserById",
-                                        data:{userId:data.data[i].userId},
-                                        type:"post",
+                                        url: "/getUserById",
+                                        data: {userId: data.data[i].userId},
+                                        type: "post",
                                         async: false,//同步请求数据,这样就可以写在for循环里了
-                                        success:function (res) {
-                                            photoUrl=res.data.photoUrl;
+                                        success: function (res) {
+                                            photoUrl = res.data.photoUrl;
                                         }
                                     })
 
-                                    if (data.data[i].operating=="卖出平仓"){
+                                    if (data.data[i].operating == "卖出平仓") {
                                         var model = "<div class=\"exert-strategy-div-l\" style=\"border: none\">\n" +
                                             "                        <div class=\"expert-strategy-div-left\"><img\n" +
-                                            "                                src=\""+photoUrl+"\"></div>\n" +
-                                            "                        <div class=\"expert-strategy-div-center\"><p>"+data.data[i].stockName+"</p>\n" +
-                                            "                            <p>"+data.data[i].updateTime+"</p>\n" +
-                                            "                            <p><span>点位：</span><span style=\"font-size: 16px;color: red\">"+data.data[i].point+"</span>&nbsp;附近</p>\n" +
+                                            "                                src=\"" + photoUrl + "\"></div>\n" +
+                                            "                        <div class=\"expert-strategy-div-center\"><p>" + data.data[i].stockName + "</p>\n" +
+                                            "                            <p>" + data.data[i].updateTime + "</p>\n" +
+                                            "                            <p><span>点位：</span><span style=\"font-size: 16px;color: red\">" + data.data[i].point + "</span>&nbsp;附近</p>\n" +
                                             "                            <p><span>策略来源：</span><a target=\"_blank\"\n" +
-                                            "                                                    href=\"http://journal.qzy77.com/15670682645d679068bcc04.docx\">"+data.data[i].source+"</a>\n" +
+                                            "                                                    href=\"http://journal.qzy77.com/15670682645d679068bcc04.docx\">" + data.data[i].source + "</a>\n" +
                                             "                            </p></div>\n" +
-                                            "                        <div class=\"expert-strategy-div-right\" style=\"background-color: green;\">"+data.data[i].operating+"</div>\n" +
+                                            "                        <div class=\"expert-strategy-div-right\" style=\"background-color: green;\">" + data.data[i].operating + "</div>\n" +
                                             "                    </div>";
-                                    }else {
+                                    } else {
                                         var model = "<div class=\"exert-strategy-div-l\" style=\"border: none\">\n" +
                                             "                        <div class=\"expert-strategy-div-left\"><img\n" +
-                                            "                                src=\""+photoUrl+"\"></div>\n" +
-                                            "                        <div class=\"expert-strategy-div-center\"><p>"+data.data[i].stockName+"</p>\n" +
-                                            "                            <p>"+data.data[i].updateTime+"</p>\n" +
-                                            "                            <p><span>点位：</span><span style=\"font-size: 16px;color: red\">"+data.data[i].point+"</span>&nbsp;附近</p>\n" +
+                                            "                                src=\"" + photoUrl + "\"></div>\n" +
+                                            "                        <div class=\"expert-strategy-div-center\"><p>" + data.data[i].stockName + "</p>\n" +
+                                            "                            <p>" + data.data[i].updateTime + "</p>\n" +
+                                            "                            <p><span>点位：</span><span style=\"font-size: 16px;color: red\">" + data.data[i].point + "</span>&nbsp;附近</p>\n" +
                                             "                            <p><span>策略来源：</span><a target=\"_blank\"\n" +
-                                            "                                                    href=\"http://journal.qzy77.com/15670682645d679068bcc04.docx\">"+data.data[i].source+"</a>\n" +
+                                            "                                                    href=\"http://journal.qzy77.com/15670682645d679068bcc04.docx\">" + data.data[i].source + "</a>\n" +
                                             "                            </p></div>\n" +
-                                            "                        <div class=\"expert-strategy-div-right\" style=\"background-color: red;\">"+data.data[i].operating+"</div>\n" +
+                                            "                        <div class=\"expert-strategy-div-right\" style=\"background-color: red;\">" + data.data[i].operating + "</div>\n" +
                                             "                    </div>";
                                     }
 
-                                    if (data.data[i].selectName==1){
+                                    if (data.data[i].selectName == 1) {
                                         $("#expert-strategy-1-1").append(model);
-                                    }else if (data.data[i].selectName==2) {
+                                    } else if (data.data[i].selectName == 2) {
                                         $("#expert-strategy-2-2").append(model);
-                                    }else if (data.data[i].selectName==3){
+                                    } else if (data.data[i].selectName == 3) {
                                         $("#expert-strategy-3-3").append(model);
 
                                     }
@@ -759,7 +768,8 @@
         <div class="expert-message" style="display: block">
             <!--<div id="xf" style="left: 74.6%;"><img width="75px" src="img/jrgd.png"></div>-->
             <div id="live-nav">
-                <button class="btn-selected layui-btn layui-btn-radius" id="zbdt" data-room="0" style="margin-left: 6%">直播大厅
+                <button class="btn-selected layui-btn layui-btn-radius" id="zbdt" data-room="0" style="margin-left: 6%">
+                    直播大厅
                 </button>
                 <button class="layui-btn layui-btn-radius" id="zd-1">黑金战队</button>
                 <button class="layui-btn layui-btn-radius" id="zd-2">狙击战队</button>
@@ -767,7 +777,7 @@
                 <!--                    <button class="layui-btn layui-btn-radius" data-room="7">测试专栏</button>-->
             </div>
             <!--<div id="xf" style="left: 74.6%; filter: opacity(0.7); display: block;"><img width="75px"-->
-                                                                                         <!--src="img/jrgd.png"></div>-->
+            <!--src="img/jrgd.png"></div>-->
 
             <script>
                 $(function () {
@@ -779,7 +789,8 @@
                         //
                         // }
                     })
-                    $("#zd-1").click(function () {
+                    //移动到上面显示策略，下同
+                    $("#zd-1").hover(function () {
                         if ($("#expert-strategy-1").css("display") == "none") {
                             $("#expert-strategy-1").css("display", "block");
                             $("#expert-strategy-2").css("display", "none");
@@ -788,7 +799,40 @@
                             $("#expert-strategy-1").css("display", "none");
                         }
                     })
-                    $("#zd-2").click(function () {
+                    //切换直播间
+                    $("#zd-1").click(function () {
+                        layer.msg("正在进入直播间，请稍后");
+                        $.ajax({
+                            url:"/getUserByToken",
+                            dataType:"json",
+                            headers:{token:$.cookie("token")},
+                            type:"post",
+                            success:function (data) {
+                                if (data.code==0){
+                                    if (data.data.ifHj==1){
+                                        //切换老师聊天
+                                        $("#teacherOnline").css("display","none");
+                                        $("#hjOnline").css("display","block");
+                                        $("#jjOnline").css("display","none");
+                                        $("#fwOnline").css("display","none");
+                                        //切换用户聊天
+                                        $("#order-content").css("display","none");
+                                        $("#hj-order-content").css("display","block");
+                                        $("#jj-order-content").css("display","none");
+                                        $("#fw-order-content").css("display","none");
+                                        //切换flag，根据flag判断发给哪个直播间
+                                        $("#selectOnline").val(1);
+                                        layer.alert("黑金战队直播间欢迎您！");
+                                    } else {
+                                        layer.alert("您没有权限进入该直播间");
+                                    }
+                                }
+                            }
+                        })
+
+
+                    })
+                    $("#zd-2").hover(function () {
                         if ($("#expert-strategy-2").css("display") == "none") {
                             $("#expert-strategy-1").css("display", "none");
                             $("#expert-strategy-2").css("display", "block");
@@ -797,7 +841,39 @@
                             $("#expert-strategy-2").css("display", "none");
                         }
                     })
-                    $("#zd-3").click(function () {
+                    //切换直播间
+                    $("#zd-2").click(function () {
+                        layer.msg("正在进入直播间，请稍后");
+                        $.ajax({
+                            url:"/getUserByToken",
+                            dataType:"json",
+                            headers:{token:$.cookie("token")},
+                            type:"post",
+                            success:function (data) {
+                                if (data.code==0){
+                                    if (data.data.ifJj==1){
+                                        $("#teacherOnline").css("display","none")
+                                        $("#hjOnline").css("display","none");
+                                        $("#jjOnline").css("display","block");
+                                        $("#fwOnline").css("display","none");
+                                        //切换用户聊天
+                                        $("#order-content").css("display","none");
+                                        $("#hj-order-content").css("display","none");
+                                        $("#jj-order-content").css("display","block");
+                                        $("#fw-order-content").css("display","none");
+                                        //切换flag，根据flag判断发给哪个直播间
+                                        $("#selectOnline").val(2);
+                                        layer.alert("狙击战队直播间欢迎您！");
+
+                                    } else {
+                                        layer.alert("您没有权限进入该直播间");
+                                    }
+                                }
+                            }
+                        })
+
+                    })
+                    $("#zd-3").hover(function () {
                         if ($("#expert-strategy-3").css("display") == "none") {
                             $("#expert-strategy-1").css("display", "none");
                             $("#expert-strategy-2").css("display", "none");
@@ -806,10 +882,50 @@
                             $("#expert-strategy-3").css("display", "none");
                         }
                     })
+                    //切换直播间
+                    $("#zd-3").click(function () {
+                        layer.msg("正在进入直播间，请稍后");
+                        $.ajax({
+                            url:"/getUserByToken",
+                            dataType:"json",
+                            headers:{token:$.cookie("token")},
+                            type:"post",
+                            success:function (data) {
+                                if (data.code==0){
+                                    if (data.data.ifFw==1){
+                                        $("#teacherOnline").css("display","none")
+                                        $("#hjOnline").css("display","none");
+                                        $("#jjOnline").css("display","none");
+                                        $("#fwOnline").css("display","block");
+                                        //切换用户聊天
+                                        $("#order-content").css("display","none");
+                                        $("#hj-order-content").css("display","none");
+                                        $("#jj-order-content").css("display","none");
+                                        $("#fw-order-content").css("display","block");
+                                        //切换flag，根据flag判断发给哪个直播间
+                                        $("#selectOnline").val(3);
+                                        layer.alert("风云战队直播间欢迎您！");
+
+                                    } else {
+                                        layer.alert("您没有权限进入该直播间");
+                                    }
+                                }
+                            }
+                        })
+
+                    })
                     $("#zbdt").click(function () {
-                        $("#expert-strategy-1").css("display", "none");
-                        $("#expert-strategy-2").css("display", "none");
-                        $("#expert-strategy-3").css("display", "none");
+                        $("#teacherOnline").css("display","block")
+                        $("#hjOnline").css("display","none");
+                        $("#jjOnline").css("display","none");
+                        $("#fwOnline").css("display","none");
+                        //切换用户聊天
+                        $("#order-content").css("display","block");
+                        $("#hj-order-content").css("display","none");
+                        $("#jj-order-content").css("display","none");
+                        $("#fw-order-content").css("display","none");
+                        //切换flag，根据flag判断发给哪个直播间
+                        $("#selectOnline").val(0);
                     })
                 })
             </script>
@@ -819,15 +935,15 @@
                 <div id="expert-strategy-1-1" class="expert-strategy-div" style="height: 17%">
                     <!--模版-->
                     <!--<div class="exert-strategy-div-l" style="border: none">-->
-                        <!--<div class="expert-strategy-div-left"><img-->
-                                <!--src="http://image.find37.com/15635197975d316b35869db.png-live"></div>-->
-                        <!--<div class="expert-strategy-div-center"><p>PTA<span>2001</span></p>-->
-                            <!--<p>2019-08-30 22:36:04</p>-->
-                            <!--<p><span>点位：</span><span style="font-size: 16px;color: red">5080</span>&nbsp;附近</p>-->
-                            <!--<p><span>策略来源：</span><a target="_blank"-->
-                                                    <!--href="http://journal.qzy77.com/15670682645d679068bcc04.docx">山金期货</a>-->
-                            <!--</p></div>-->
-                        <!--<div class="expert-strategy-div-right" style="background-color: rgb(64, 211, 64);">卖出平仓</div>-->
+                    <!--<div class="expert-strategy-div-left"><img-->
+                    <!--src="http://image.find37.com/15635197975d316b35869db.png-live"></div>-->
+                    <!--<div class="expert-strategy-div-center"><p>PTA<span>2001</span></p>-->
+                    <!--<p>2019-08-30 22:36:04</p>-->
+                    <!--<p><span>点位：</span><span style="font-size: 16px;color: red">5080</span>&nbsp;附近</p>-->
+                    <!--<p><span>策略来源：</span><a target="_blank"-->
+                    <!--href="http://journal.qzy77.com/15670682645d679068bcc04.docx">山金期货</a>-->
+                    <!--</p></div>-->
+                    <!--<div class="expert-strategy-div-right" style="background-color: rgb(64, 211, 64);">卖出平仓</div>-->
                     <!--</div>-->
 
                 </div>
@@ -845,15 +961,10 @@
                 <div class="expert-strategy-div" id="expert-strategy-3-3" style="height: 17%">
                 </div>
             </div>
-
-
             <div class="expert-content-white">
-
             </div>
             <!--<p id="getqx">请激活后查看</p>-->
             <div class="expert-content" id="teacherOnline">
-
-
                 <!--模版-->
                 <!--<div class="expert-chat-item" style="display: block">-->
                 <!--<div class="expert-chat-left"><img src="http://image.find37.com/15507171295c6e10c9899cf.png" +=""-->
@@ -865,9 +976,17 @@
                 <!--<p><br></p></div>-->
                 <!--</div>-->
                 <!--</div>-->
-
-
             </div>
+            <div class="expert-content" id="hjOnline" style="display: none">
+                <h3>黑金战队专属直播间</h3>
+            </div>
+            <div class="expert-content" id="jjOnline" style="display: none">
+                <h3>狙击战队专属直播间</h3>
+            </div>
+            <div class="expert-content" id="fwOnline" style="display: none">
+                <h3>风云战队专属直播间</h3>
+            </div>
+
             <div class="clbg">
                 策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，建议投资者自主决定交易，自负风险。市场有风险，入市谨慎
             </div>
@@ -918,10 +1037,19 @@
             <div class="order-content-white"></div>
             <div class="order-content" id="order-content">
             </div>
+            <div class="order-content" id="hj-order-content" style="display: none">
+                <h3>黑金战队专属直播间</h3>
+            </div>
+            <div class="order-content" id="jj-order-content" style="display: none">
+                <h3>狙击战队专属直播间</h3>
+            </div>
+            <div class="order-content" id="fw-order-content" style="display: none">
+                <h3>风云战队专属直播间</h3>
+            </div>
 
             <div style="height: 25%;margin-top: 8%">
                 <p id="has-message">我有话要说</p>
-                <!--<textarea class="text-area" id="message-aera"></textarea>-->
+                <input type="hidden" value="0" id="selectOnline">
                 <textarea style="width: 90%;height: 80%;margin-left: 5%;border-radius: 0 0 7px 7px;background: white;"
                           id="message-aera"></textarea>
                 <button id="send" class="layui-btn layui-btn-primary layui-btn-radius">发送</button>

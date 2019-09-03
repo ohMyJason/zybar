@@ -54,6 +54,8 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
+
+
     User selectByUserName(User user);
 
     List<User> getAllUser(@Param("start") int start,@Param("limit") int limit,@Param("username") String username);

@@ -11,6 +11,7 @@ import com.zybar.bar.util.FileUtil;
 import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,7 +81,7 @@ public class UserController {
     }
 
 
-
+    @CrossOrigin
     @PostMapping("/getAllUser")
     public Result getAllUser(){
         //懒得在写一个无参mapper了
