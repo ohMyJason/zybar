@@ -2,6 +2,7 @@ package com.zybar.bar.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zybar.bar.dao.UserMapper;
 import com.zybar.bar.dao.ZyvoiceMapper;
 import com.zybar.bar.model.Zyvoice;
 import com.zybar.bar.util.FileUtil;
@@ -23,6 +24,9 @@ import java.util.List;
 public class ZyVoiceController {
     @Autowired
     ZyvoiceMapper zyvoiceMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     FileUtil fileUtil;
@@ -49,7 +53,7 @@ public class ZyVoiceController {
                 JSONObject data = new JSONObject();
                 data.put("src",voice.getMp3Url());
                 data.put("name",voice.getMp3Name());
-                data.put("author",voice.getUserId());
+                data.put("author",userMapper.selectByPrimaryKey(voice.getUserId()).getUsername());
                 data.put("cover",voice.getPhotoUrl());
                 datas.add(data);
             }
@@ -69,7 +73,7 @@ public class ZyVoiceController {
     @PostMapping("/insertZyVoice")
     public Result insertZyVoice(Zyvoice zyvoice) {
         try {
-
+            zyvoice.setPhotoUrl(userMapper.selectByPrimaryKey(zyvoice.getUserId()).getPhotoUrl());
             zyvoiceMapper.insertSelective(zyvoice);
             return Result.createSuccessResult();
         } catch (Exception e) {

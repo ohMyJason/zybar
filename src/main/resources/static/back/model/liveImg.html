@@ -6,7 +6,6 @@
     <title>风口交易吧后台</title>
     <script src="../../user/js/jquery-3.1.1.min.js"></script>
     <script src="../../user/js/jquery.cookie.js"></script>
-
     <link rel="stylesheet" href="../layui/css/layui.css">
     <script src="../layui/layui.js"></script>
     <script src="../js/common.js"></script>
@@ -18,26 +17,26 @@
         <!-- 内容主体区域 -->
 
         <div  style="margin: 15px;">
-            <button type="button" id="add-paper" class="layui-btn">添加多维量化</button>
+            <button type="button" id="add-live-img" class="layui-btn">添加直播预览图</button>
         </div>
         <script>
-            $("#add-paper").click(function () {
+            $("#add-live-img").click(function () {
                 layer.open({
                     type: 2,
                     area : ['800px' , '580px'],
-                    content: '/back/content/add-multi-quanti.html' //这里content是一个普通的String
+                    content: '/back/content/add-live.html' //这里content是一个普通的String
                 });
             })
         </script>
         <div style="padding: 15px;margin-top: 30px">
-            <!--<div class="demoTable">-->
-                <!--<div class="layui-inline">-->
-                    <!--<input class="layui-input" id="paper-name" placeholder="机构研报名" autocomplete="off">-->
-                <!--</div>-->
-                <!--<button class="layui-btn" data-type="reload" id="search">搜索</button>-->
-            <!--</div>-->
+            <div class="demoTable">
+                <div class="layui-inline">
+                    <input class="layui-input" id="live-name" placeholder="节目名" autocomplete="off">
+                </div>
+                <button class="layui-btn" data-type="reload" id="search">搜索</button>
+            </div>
 
-            <table class="layui-hide" id="multi-quanti-table" lay-filter="multi-quanti-table"></table>
+            <table class="layui-hide" id="live-table" lay-filter="live-table"></table>
 
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
@@ -46,7 +45,6 @@
                     <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
                 </div>
             </script>
-
             <script type="text/html" id="barDemo">
                 <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -57,29 +55,28 @@
                 layui.use('table', function(){
                     var table = layui.table;
                     table.render({
-                        elem: '#multi-quanti-table'
-                        ,url:'/getAllMultiQuanti'
+                        elem: '#live-table'
+                        ,url:'/getAllLive'
                         ,toolbar: '#toolbarDemo'
-                        ,title: '焦炭'
+                        ,title: '节目清单'
                         ,method:'post'
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
-                            ,{field:'multiQuantiId', title:'ID', fixed: 'left', unresize: true, sort: true}
-                            ,{field:'time', title:'时间',sort:true}
-                            ,{field:'variety', title:'品种'}
-                            ,{field:'direction', title:'方向'}
-                            ,{field:'point', title:'点位'}
-                            // ,{field:'category', title:'类别'}
+                            ,{field:'liveId', title:'ID', fixed: 'left',unresize: true,width:150, sort: true}
+                            ,{field:'liveName', title:'节目名称'}
+                            ,{field:'liveImgUrl', title:'图片地址',templet:function f(d) {
+                            return "<a href=\""+d.liveImgUrl+"\" target=\"_blank\">"+d.liveImgUrl+"</a>\n"
+                    }}
+                            ,{field:'liveUrl', title:'节目地址',templet:function (d) {
+                                    return "            <a href=\""+d.liveUrl+"\" target=\"_blank\">"+d.liveUrl+"</a>\n"
+                                }}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                         ]]
                         ,page: true
-                        ,where: { //设定异步数据接口的额外参数，任意设
-                                        category : 1
-                                    }
                     });
 
                     //头工具栏事件
-                    table.on('toolbar(multi-quanti-table)', function(obj){
+                    table.on('toolbar(live-table)', function(obj){
                         var checkStatus = table.checkStatus(obj.config.id);
                         switch(obj.event){
                             case 'getCheckData':
@@ -97,14 +94,11 @@
                     });
 
                     //监听行工具事件
-                    table.on('tool(multi-quanti-table)', function(obj){
+                    table.on('tool(live-table)', function(obj){
                         var data = obj.data;
-                        // console.log(obj.data.paperId)
-                        // layer.alert(data.paperId);
-
                         if(obj.event === 'del'){
                             layer.confirm('真的删除么', function(index){
-                                ajaxPOST("/deleteMultiQuanti",{multiQuantiId:data.multiQuantiId},function () {
+                                ajaxPOST("/deleteLive",{liveId :data.liveId},function () {
                                     obj.del();
                                     layer.close(index);
                                     layui.use('layer', function(){
@@ -117,42 +111,30 @@
                                 })
 
                             });
-                        } else if(obj.event === 'edit'){
-                            layer.prompt({
-                                formType: 2
-                                ,value: data.email
-                            }, function(value, index){
-                                obj.update({
-                                    email: value
-                                });
-                                layer.close(index);
-                            });
                         }
                     });
 
                     // 搜索
-                    // $("#search").click(function () {
-                    //     //重新加载表格
-                    //     table.reload('paper-table' ,{
-                    //         where: { //设定异步数据接口的额外参数，任意设
-                    //             paperName : $("#paper-name").val()
-                    //         },
-                    //         page: {
-                    //             curr: 1 //重新从第 1 页开始
-                    //         }
-                    //     });
-                    // });
+                    $("#search").click(function () {
+                        //重新加载表格
+                        table.reload('live-table' ,{
+                            where: { //设定异步数据接口的额外参数，任意设
+                                liveName : $("#live-name").val()
+                            },
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    });
                 });
             </script>
         </div>
-
-
-
 <script>
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
-        $("#multi").attr("class","layui-nav-item layui-nav-itemed")
+        $("#super").attr("class","layui-nav-item layui-nav-itemed")
+
     });
 </script>
 </body>

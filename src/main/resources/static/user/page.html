@@ -121,22 +121,26 @@
                     <meta charset="UTF-8">
                     <title>Title</title>
                     <style>
-                    #skPlayer .skPlayer-list {
-                    max-height: 80%;
-                    }
+                        #skPlayer .skPlayer-list {
+                            max-height: 80%;
+                        }
 
-                    #skPlayer .skPlayer-picture {
-                    width: 28%;
-                    }
+                        #skPlayer .skPlayer-picture {
+                            width: 28%;
+                        }
 
-                    #skPlayer .skPlayer-control {
-                    width: 70%;
-                    padding: 10px 0px 15px;
-                    }
+                        #skPlayer .skPlayer-control {
+                            width: 70%;
+                            padding: 10px 0px 15px;
+                        }
 
-                    #skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {
-                    width: 86%;
-                    }
+                        #skPlayer .skPlayer-cover {
+                            height: 70%;
+                        }
+
+                        #skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {
+                            width: 86%;
+                        }
                     </style>
 
 
@@ -268,12 +272,16 @@
                                 "token": $.cookie("token")
                             },
                             success: function (data) {
-                                for (var i = 0; i < data.data.length; i++) {
-                                    $("#Traders-classic").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
-                                        "                        <div class=\"researchReport-news\" >\n" +
-                                        "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
-                                        "                        <span class=\"researchReport-news-date\">" + data.data[i].updateTime + "</span></div>");
+                                if (data.code == 0) {
+
+                                    for (var i = 0; i < data.data.length; i++) {
+                                        $("#Traders-classic").append(" <div style=\"box-shadow: 9px 16px 44px #e3e5f1;height: 5%\">\n" +
+                                            "                        <div class=\"researchReport-news\" >\n" +
+                                            "                            <a href=\"" + data.data[i].pdfUrl + "\" target=\"_blank\">" + data.data[i].name + "</a></div>\n" +
+                                            "                        <span class=\"researchReport-news-date\">" + data.data[i].updateTime + "</span></div>");
+                                    }
                                 }
+
                             },
                         })
 
@@ -322,7 +330,7 @@
                                 },
                                 success: function (data) {
                                     for (var i = 0; i < data.data.length; i++) {
-                                        $("#tb-contain-" + j).append("  <tr><td>" + data.data[i].time.substr(5, 11) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].variety + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].direction + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>" + data.data[i].point + "</td></tr>");
+                                        $("#tb-contain-" + j).prepend("  <tr><td align=\"center\" width='25%'>" + data.data[i].time.substr(5, 11) + "</td><td align=\"center\" width='25%'>" + data.data[i].variety + "</td><td align=\"center\" width='25%'>" + data.data[i].direction + "</td><td align=\"center\" width='25%'>" + data.data[i].point + "</td></tr>");
                                     }
                                 },
                             })
@@ -415,7 +423,6 @@
                             headers: {
                                 "token": $.cookie("token")
                             },
-                            data: {page: 1, limit: 1000},
                             success: function (data) {
                                 if (data.code == 0) {
 
@@ -435,7 +442,6 @@
                             headers: {
                                 "token": $.cookie("token")
                             },
-                            data: {page: 1, limit: 1000},
                             success: function (data) {
                                 if (data.code == 0) {
 
@@ -996,26 +1002,30 @@
             <div class="news layui-carousel" lay-anim="" lay-indicator="inside" lay-arrow="always"
                  style="width: 100%; height: 30%;">
                 <div class="layui-carousel" id="test1">
-                    <div carousel-item>
-                        <div class=""><a target="_blank" href="http://mudu.tv/watch/3289725"><img width="100%"
-                                                                                                  height="100%"
-                                                                                                  src="http://image.find37.com/15540966745ca1a222e480f.jpg"></a>
-                        </div>
-                        <div class="layui-this"><a target="_blank" href="http://mudu.tv/watch/3289725"><img width="100%"
-                                                                                                            height="100%"
-                                                                                                            src="http://image.find37.com/15570498765cceb214d5874.jpg"></a>
-                        </div>
-                        <div class=""><a target="_blank" href="http://mudu.tv/watch/3289725"><img width="100%"
-                                                                                                  height="100%"
-                                                                                                  src="http://image.find37.com/15570199515cce3d2f9e725.jpg"></a>
-                        </div>
+
+                    <div carousel-item id="liveImg">
                     </div>
                 </div>
 
 
                 <script>
+
                     //加载轮播
                     layui.use('carousel', function () {
+
+                        $.ajax({
+                            url: "/getAllLive",
+                            data: {page: 1, limit: 1000},
+                            dataType: "json",
+                            type: "post",
+                            async: false,//取消异步
+                            success: function (res) {
+                                for (let i = 0; i < res.data.length; i++) {
+                                    $("#liveImg").append("<div class=\"\"><a target=\"_blank\" href=\"" + res.data[i].liveUrl + "\"><img width=\"100%\" height=\"100%\" src=\"" + res.data[i].liveImgUrl + "\"></a></div>\n")
+                                }
+                            }
+                        })
+
                         var carousel = layui.carousel;
                         //建造实例
                         carousel.render({

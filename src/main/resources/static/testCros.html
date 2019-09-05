@@ -7,22 +7,10 @@
 </head>
 <body>
 <input type="button" value="cros" id="cros">
+<img src="user/img/liveImg_2.jpg" alt="">
 </body>
 <script>
 
-    $(function () {
-        $("#cros").click(function () {
-            console.log("sss");
-            $.ajax({
-                url: "localhost:8080/getAllUser",
-                dataType: "json",
-                type: "post",
-                success: function (data) {
-                    console.log(data);
-                    alert(data);
-                }
-            })
-        })
-    })
+   
 </script>
 </html>

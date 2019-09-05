@@ -43,7 +43,7 @@ public class PopularRankingController {
             if (popularRankings.size()>0){
                 return Result.createSuccessResult(count,popularRankings);
             }else{
-                return Result.createSuccessResult(0,null);
+                return Result.createByFailure("没数据");
             }
         }catch (Exception e){
             System.out.println(e.getMessage());

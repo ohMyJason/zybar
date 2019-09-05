@@ -2,14 +2,23 @@ var websocket = null;
 
 
 $(function () {
+    $("body").keydown(function () {
+        if (event.keyCode == "13") {//keyCode=13是回车键
+            $('#send').click();
+        }
+    });
 
     $("#send").click(function () {
-        var message = $("#message-aera").val();
-        //通过判断$("#selectOnline").val()是1还是2，来判断是用户发的还是老师发的
-        websocket.send(1 + "&*&" + message + "&*&" + $.cookie("username") + "&*&"+"#" + "&*&" + $("#selectOnline").val() + "&*&#");
-        $("#message-aera").val(" ");
-        if (websocket.readyState != 1) {
-            layer.alert("直播间连接错误，请刷新页面重试。");
+        if ($("#message-aera").val().replace(/\s*/g,"") =="") {
+            layer.msg("请输入消息");
+        } else {
+            var message = $("#message-aera").val();
+            //通过判断$("#selectOnline").val()是1还是2，来判断是用户发的还是老师发的
+            websocket.send(1 + "&*&" + message + "&*&" + $.cookie("username") + "&*&" + "#" + "&*&" + $("#selectOnline").val() + "&*&#");
+            $("#message-aera").val(" ");
+            if (websocket.readyState != 1) {
+                layer.alert("直播间连接错误，请刷新页面重试。");
+            }
         }
     })
 })

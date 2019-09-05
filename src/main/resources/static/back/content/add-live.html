@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../../user/js/jquery-3.1.1.min.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>添加节目</legend>
+</fieldset>
+<form class="layui-form" >
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="text" name="liveName" required lay-verify="required" placeholder="请输入节目名" autocomplete="off"
+                   class="layui-input">
+
+            <input type="hidden" name="liveImgUrl" id="photoUrl">
+        </div>
+
+        <div class="layui-input-block" style="margin-top: 20px">
+            <input type="text" name="liveUrl" required lay-verify="required" placeholder="请输入节目地址" autocomplete="off"
+                   class="layui-input">
+
+        </div>
+
+        <div class="layui-input-block" style="margin-top: 20px;">
+
+            <button type="button" class="layui-btn" id="test1">
+                <i class="layui-icon">&#xe67c;</i>上传节目图片
+            </button>
+
+            <!--<img id="photo" alt="请上传图片">-->
+            <img style="width: 70%" class="layui-upload-img" src="../layui/images/imgInit.png" id="photo">
+
+            <a href="" id="fileUrl" target="_blank"></a>
+
+        </div>
+
+
+        <script>
+            $(function () {
+                $("#reset").click(function () {
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.msg("重置成功，请重新上传文件");
+                    })
+                    $("#photo").attr("src","../layui/images/imgInit.png");
+                    $("#fileUrl").text("");
+
+
+                })
+            })
+            layui.use('upload', function () {
+                var upload = layui.upload;
+
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#test1' //绑定元素
+                    , url: '/uploadLiveImg' //上传接口
+                    ,accept:'img'
+                    , done: function (res) {
+                        $("#photoUrl").val(res.data.imgUrl);
+                        $("#photo").attr("src",res.data.imgUrl);
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+
+                            layer.msg("上传成功",{time:1000});
+                        });
+
+                        $("#fileUrl").attr("href",res.data.imgUrl);
+                        $("#fileUrl").text("点击可查看："+res.data.imgUrl);
+                        //上传完毕回调
+
+                    }
+                    , error: function () {
+                        //请求异常回调
+                    }
+                });
+            });
+        </script>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url:"/insertLive",
+                type:"post",
+                data:data.field,
+                dataType:"json",
+                success:function () {
+                    layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待1秒
+                    setTimeout(function(){
+                        layer.msg('添加成功');
+                    }, 1000);
+                    //当你在iframe页面关闭自身时
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                    parent.window.location.reload();
+                },
+                error:function () {
+
+                }
+            })
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -183,4 +183,14 @@ public class FileUtil {
 
     }
 
+    /**
+     * 访问文件名
+     * @param relaUrl 文件虚拟路径名
+     * @return
+     */
+    public String getFileName(String relaUrl){
+        String[] split = relaUrl.split("/");
+        return split[split.length-1];
+    }
+
 }
