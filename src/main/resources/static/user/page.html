@@ -33,25 +33,28 @@
         <div id="user">
             <div id="user-information" style="height: 100%">
             </div>
-            <div id="lq-btn">
-                <button id="login" class="layui-btn layui-btn-primary"><a href="/user/login.html">登录</a></button>
-                <button id="quit" class="layui-btn layui-btn-primary" style="display: none"><a href="/user/login.html">退出</a>
-                </button>
 
-            </div>
+        </div>
+        <div id="lq-btn">
+            <button id="login" class="layui-btn layui-btn-primary"><a href="/user/login.html">登录</a></button>
+            <button id="quit" class="layui-btn layui-btn-primary" style="display: none"><a
+                    href="/user/login.html">退出</a>
+            </button>
+            <!--<button id="user-information-click" class="layui-btn layui-btn-primary">编辑个人信息</button>-->
+
         </div>
         <script>
             // 这里吧用户名显示在右上角
             $(function () {
                 if ($.cookie("username") != null) {
-                    $("#user-information").append("<ul><li>" + $.cookie("username") + "</li><li></li><li></li></ul>")
+                    $("#user-information").append("<ul><li style='margin-left: 50px'>" + $.cookie("username") + "</li><li> </li><li></li></ul>")
                     $("#login").css("display", "none");
                     $("#quit").css("display", "block");
                 } else {
 
                 }
 
-                $("#user-information").click(function () {
+                $("#user").click(function () {
                     layer.open({
                         type: 2,
                         title: false,
@@ -117,24 +120,24 @@
                 <div id="audio" style="overflow: hidden; display: block;">
                     <meta charset="UTF-8">
                     <title>Title</title>
-                    <!--<style>-->
-                    <!--#skPlayer .skPlayer-list {-->
-                    <!--max-height: 80%;-->
-                    <!--}-->
+                    <style>
+                    #skPlayer .skPlayer-list {
+                    max-height: 80%;
+                    }
 
-                    <!--#skPlayer .skPlayer-picture {-->
-                    <!--width: 28%;-->
-                    <!--}-->
+                    #skPlayer .skPlayer-picture {
+                    width: 28%;
+                    }
 
-                    <!--#skPlayer .skPlayer-control {-->
-                    <!--width: 70%;-->
-                    <!--padding: 10px 0px 15px;-->
-                    <!--}-->
+                    #skPlayer .skPlayer-control {
+                    width: 70%;
+                    padding: 10px 0px 15px;
+                    }
 
-                    <!--#skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {-->
-                    <!--width: 86%;-->
-                    <!--}-->
-                    <!--</style>-->
+                    #skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {
+                    width: 86%;
+                    }
+                    </style>
 
 
                     <!--<div id="skPlayer" style="height:100%;width: 100%" class="skPlayer-list-on">-->
@@ -213,7 +216,7 @@
                             //     "token": $.cookie("token")
                             // },
                             success: function (data) {
-                                if (data.code==0){
+                                if (data.code == 0) {
 
                                     for (var i = 0; i < data.data.length; i++) {
 
@@ -414,7 +417,7 @@
                             },
                             data: {page: 1, limit: 1000},
                             success: function (data) {
-                                if (data.code==0){
+                                if (data.code == 0) {
 
                                     for (var i = 0; i < 2; i++) {
                                         $("#popularRank").append("<div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].popularRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].popularRankingNum + "人</span></div></div>\n")
@@ -434,7 +437,7 @@
                             },
                             data: {page: 1, limit: 1000},
                             success: function (data) {
-                                if (data.code==0){
+                                if (data.code == 0) {
 
                                     for (var i = 0; i < 3; i++) {
                                         $("#winRank").append(" <div style=\"margin-top: 8%\"><div class=\"odds-left\"><span class=\"layui-badge layui-bg-blue\">" + (i + 1) + "</span><span style=\"margin-left: 4%;color: #666666\">" + data.data[i].winningRateRankingName + "</span></div><div class=\"odds-right\" style=\"color: #666666\"><span>" + data.data[i].winningRateRankingRate + "%</span></div></div>\n")
@@ -803,23 +806,23 @@
                     $("#zd-1").click(function () {
                         layer.msg("正在进入直播间，请稍后");
                         $.ajax({
-                            url:"/getUserByToken",
-                            dataType:"json",
-                            headers:{token:$.cookie("token")},
-                            type:"post",
-                            success:function (data) {
-                                if (data.code==0){
-                                    if (data.data.ifHj==1){
+                            url: "/getUserByToken",
+                            dataType: "json",
+                            headers: {token: $.cookie("token")},
+                            type: "post",
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    if (data.data.ifHj == 1) {
                                         //切换老师聊天
-                                        $("#teacherOnline").css("display","none");
-                                        $("#hjOnline").css("display","block");
-                                        $("#jjOnline").css("display","none");
-                                        $("#fwOnline").css("display","none");
+                                        $("#teacherOnline").css("display", "none");
+                                        $("#hjOnline").css("display", "block");
+                                        $("#jjOnline").css("display", "none");
+                                        $("#fwOnline").css("display", "none");
                                         //切换用户聊天
-                                        $("#order-content").css("display","none");
-                                        $("#hj-order-content").css("display","block");
-                                        $("#jj-order-content").css("display","none");
-                                        $("#fw-order-content").css("display","none");
+                                        $("#order-content").css("display", "none");
+                                        $("#hj-order-content").css("display", "block");
+                                        $("#jj-order-content").css("display", "none");
+                                        $("#fw-order-content").css("display", "none");
                                         //切换flag，根据flag判断发给哪个直播间
                                         $("#selectOnline").val(1);
                                         layer.alert("黑金战队直播间欢迎您！");
@@ -845,22 +848,22 @@
                     $("#zd-2").click(function () {
                         layer.msg("正在进入直播间，请稍后");
                         $.ajax({
-                            url:"/getUserByToken",
-                            dataType:"json",
-                            headers:{token:$.cookie("token")},
-                            type:"post",
-                            success:function (data) {
-                                if (data.code==0){
-                                    if (data.data.ifJj==1){
-                                        $("#teacherOnline").css("display","none")
-                                        $("#hjOnline").css("display","none");
-                                        $("#jjOnline").css("display","block");
-                                        $("#fwOnline").css("display","none");
+                            url: "/getUserByToken",
+                            dataType: "json",
+                            headers: {token: $.cookie("token")},
+                            type: "post",
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    if (data.data.ifJj == 1) {
+                                        $("#teacherOnline").css("display", "none")
+                                        $("#hjOnline").css("display", "none");
+                                        $("#jjOnline").css("display", "block");
+                                        $("#fwOnline").css("display", "none");
                                         //切换用户聊天
-                                        $("#order-content").css("display","none");
-                                        $("#hj-order-content").css("display","none");
-                                        $("#jj-order-content").css("display","block");
-                                        $("#fw-order-content").css("display","none");
+                                        $("#order-content").css("display", "none");
+                                        $("#hj-order-content").css("display", "none");
+                                        $("#jj-order-content").css("display", "block");
+                                        $("#fw-order-content").css("display", "none");
                                         //切换flag，根据flag判断发给哪个直播间
                                         $("#selectOnline").val(2);
                                         layer.alert("狙击战队直播间欢迎您！");
@@ -886,22 +889,22 @@
                     $("#zd-3").click(function () {
                         layer.msg("正在进入直播间，请稍后");
                         $.ajax({
-                            url:"/getUserByToken",
-                            dataType:"json",
-                            headers:{token:$.cookie("token")},
-                            type:"post",
-                            success:function (data) {
-                                if (data.code==0){
-                                    if (data.data.ifFw==1){
-                                        $("#teacherOnline").css("display","none")
-                                        $("#hjOnline").css("display","none");
-                                        $("#jjOnline").css("display","none");
-                                        $("#fwOnline").css("display","block");
+                            url: "/getUserByToken",
+                            dataType: "json",
+                            headers: {token: $.cookie("token")},
+                            type: "post",
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    if (data.data.ifFw == 1) {
+                                        $("#teacherOnline").css("display", "none")
+                                        $("#hjOnline").css("display", "none");
+                                        $("#jjOnline").css("display", "none");
+                                        $("#fwOnline").css("display", "block");
                                         //切换用户聊天
-                                        $("#order-content").css("display","none");
-                                        $("#hj-order-content").css("display","none");
-                                        $("#jj-order-content").css("display","none");
-                                        $("#fw-order-content").css("display","block");
+                                        $("#order-content").css("display", "none");
+                                        $("#hj-order-content").css("display", "none");
+                                        $("#jj-order-content").css("display", "none");
+                                        $("#fw-order-content").css("display", "block");
                                         //切换flag，根据flag判断发给哪个直播间
                                         $("#selectOnline").val(3);
                                         layer.alert("风云战队直播间欢迎您！");
@@ -915,15 +918,15 @@
 
                     })
                     $("#zbdt").click(function () {
-                        $("#teacherOnline").css("display","block")
-                        $("#hjOnline").css("display","none");
-                        $("#jjOnline").css("display","none");
-                        $("#fwOnline").css("display","none");
+                        $("#teacherOnline").css("display", "block")
+                        $("#hjOnline").css("display", "none");
+                        $("#jjOnline").css("display", "none");
+                        $("#fwOnline").css("display", "none");
                         //切换用户聊天
-                        $("#order-content").css("display","block");
-                        $("#hj-order-content").css("display","none");
-                        $("#jj-order-content").css("display","none");
-                        $("#fw-order-content").css("display","none");
+                        $("#order-content").css("display", "block");
+                        $("#hj-order-content").css("display", "none");
+                        $("#jj-order-content").css("display", "none");
+                        $("#fw-order-content").css("display", "none");
                         //切换flag，根据flag判断发给哪个直播间
                         $("#selectOnline").val(0);
                     })
@@ -978,13 +981,10 @@
                 <!--</div>-->
             </div>
             <div class="expert-content" id="hjOnline" style="display: none">
-                <h3>黑金战队专属直播间</h3>
             </div>
             <div class="expert-content" id="jjOnline" style="display: none">
-                <h3>狙击战队专属直播间</h3>
             </div>
             <div class="expert-content" id="fwOnline" style="display: none">
-                <h3>风云战队专属直播间</h3>
             </div>
 
             <div class="clbg">
@@ -1038,13 +1038,10 @@
             <div class="order-content" id="order-content">
             </div>
             <div class="order-content" id="hj-order-content" style="display: none">
-                <h3>黑金战队专属直播间</h3>
             </div>
             <div class="order-content" id="jj-order-content" style="display: none">
-                <h3>狙击战队专属直播间</h3>
             </div>
             <div class="order-content" id="fw-order-content" style="display: none">
-                <h3>风云战队专属直播间</h3>
             </div>
 
             <div style="height: 25%;margin-top: 8%">

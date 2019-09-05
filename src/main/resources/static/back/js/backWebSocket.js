@@ -1,7 +1,7 @@
 var websocket = null;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket("ws://localhost:8080/websocket");
+    websocket = new WebSocket("ws://120.79.30.62:8080/websocket");
 } else {
     alert('Not support websocket');
 }
@@ -9,24 +9,43 @@ if ('WebSocket' in window) {
 
 //将接收到的html代码（消息）贴到版面上
 function setMessage(event) {
+    console.log(event.data);
     var role = event.data.split("&*&")[0];
     var message = event.data.split("&*&")[1];
+    console.log(message);
     var username = event.data.split("&*&")[2];
     var selectOnline = event.data.split("&*&")[4];
+    var replay = event.data.split("&*&")[5];
+    if (replay=="无选择回复") {
+        replay = "";
+    }else if(replay==null){
+        replay = "";
+    }else {
+        replay+="<br>"
+    }
+
     var msgModel =  "<div class=\"layui-card\">\n" +
         "                        <div class=\"layui-card-header\">" + username + "</div>\n" +
         "                        <div class=\"layui-card-body\">\n" +
-        message +
+        replay+"<b>"+message +"</b>" +
         "                        </div>\n" +
         "                    </div>"
-
+    var userMsgModel = "<div class=\"layui-card\">\n" +
+        "                        <div class=\"layui-card-header\"><button type=\"button\" style='margin-right: 5px' class=\"layui-btn layui-btn-sm layui-btn-warm\">回复@</button>" + username + "</div>\n" +
+        "                        <div class=\"layui-card-body\">\n" +
+         message +
+        "                        </div>\n" +
+        "                    </div>"
 
     if (selectOnline == 0){
         if (role == 2) {
             $("#teacherChat").append(msgModel);
             scrollDown("teacherChat");
         } else if (role == 1) {
-            $("#userChat").append(msgModel);
+            $("#userChat").append(userMsgModel);
+            // $(".layui-card").click(function () {
+            //     console.log($(this).html());
+            // })
             scrollDown("userChat");
         }
     } else if (selectOnline==1){
@@ -34,7 +53,7 @@ function setMessage(event) {
             $("#hjTeacherChat").append(msgModel);
             scrollDown("hjTeacherChat");
         } else if (role == 1) {
-            $("#hjUserChat").append(msgModel);
+            $("#hjUserChat").append(userMsgModel);
             scrollDown("hjUserChat");
         }
     } else if (selectOnline==2){
@@ -42,7 +61,7 @@ function setMessage(event) {
             $("#jjTeacherChat").append(msgModel);
             scrollDown("jjTeacherChat");
         } else if (role == 1) {
-            $("#jjUserChat").append(msgModel);
+            $("#jjUserChat").append(userMsgModel);
             scrollDown("jjUserChat");
         }
     } else if (selectOnline==3){
@@ -50,7 +69,7 @@ function setMessage(event) {
             $("#fwTeacherChat").append(msgModel);
             scrollDown("fwTeacherChat");
         } else if (role == 1) {
-            $("#fwUserChat").append(msgModel);
+            $("#fwUserChat").append(userMsgModel);
             scrollDown("fwUserChat");
         }
     }
@@ -120,7 +139,6 @@ window.onbeforeunload = function () {
 function scrollDown(divId) {
     var content = document.getElementById(divId);
     if (content!=null){
-
         content.scrollTop = content.scrollHeight;
     }
 }
@@ -156,3 +174,5 @@ layui.use('layedit', function () {
     // })
 
 });
+
+
