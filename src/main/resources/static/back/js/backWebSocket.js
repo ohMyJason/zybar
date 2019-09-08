@@ -10,12 +10,12 @@ if ('WebSocket' in window) {
 //将接收到的html代码（消息）贴到版面上
 function setMessage(event) {
     console.log(event.data);
-    var role = event.data.split("&*&")[0];
-    var message = event.data.split("&*&")[1];
-    console.log(message);
-    var username = event.data.split("&*&")[2];
-    var selectOnline = event.data.split("&*&")[4];
-    var replay = event.data.split("&*&")[5];
+    var role = event.data.split("&*&")[0];  //老师是2 用户1
+    var message = event.data.split("&*&")[1];  //消息
+    var username = event.data.split("&*&")[2];    //用户名
+    var photoUrl = event.data.split("&*&")[3];  // 头像
+    var selectOnline = event.data.split("&*&")[4];  //选择是哪个直播间 0是大厅 1是黑金 2狙击 3风云
+    var replay = event.data.split("&*&")[5];  //这个回复消息
     if (replay=="无选择回复") {
         replay = "";
     }else if(replay==null){

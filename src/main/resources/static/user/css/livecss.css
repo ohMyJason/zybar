@@ -549,8 +549,10 @@ body{
 /**/
 /*鐩存挱瑙傜偣*/
 .expert-strategy{
+    border: #9e9e9e 1px solid;
+    box-shadow: 5px 5px 5px #dad6d6;
     width: 100%;
-    height: 100%;
+    height: 80%;
     /*position: absolute;*/
     z-index: 1000;
     background: white;

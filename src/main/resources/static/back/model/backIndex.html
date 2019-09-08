@@ -12,7 +12,7 @@
     <script>
         $(function () {
             $("#indexUsername").text($.cookie("username"));
-            $("#indexPhoto").attr("src",$.cookie("photoUrl"));
+            $("#indexPhoto").attr("src", $.cookie("photoUrl"));
             console.log($.cookie("photoUrl"));
         })
     </script>
@@ -51,60 +51,61 @@
 
     <div class="layui-side layui-bg-black" id="window-left">
         <div class="layui-side-scroll">
-                   <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                   <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                       <li class="layui-nav-item" id="super">
-                               <a class="" href="javascript:;">金融超市</a>
-                               <dl class="layui-nav-child">
-                                       <dd><a href="/back/model/zyVoice.html" target="backContent">风口之声管理</a></dd>
-                                       <dd><a href="/back/model/paper.html" target="backContent">机构研报管理</a></dd>
-                                       <dd><a href="/back/model/app.html" target="backContent">手机App管理</a></dd>
-                                       <dd><a href="/back/model/zyView.html" target="backContent">风口视角管理</a></dd>
-                                       <dd><a href="/back/model/caoPan.html" target="backContent">操盘经典管理</a></dd>
-                                       <dd><a href="/back/model/plan.html" target="backContent">布局计划管理</a></dd>
-                                       <dd><a href="/back/model/inveEdu.html" target="backContent">投资者教育管理</a></dd>
-                                       <dd><a href="/back/model/bigData.html" target="backContent">大数据云管理</a></dd>
-                                       <dd><a href="/back/model/popularRanking.html" target="backContent">人气排名管理</a></dd>
-                                       <dd><a href="/back/model/winRanking.html" target="backContent">胜率排名管理</a></dd>
-                                   </dl>
-                           </li>
-                       <li class="layui-nav-item" id="multi">
-                               <a href="javascript:;">多维量化</a>
-                               <dl class="layui-nav-child">
-                                       <dd><a href="/back/model/coke.html" target="backContent">焦炭</a></dd>
-                                       <dd><a href="/back/model/formaldehyde.html" target="backContent">甲醛</a></dd>
-                                       <dd><a href="/back/model/rebar.html" target="backContent">螺纹钢</a></dd>
-                                       <dd><a href="/back/model/asphalt.html" target="backContent">沥青</a></dd>
-                                       <dd><a href="/back/model/hotRoll.html" target="backContent">热卷</a></dd>
-                                       <dd><a href="/back/model/cokingCoal.html" target="backContent">焦煤</a></dd>
-                                   </dl>
-                           </li>
-                       <li class="layui-nav-item" id="viewOnline">
-                               <a href="javascript:;">观点在线</a>
-                               <dl class="layui-nav-child">
-                                       <dd><a href="/back/model/viewOnline.html" target="backContent">我要直播</a></dd>
-                                       <dd><a href="/back/model/liveImg.html" target="backContent">节目轮播图片管理</a></dd>
-                                       <dd><a href="/back/model/hjStrategy.html" target="backContent">黑金战队策略</a></dd>
-                                       <dd><a href="/back/model/hjOnline.html" target="backContent">黑金战队直播间</a></dd>
-                                       <dd><a href="/back/model/jjStrategy.html" target="backContent">狙击战队策略</a></dd>
-                                       <dd><a href="/back/model/jjOnline.html" target="backContent">狙击战队直播间</a></dd>
-                                       <dd><a href="/back/model/fyStrategy.html" target="backContent">风云战队策略</a></dd>
-                                       <dd><a href="/back/model/fwOnline.html" target="backContent">风云战队直播间</a></dd>
-                                   </dl>
-                           </li>
-                       <li class="layui-nav-item" id="userAdmin">
-                               <a href="javascript:;">账号管理</a>
-                               <dl class="layui-nav-child">
-                                       <dd><a href="/back/model/userMange.html" target="backContent">用户管理</a></dd>
-                                   </dl>
-                           </li>
-                   </ul>
-               </div>
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item" id="super">
+                    <a class="" href="javascript:;">金融超市</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/back/model/zyVoice.html" target="backContent">风口之声管理</a></dd>
+                        <dd><a href="/back/model/paper.html" target="backContent">机构研报管理</a></dd>
+                        <dd><a href="/back/model/app.html" target="backContent">手机App管理</a></dd>
+                        <dd><a href="/back/model/zyView.html" target="backContent">风口视角管理</a></dd>
+                        <dd><a href="/back/model/caoPan.html" target="backContent">操盘经典管理</a></dd>
+                        <dd><a href="/back/model/plan.html" target="backContent">布局计划管理</a></dd>
+                        <dd><a href="/back/model/inveEdu.html" target="backContent">投资者教育管理</a></dd>
+                        <dd><a href="/back/model/bigData.html" target="backContent">大数据云管理</a></dd>
+                        <dd><a href="/back/model/popularRanking.html" target="backContent">人气排名管理</a></dd>
+                        <dd><a href="/back/model/winRanking.html" target="backContent">胜率排名管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" id="multi">
+                    <a href="javascript:;">多维量化</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/back/model/coke.html" target="backContent">焦炭</a></dd>
+                        <dd><a href="/back/model/formaldehyde.html" target="backContent">甲醛</a></dd>
+                        <dd><a href="/back/model/rebar.html" target="backContent">螺纹钢</a></dd>
+                        <dd><a href="/back/model/asphalt.html" target="backContent">沥青</a></dd>
+                        <dd><a href="/back/model/hotRoll.html" target="backContent">热卷</a></dd>
+                        <dd><a href="/back/model/cokingCoal.html" target="backContent">焦煤</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" id="viewOnline">
+                    <a href="javascript:;">观点在线</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/back/model/viewOnline.html" target="backContent">我要直播</a></dd>
+                        <dd><a href="/back/model/liveImg.html" target="backContent">节目轮播图片管理</a></dd>
+                        <dd><a href="/back/model/hjStrategy.html" target="backContent">黑金战队策略</a></dd>
+                        <dd><a href="/back/model/hjOnline.html" target="backContent">黑金战队直播间</a></dd>
+                        <dd><a href="/back/model/jjStrategy.html" target="backContent">狙击战队策略</a></dd>
+                        <dd><a href="/back/model/jjOnline.html" target="backContent">狙击战队直播间</a></dd>
+                        <dd><a href="/back/model/fyStrategy.html" target="backContent">风云战队策略</a></dd>
+                        <dd><a href="/back/model/fwOnline.html" target="backContent">风云战队直播间</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" id="userAdmin">
+                    <a href="javascript:;">账号管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="enterUserMange">用户管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe src="paper.html"  frameborder="0" name="backContent" height="100%" width="100%"></iframe>
+        <iframe id="content-aera" src="paper.html" frameborder="0" name="backContent" height="100%"
+                width="100%"></iframe>
     </div>
 
     <div class="layui-footer">
@@ -119,17 +120,45 @@
 
     });
 
-    $("#alertUserInfo").click(function () {
-        layui.use('layer', function () {
-            var layer = layui.layer;
-            layer.open({
-                type: 2,
-                area: ['800px', '580px'],
-                content: '/back/content/userInfo.html' //这里content是一个普通的String
-            });
+    layui.use('layer', function () {
+        var layer = layui.layer;
+
+        $("#alertUserInfo").click(function () {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    area: ['800px', '580px'],
+                    content: '/back/content/userInfo.html' //这里content是一个普通的String
+                });
+            })
+
         })
 
+        $("#enterUserMange").click(function () {
+            $.ajax({
+                url: "/getUserByToken",
+                headers: {token: $.cookie("token")},
+                dataType: "json",
+                type:"post",
+                success: function (res) {
+                    if (res.code == 0) {
+                        if (res.data.role == 3) {
+                            $("#content-aera").attr("src", "/back/model/userMange.html");
+                        } else {
+                            layer.alert("只有超级管理员有权限管理用户信息，请登录超级管理员账号。")
+                        }
+                    } else {
+                        layer.msg("操作失败");
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        })
     })
+
 </script>
 </body>
 </html>

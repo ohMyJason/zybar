@@ -68,7 +68,11 @@
                             ,{field:'userId', title:'账号', fixed: 'left', unresize: true, sort: true}
                             ,{field:'photoUrl', title:'头像' ,templet:function (d) {
                                     if (d.role==1){
-                                        return "普通用户无头像"
+                                        if (d.photoUrl==null){
+                                            return "无头像"
+                                        }else {
+                                            return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
+                                        }
                                     } else {
                                         return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
                                     }
@@ -78,9 +82,11 @@
                             ,{field:'phone', title:'电话'}
                             ,{field:'role', title:'角色',sort: true,templet:function (d) {
                                     if (d.role==1){
-                                        return "普通用户"
-                                    } else {
-                                        return "老师"
+                                        return "普通用户";
+                                    } else if (d.role==2) {
+                                        return "老师";
+                                    }else {
+                                        return "超级管理员";
                                     }
                                 }}
                             // ,{field:'category', title:'类别'}
@@ -150,14 +156,13 @@
                                         }, 1000);
                                     });
                                 })
-
                             });
                         } else if(obj.event === 'edit'){
                             layer.open({
                                 type: 2,
                                 shadeClose: true,
                                 area : ['800px' , '480px'],
-                                content: '/back/content/edit-user.html?username='+data.username+'&password='+data.password+'&userId='+data.userId+'&phone='+data.phone+'&role='+data.role+'&level='+data.level+'&ifHj='+data.ifHj+'&ifJj='+data.ifJj+'&ifFw='+data.ifFw //这里content是一个普通的String
+                                content: '/back/content/edit-user.html?username='+data.username+'&password='+data.password+'&userId='+data.userId+'&phone='+data.phone+'&role='+data.role+'&level='+data.level+'&ifHj='+data.ifHj+'&ifJj='+data.ifJj+'&ifFw='+data.ifFw+'&photoUrl='+data.photoUrl //这里content是一个普通的String
                             });
                         }
                     });

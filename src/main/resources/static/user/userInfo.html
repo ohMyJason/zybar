@@ -78,11 +78,22 @@
 <body>
 <div class="user-information-content">
     <!--<div class="background-img">-->
-        <!--<div class="headimg"><img src="http://image.find37.com/150950657159f93e0b53113.png-live"></div>-->
+    <!--<div class="headimg"><img src="http://image.find37.com/150950657159f93e0b53113.png-live"></div>-->
     <!--</div>-->
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
         <legend>个人中心</legend>
     </fieldset>
+    <div class="re-user">
+        <div class="layui-card-header">修改头像</div>
+        <img src="" id="userPhoto" alt="" width="100px" height="100px" style="margin-left: 5%">
+    </div>
+    <div class="re-user">
+        <button  style="margin-left: 42%" type="button" class="layui-btn layui-btn-normal" id="test1">
+            <i class="layui-icon">&#xe67c;</i>上传头像
+        </button>
+        <input type="hidden" name="photoUrl" id="photoUrl">
+        <button class="layui-btn new_button" id="updateUserPhoto">确定修改</button>
+    </div>
     <div class="re-user">
         <div class="layui-card-header">修改昵称</div>
         <input type="text" name="name" id="name" placeholder="请输入昵称" autocomplete="off" class="layui-input new_input">
@@ -95,26 +106,73 @@
         <button class="layui-btn new_button" id="updatePassWord">确定修改</button>
     </div>
     <!--<div class="re-user">-->
-        <!--<div class="layui-card-header">修改手机号</div>-->
-        <!--<input type="text" style="margin-bottom: 2%" name="mobile" id="mobile" placeholder="请输入手机号" autocomplete="off"-->
-               <!--class="layui-input new_input">-->
-        <!--<input type="tel" name="phone" id="nickCode" lay-verify="required|phone" placeholder="输入验证码" autocomplete="off"-->
-               <!--class="layui-input new_input">-->
-        <!--<button style="margin-bottom: 2%" class="layui-btn new_button">获取验证码</button>-->
-        <!--<button class="layui-btn new_button">确定修改</button>-->
+    <!--<div class="layui-card-header">修改手机号</div>-->
+    <!--<input type="text" style="margin-bottom: 2%" name="mobile" id="mobile" placeholder="请输入手机号" autocomplete="off"-->
+    <!--class="layui-input new_input">-->
+    <!--<input type="tel" name="phone" id="nickCode" lay-verify="required|phone" placeholder="输入验证码" autocomplete="off"-->
+    <!--class="layui-input new_input">-->
+    <!--<button style="margin-bottom: 2%" class="layui-btn new_button">获取验证码</button>-->
+    <!--<button class="layui-btn new_button">确定修改</button>-->
     <!--</div>-->
 </div>
 <script>
+    layui.use('upload', function () {
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            , url: '/uploadUserImg' //上传接口
+            , accept: 'img'
+            , done: function (res) {
+                $("#photoUrl").val(res.data);
+                $("#userPhoto").attr("src", res.data);
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg("上传成功", {time: 1000});
+                });
+
+                //上传完毕回调
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+    });
     $(function () {
+        $("#userPhoto").attr("src",$.cookie("userPhotoUrl"));
+
         $("#updateUserName").click(function () {
-            ajaxPOST("/updateUserByToken",{username:$("#name").val()},function () {
+            ajaxPOST("/updateUserByToken", {username: $("#name").val()}, function () {
                 layer.alert("修改成功，请重新登录");
+                setTimeout(function () {
+
+                    parent.window.location.href="/user/login.html";
+                },3000)
+
             })
         })
 
         $("#updatePassWord").click(function () {
-            ajaxPOST("/updateUserByToken",{password:$("#password").val()},function () {
+            ajaxPOST("/updateUserByToken", {password: $("#password").val()}, function () {
                 layer.alert("修改成功，请重新登录");
+                setTimeout(function () {
+
+                    parent.window.location.href="/user/login.html";
+                },3000)
+
+            })
+        })
+
+        $("#updateUserPhoto").click(function () {
+            ajaxPOST("/updateUserByToken", {photoUrl: $("#photoUrl").val()}, function () {
+                layer.alert("修改成功，请重新登录");
+                setTimeout(function () {
+
+                    parent.window.location.href="/user/login.html";
+                },3000)
+
+
             })
         })
     })

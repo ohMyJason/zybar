@@ -59,7 +59,13 @@
                     $("#userId").prepend(" <p>" + data.data.userId + "</p>")
                     $("#userName").prepend(" <p>" + data.data.username + "</p>")
                     $("#userPhone").prepend(" <p>" + data.data.phone + "</p>")
-                    $("#userImg").prepend("<img style='width: 80%' id='photo' src=\"" + data.data.photoUrl + "\" alt=\"无头像\">\n")
+                    if (data.data.photoUrl!=null){
+
+                        $("#userImg").prepend("<img style='width: 100px;height: 100px' id='photo' src=\"" + data.data.photoUrl + "\" alt=\"无头像\">\n")
+                    } else {
+                        $("#userImg").prepend("<img style='width: 100px;height: 100px' id='photo' src=\"" + data.data.photoUrl + "\" alt=\"无头像\">\n")
+
+                    }
                 }
             })
         })
@@ -132,11 +138,11 @@
                 success: function () {
                     layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
                     setTimeout(function () {
-                        layer.msg('修改成功,请重新登录');
+                        layer.msg('修改成功,请重新登录以更新资料，页面将自动跳转');
                         setTimeout(function () {
-                            window.location.reload();
-                        },1000);
-                    }, 1000);
+                            parent.location.href="/back/adminLogin.html"
+                        },3000);
+                }, 1000);
 
                     // $.ajax({
                     //     url:"/getUserByToken",

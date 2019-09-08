@@ -213,9 +213,9 @@
               },
               success:function (data) {
                   if (data.code==0){
-
                       $.cookie("token",data.data[1],{ expires:1,path:'/'});
                       $.cookie("username",data.data[0].username,{ expires:1,path:'/'});
+                      $.cookie("userPhotoUrl",data.data[0].photoUrl,{ expires:1,path:'/'});
                       window.location.href="/user/page.html";
                   }else {
                       layer.msg("账号或密码错误");

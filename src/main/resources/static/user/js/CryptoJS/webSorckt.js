@@ -14,7 +14,7 @@ $(function () {
         } else {
             var message = $("#message-aera").val();
             //通过判断$("#selectOnline").val()是1还是2，来判断是用户发的还是老师发的
-            websocket.send(1 + "&*&" + message + "&*&" + $.cookie("username") + "&*&" + "#" + "&*&" + $("#selectOnline").val() + "&*&#");
+            websocket.send(1 + "&*&" + message + "&*&" + $.cookie("username") + "&*&" + $.cookie("userPhotoUrl") + "&*&" + $("#selectOnline").val() + "&*&#");
             $("#message-aera").val(" ");
             if (websocket.readyState != 1) {
                 layer.alert("直播间连接错误，请刷新页面重试。");
@@ -47,8 +47,12 @@ function setMessage(event) {
         reply += "<br>";
     }
 
+    if (photoUrl==null||photoUrl=="null"){
+        photoUrl="http://image.find37.com/150950657159f93e0b53113.png-live";
+    }
+
     var userMsgModel = "<div class=\"chat-item\" id=\"hallUsers\" style=\"display: block;\">\n" +
-        "                    <div class=\"chat-left\"><img src=\"http://image.find37.com/150950665859f93e62b5b32.png\" +=\"\" -live=\"\">\n" +
+        "                    <div class=\"chat-left\"><img src=\""+photoUrl+"\" +=\"\" -live=\"\">\n" +
         "                    </div>\n" +
         "                    <div class=\"chat-right\"><p class=\"time\">" + new Date().toLocaleTimeString() + "</p>\n" +
         "                        <div class=\"chat-user\"><img class=\"imgLogo\" src=\"http://image.find37.com/grade1.png\" +=\"\"\n" +

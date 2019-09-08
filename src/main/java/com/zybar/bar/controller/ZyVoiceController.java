@@ -54,7 +54,7 @@ public class ZyVoiceController {
                 data.put("src",voice.getMp3Url());
                 data.put("name",voice.getMp3Name());
                 data.put("author",userMapper.selectByPrimaryKey(voice.getUserId()).getUsername());
-                data.put("cover",voice.getPhotoUrl());
+                data.put("cover",userMapper.selectByPrimaryKey(voice.getUserId()).getPhotoUrl());
                 datas.add(data);
             }
             return Result.createSuccessResult(datas);

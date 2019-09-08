@@ -49,7 +49,7 @@
             // alert(data);
             function fun(res){
                 if (res.code==0) {
-                    if (res.data[0].role==2){
+                    if (res.data[0].role==2||res.data[0].role==3){
                         $.cookie("token",res.data[1]);
                         $.cookie("username",res.data[0].username);
                         $.cookie("photoUrl",res.data[0].photoUrl);

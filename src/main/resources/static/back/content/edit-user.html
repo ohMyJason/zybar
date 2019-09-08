@@ -19,7 +19,8 @@
         <div class="layui-inline">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-inline">
-                <input type="text" name="username" id="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off"
+                <input type="text" name="username" id="username" lay-verify="required" placeholder="请输入用户名"
+                       autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -27,10 +28,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-inline">
-                <input type="text" name="password" id="password" lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                <input type="text" name="password" id="password" lay-verify="required" placeholder="请输入密码"
+                       autocomplete="off"
                        class="layui-input">
             </div>
         </div>
+
+
     </div>
 
     <div class="layui-form-item">
@@ -101,7 +105,24 @@
             </div>
         </div>
     </div>
+    <div class="layui-form-item">
+
+        <div class="layui-input-block" style="margin-top: 20px;">
+            <button type="button" class="layui-btn" id="test1">
+                <i class="layui-icon">&#xe67c;</i>上传头像
+            </button>
+            <input type="hidden" name="photoUrl" id="photoUrl">
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-inline">
+                <img class="layui-upload-img" id="photo" width="100%" height="100%">
+            </div>
+        </div>
+    </div>
     <input type="hidden" id="userId" name="userId">
+
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -111,19 +132,45 @@
 </form>
 
 <script>
-    function RequestParameter(){
+    layui.use('upload', function () {
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            , url: '/uploadUserImg' //上传接口
+            , accept: 'img'
+            , done: function (res) {
+                $("#photoUrl").val(res.data);
+                $("#photo").attr("src", res.data);
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg("上传成功", {time: 1000});
+                });
+
+                //上传完毕回调
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+    });
+
+    function RequestParameter() {
         var url = window.location.search; //获取url中"?"符后的字串
-        url=decodeURI(url);
+        url = decodeURI(url);
         console.log(url);
         var theRequest = new Object();
         if (url.indexOf("?") != -1) {
             var str = url.substr(1);
             var strs = str.split("&");
-            for(var i = 0; i < strs.length; i ++) {
-                theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
             }
         }
-        return theRequest}
+        return theRequest
+    }
+
     //Demo
     $(function () {
         var data = RequestParameter();
@@ -136,6 +183,11 @@
         $("#ifHj").val(data.ifHj);
         $("#ifJj").val(data.ifJj);
         $("#ifFw").val(data.ifFw);
+        if (data.photoUrl==null||data.photoUrl=="null"){
+            $("#photo").attr("src", "/back/layui/images/imgInit.png");
+        } else {
+            $("#photo").attr("src", data.photoUrl);
+        }
     })
     layui.use('form', function () {
         var form = layui.form;
@@ -158,7 +210,7 @@
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
                         parent.window.location.reload();
-                    },3000);
+                    }, 3000);
                 },
                 error: function () {
                 }

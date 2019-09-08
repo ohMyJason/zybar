@@ -59,7 +59,7 @@
                         type: 2,
                         title: false,
                         closeBtn: 0,
-                        area: ['700px', '350px'],
+                        area: ['700px', '450px'],
                         shadeClose: true,
                         skin: 'yourclass',
                         content: 'userInfo.html'
@@ -136,6 +136,7 @@
 
                         #skPlayer .skPlayer-cover {
                             height: 70%;
+                            width: 70%;
                         }
 
                         #skPlayer .skPlayer-control .skPlayer-volume .skPlayer-percent {
@@ -801,12 +802,14 @@
                     //移动到上面显示策略，下同
                     $("#zd-1").hover(function () {
                         if ($("#expert-strategy-1").css("display") == "none") {
-                            $("#expert-strategy-1").css("display", "block");
+                            $("#expert-strategy-1").fadeIn(1000);
                             $("#expert-strategy-2").css("display", "none");
                             $("#expert-strategy-3").css("display", "none");
-                        } else {
-                            $("#expert-strategy-1").css("display", "none");
                         }
+                    },function () {
+                        setTimeout(function () {
+                            $("#expert-strategy-1").fadeOut(1000);
+                        },3000);
                     })
                     //切换直播间
                     $("#zd-1").click(function () {
@@ -844,11 +847,13 @@
                     $("#zd-2").hover(function () {
                         if ($("#expert-strategy-2").css("display") == "none") {
                             $("#expert-strategy-1").css("display", "none");
-                            $("#expert-strategy-2").css("display", "block");
+                            $("#expert-strategy-2").fadeIn(1000);
                             $("#expert-strategy-3").css("display", "none");
-                        } else {
-                            $("#expert-strategy-2").css("display", "none");
                         }
+                    },function () {
+                        setTimeout(function () {
+                            $("#expert-strategy-2").fadeOut(1000);
+                        },3000);
                     })
                     //切换直播间
                     $("#zd-2").click(function () {
@@ -886,10 +891,12 @@
                         if ($("#expert-strategy-3").css("display") == "none") {
                             $("#expert-strategy-1").css("display", "none");
                             $("#expert-strategy-2").css("display", "none");
-                            $("#expert-strategy-3").css("display", "block");
-                        } else {
-                            $("#expert-strategy-3").css("display", "none");
+                            $("#expert-strategy-3").fadeIn(1000);
                         }
+                    },function () {
+                        setTimeout(function () {
+                            $("#expert-strategy-3").fadeOut(1000);
+                        },3000);
                     })
                     //切换直播间
                     $("#zd-3").click(function () {
@@ -940,8 +947,7 @@
             </script>
             <div class="expert-strategy" id="expert-strategy-1" style="overflow: scroll;display: none">
                 <p>策略仅供参考，不作为买卖依据</p>
-
-                <div id="expert-strategy-1-1" class="expert-strategy-div" style="height: 17%">
+                <div id="expert-strategy-1-1" class="expert-strategy-div" style="height: 15%">
                     <!--模版-->
                     <!--<div class="exert-strategy-div-l" style="border: none">-->
                     <!--<div class="expert-strategy-div-left"><img-->
@@ -954,8 +960,8 @@
                     <!--</p></div>-->
                     <!--<div class="expert-strategy-div-right" style="background-color: rgb(64, 211, 64);">卖出平仓</div>-->
                     <!--</div>-->
-
                 </div>
+                <!--<div  style="margin-left: 48%;margin-top: 80%"><img  style="width: 10%;" src="img/shangla.png"></div>-->
             </div>
             <div class="expert-strategy" id="expert-strategy-2" style="overflow: scroll;display: none">
                 <p>策略仅供参考，不作为买卖依据</p>
