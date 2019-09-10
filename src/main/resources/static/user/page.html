@@ -806,10 +806,10 @@
                             $("#expert-strategy-2").css("display", "none");
                             $("#expert-strategy-3").css("display", "none");
                         }
-                    },function () {
+                    }, function () {
                         setTimeout(function () {
                             $("#expert-strategy-1").fadeOut(1000);
-                        },3000);
+                        }, 3000);
                     })
                     //切换直播间
                     $("#zd-1").click(function () {
@@ -850,10 +850,10 @@
                             $("#expert-strategy-2").fadeIn(1000);
                             $("#expert-strategy-3").css("display", "none");
                         }
-                    },function () {
+                    }, function () {
                         setTimeout(function () {
                             $("#expert-strategy-2").fadeOut(1000);
-                        },3000);
+                        }, 3000);
                     })
                     //切换直播间
                     $("#zd-2").click(function () {
@@ -893,10 +893,10 @@
                             $("#expert-strategy-2").css("display", "none");
                             $("#expert-strategy-3").fadeIn(1000);
                         }
-                    },function () {
+                    }, function () {
                         setTimeout(function () {
                             $("#expert-strategy-3").fadeOut(1000);
-                        },3000);
+                        }, 3000);
                     })
                     //切换直播间
                     $("#zd-3").click(function () {
@@ -945,6 +945,11 @@
                     })
                 })
             </script>
+            <style>
+                #expert-strategy-1-1 div {
+                    margin-top: 5%;
+                }
+            </style>
             <div class="expert-strategy" id="expert-strategy-1" style="overflow: scroll;display: none">
                 <p>策略仅供参考，不作为买卖依据</p>
                 <div id="expert-strategy-1-1" class="expert-strategy-div" style="height: 15%">
@@ -961,7 +966,7 @@
                     <!--<div class="expert-strategy-div-right" style="background-color: rgb(64, 211, 64);">卖出平仓</div>-->
                     <!--</div>-->
                 </div>
-                <!--<div  style="margin-left: 48%;margin-top: 80%"><img  style="width: 10%;" src="img/shangla.png"></div>-->
+                <div class="shangla"><img style="width: 60%;" src="img/shangla.png"></div>
             </div>
             <div class="expert-strategy" id="expert-strategy-2" style="overflow: scroll;display: none">
                 <p>策略仅供参考，不作为买卖依据</p>
@@ -998,7 +1003,17 @@
             </div>
             <div class="expert-content" id="fwOnline" style="display: none">
             </div>
-
+            <div style="height: 20%;width: 100%">
+                <textarea id="demo" style="display: none;"></textarea>
+                <script>
+                    layui.use('layedit', function () {
+                        var layedit = layui.layedit;
+                        layedit.build('demo',{
+                            height: "20%" //设置编辑器高度,
+                        }); //建立编辑器
+                    });
+                </script>
+            </div>
             <div class="clbg">
                 策略仅供参考，不作为买卖依据！本服务团队秉承严谨、客观的角度为投资者提供市场资讯服务，但是市场对资讯的反馈存在不可控因素，本公司资讯服务仅供参考，并不能取代您自己的投资判断，建议投资者自主决定交易，自负风险。市场有风险，入市谨慎
             </div>
