@@ -11,10 +11,7 @@ import com.zybar.bar.util.FileUtil;
 import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +39,8 @@ public class UserController {
 
     //登录 -> 检查用户名密码与数据库中的记录是否匹配
     @PostMapping("/login")
-    public Result login(User user) {
+    public Result login(@RequestBody  User user) {
+        System.out.println(user.getUserId()+"-"+user.getUsername()+"-"+user.getPassword());
 //        User userForBase = userService.findByUsername(user);
 //        上面是根据用户名登录，这里是根据id登录
         User userForBase = userService.findUserById(user.getUserId());

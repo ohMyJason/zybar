@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -44,11 +44,11 @@
                         console.log(replay);
                         $("#replayName").text(replay);
 
-                    })
+                    });
 
                     $("#restReply").click(function () {
                         $("#replayName").text("无选择回复");
-                    })
+                    });
 
 
                     $("#editMessage").click(function () {
@@ -87,7 +87,7 @@
                             $("#send").click(function () {
                                 var content = layedit.getContent(index);
                                 console.log(content);
-                                if (websocket.readyState != 1) {
+                                if (websocket.readyState !== 1) {
                                     layui.use('layer', function () {
                                         var layer = layui.layer;
                                         layer.alert("直播间连接出现错误,请刷新页面重新连接");
