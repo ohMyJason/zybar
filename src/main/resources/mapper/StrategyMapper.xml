@@ -23,6 +23,7 @@
     <result column="close_id" property="closeId" jdbcType="INTEGER" />
     <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
     <result column="creater_id" property="createrId" jdbcType="INTEGER" />
+    <result column="select_live" property="selectLive" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -31,7 +32,7 @@
       This element was generated on Wed Sep 11 11:07:53 CST 2019.
     -->
     strategy_id, product_id, contract, opera, delegate_type, opera_type, position, point, 
-    target_one, target_two, stop_loss, remarks, is_close, close_id, creat_time, creater_id
+    target_one, target_two, stop_loss, remarks, is_close, close_id, creat_time, creater_id,select_live
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     <!--
@@ -64,13 +65,13 @@
       position, point, target_one, 
       target_two, stop_loss, remarks, 
       is_close, close_id, creat_time, 
-      creater_id)
+      creater_id,select_live)
     values (#{strategyId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{contract,jdbcType=VARCHAR}, 
       #{opera,jdbcType=VARCHAR}, #{delegateType,jdbcType=VARCHAR}, #{operaType,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{point,jdbcType=VARCHAR}, #{targetOne,jdbcType=VARCHAR}, 
       #{targetTwo,jdbcType=VARCHAR}, #{stopLoss,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
       #{isClose,jdbcType=INTEGER}, #{closeId,jdbcType=INTEGER}, #{creatTime,jdbcType=VARCHAR}, 
-      #{createrId,jdbcType=INTEGER})
+      #{createrId,jdbcType=INTEGER}),#{selectLive,jdbcType=INTEGER}
   </insert>
   <insert id="insertSelective" parameterType="com.zybar.bar.model.Strategy" >
     <!--
@@ -128,6 +129,9 @@
       <if test="createrId != null" >
         creater_id,
       </if>
+      <if test="selectLive != null" >
+        select_live,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="strategyId != null" >
@@ -177,6 +181,9 @@
       </if>
       <if test="createrId != null" >
         #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="selectLive != null" >
+        #{selectLive,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -233,6 +240,9 @@
       <if test="createrId != null" >
         creater_id = #{createrId,jdbcType=INTEGER},
       </if>
+      <if test="selectLive != null" >
+        select_live = #{createrId,jdbcType=INTEGER},
+      </if>
     </set>
     where strategy_id = #{strategyId,jdbcType=INTEGER}
   </update>
@@ -257,7 +267,8 @@
       is_close = #{isClose,jdbcType=INTEGER},
       close_id = #{closeId,jdbcType=INTEGER},
       creat_time = #{creatTime,jdbcType=VARCHAR},
-      creater_id = #{createrId,jdbcType=INTEGER}
+      creater_id = #{createrId,jdbcType=INTEGER},
+      select_live = #{selectLive,jdbcType=INTEGER}
     where strategy_id = #{strategyId,jdbcType=INTEGER}
   </update>
 
@@ -266,6 +277,23 @@
     from tb_strategy
     <where>
       creater_id = #{createrId}
+      <if test="ifClose!=null">
+        and if_close = #{ifClose}
+      </if>
     </where>
+    LIMIT #{start},#{limit}
   </select>
+
+  <select id="getCount" resultType="integer">
+   select count(*)
+   from tb_strategy
+   <where>
+     <if test="createrId!=null">
+       creater_id = #{createrId}
+     </if>
+     <if test="ifClose!=null">
+       and if_close = #{ifClose}
+     </if>
+   </where>
+ </select>
 </mapper>

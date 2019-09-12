@@ -43,4 +43,14 @@
       </if>
     </trim>
   </insert>
+  <select id="selectById" resultMap="BaseResultMap">
+    select *
+    from tb_product
+    where product_id = #{productId}
+  </select>
+
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select *
+    from  tb_product
+  </select>
 </mapper>

@@ -27,5 +27,7 @@ public interface StrategyMapper {
     
     int updateByPrimaryKey(Strategy record);
 
-    List<Strategy> selectStrategyByCreaterId(@Param("createrId") int createrId);
+    List<Strategy> selectStrategyByCreaterId(@Param("createrId") Integer createrId,@Param("start") int start,@Param("limit") int limit,@Param("ifClose") Integer ifClose);
+
+    int getCount(@Param("createrId") Integer createrId,@Param("ifClose") Integer ifClose);
 }

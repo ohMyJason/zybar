@@ -7,6 +7,7 @@ import com.zybar.bar.annotations.UserLoginToken;
 import com.zybar.bar.dao.CloseStrategyMapper;
 import com.zybar.bar.dao.ProductMapper;
 import com.zybar.bar.dao.StrategyMapper;
+import com.zybar.bar.dao.UserMapper;
 import com.zybar.bar.model.CloseStrategy;
 import com.zybar.bar.model.Product;
 import com.zybar.bar.model.Strategy;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,15 +51,24 @@ public class StrategyController {
     @Autowired
     ProductMapper productMapper;
 
+    @Autowired
+    UserMapper userMapper;
+
     @PostMapping("/insertProduct")
     public  Result insertProduct(Product product){
         productMapper.insertSelective(product);
         return Result.createSuccessResult();
     }
 
+    @PostMapping("/getProduct")
+    public Result getProduct(){
+        List<Product> products = productMapper.selectAll();
+        return Result.createSuccessResult(products.size(),products);
+    }
+
 
     @PostMapping("/creatStrategy")
-    public Result creatStrategy(Strategy strategy,HttpServletRequest httpServletRequest){
+    public Result creatStrategy(@RequestBody Strategy strategy,HttpServletRequest httpServletRequest){
         try {
             String createrId = tokenService.getUserId(httpServletRequest);
             strategy.setCreaterId(Integer.parseInt(createrId));
@@ -98,34 +109,63 @@ public class StrategyController {
 
     }
 
-
+    /**
+     * 查询用户的建仓列表
+     * @param httpServletRequest
+     * @return
+     */
     @PostMapping("/getStrategyByToken")
-    public Result getStrategy(HttpServletRequest httpServletRequest){
+    public Result getStrategy(HttpServletRequest httpServletRequest,int page,int limit){
         String userId = tokenService.getUserId(httpServletRequest);
-        List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(Integer.parseInt(userId));
+        int start = PageCheck.calculateStart(page, limit);
+        //这里不用分辨是否平仓，所以用null代替
+        Integer ifClose = null;
+        int count = strategyMapper.getCount(Integer.parseInt(userId),ifClose);
+        List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(Integer.parseInt(userId),start,limit,ifClose);
         JSONArray res = new JSONArray();
+//        将已经平仓的返回json对象里面加个平仓的json对象
         for (Strategy strategy : strategies){
             if (strategy.getIsClose() == 1) {
                 JSONObject jsonStrategy = (JSONObject)JSON.toJSON(strategy);
+                jsonStrategy.put("productName",productMapper.selectById(strategy.getProductId()).getProductName());
+                jsonStrategy.put("teacherName",userMapper.selectByPrimaryKey(strategy.getCreaterId()).getUsername());
                 CloseStrategy closeStrategy = closeStrategyMapper.selectByPrimaryKey(strategy.getCloseId());
                 JSONObject jsonCloseStrategy = (JSONObject)JSON.toJSON(closeStrategy);
                 jsonStrategy.put("closeStrategy",jsonCloseStrategy);
                 res.add(jsonStrategy);
             }else {
                 JSONObject jsonStrategy = (JSONObject)JSON.toJSON(strategy);
+                jsonStrategy.put("productName",productMapper.selectById(strategy.getProductId()).getProductName());
+                jsonStrategy.put("teacherName",userMapper.selectByPrimaryKey(strategy.getCreaterId()).getUsername());
                 res.add(jsonStrategy);
             }
         }
-        return Result.createSuccessResult(res.size(),res);
+        return  Result.createSuccessResult(count,res);
     }
 
 
-    //todo 还没写
+    /**
+     * 查询自己的的平仓列表
+     * @param httpServletRequest
+     * @return
+     */
     @PostMapping("/getCloseStrategy")
-    public  Result getCloseStrategy(HttpServletRequest httpServletRequest){
+    public  Result getCloseStrategy(int page,int limit,HttpServletRequest httpServletRequest){
         String userId = tokenService.getUserId(httpServletRequest);
-        List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(Integer.parseInt(userId));
-        return null;
+        int start = PageCheck.calculateStart(page, limit);
+        //查询已经平仓的建仓策略
+        Integer ifClose = 1;
+        int count = strategyMapper.getCount(Integer.parseInt(userId),ifClose);
+        List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(Integer.parseInt(userId),start,limit,ifClose);
+        ArrayList<CloseStrategy> closeStrategies = new ArrayList<>();
+//        再根据建仓查对应平仓
+        for (Strategy strategy:strategies){
+            if (strategy.getIsClose()==1){
+                closeStrategies.add(closeStrategyMapper.selectByPrimaryKey(strategy.getCloseId()));
+            }
+        }
+
+        return Result.createSuccessResult(count,closeStrategies);
     }
 
 

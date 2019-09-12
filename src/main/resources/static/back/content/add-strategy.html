@@ -15,66 +15,99 @@
 </fieldset>
 <form class="layui-form">
     <div class="layui-form-item">
-        <label class="layui-form-label">股票名</label>
+        <label class="layui-form-label">商品名</label>
         <div class="layui-input-block">
-            <input type="text" name="stockName" required lay-verify="required" placeholder="请输入股票名" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">点位</label>
-        <div class="layui-input-block">
-            <input type="text" name="point" required lay-verify="required" placeholder="请输入点位" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">目标</label>
-        <div class="layui-input-block">
-            <input type="text" name="target" required lay-verify="required" placeholder="请输入目标" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">止损</label>
-        <div class="layui-input-block">
-            <input type="text" name="stopLoss" required lay-verify="required" placeholder="请输入止损" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">策略操作</label>
-        <div class="layui-input-block">
-            <!--<input type="text" name="operating" required lay-verify="required" placeholder="请输入策略操作" autocomplete="off"-->
-                   <!--class="layui-input">-->
-            <select name="operating" lay-verify="">
-                <option value="">请选择一个操作</option>
-                <option value="买入建仓">买入建仓</option>
-                <option value="卖出平仓">卖出平仓</option>
+            <select name="productId" id="productId" lay-verify="">
+                <option value="">请选择一个商品</option>
+
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">策略来源</label>
+        <label class="layui-form-label">合约</label>
         <div class="layui-input-block">
-            <input type="text" name="source" required lay-verify="required" placeholder="请输入策略来源" autocomplete="off"
+            <input type="text" name="contract"  lay-verify="" placeholder="合约（没有则留空）" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">更新时间</label>
+        <label class="layui-form-label">买入/卖出</label>
         <div class="layui-input-block">
-            <input type="text" name="updateTime" id="updateDate" required lay-verify="required" placeholder="请输入时间"
-                   autocomplete="off"
+            <select name="opera" lay-verify="">
+                <option value="">请选择一个操作</option>
+                <option value="多单建仓">多单建仓</option>
+                <option value="空单建仓">空单建仓</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">委托类型</label>
+        <div class="layui-input-block">
+            <select name="delegateType" lay-verify="">
+                <option value="">请选择一个委托类型</option>
+                <option value="市价委托">市价委托</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作类型</label>
+        <div class="layui-input-block">
+            <!--<input type="text" name="operating" required lay-verify="required" placeholder="请输入策略操作" autocomplete="off"-->
+            <!--class="layui-input">-->
+            <select name="operaType" lay-verify="">
+                <option value="">请选择一个操作</option>
+                <option value="日内操作">日内操作</option>
+                <option value="趋势操作">趋势操作</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">仓位</label>
+        <div class="layui-input-inline">
+            <input type="text" name="position" required lay-verify="required" placeholder="仓位" autocomplete="off"
                    class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">%</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">点位</label>
+        <div class="layui-input-inline">
+            <input type="text" name="point" required lay-verify="required" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <label class="layui-form-label">目标1</label>
+        <div class="layui-input-inline">
+            <input type="text" name="targetOne" required lay-verify="required" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+
+    <label class="layui-form-label">目标2</label>
+        <div class="layui-input-inline">
+            <input type="text" name="targetTwo" required lay-verify="required" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <label class="layui-form-label">止损</label>
+        <div class="layui-input-inline">
+            <input type="text" name="stopLoss" required lay-verify="required" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">建仓描述</label>
+        <div class="layui-input-block" style="margin-top: 15px">
+            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">选择战队</label>
         <div class="layui-input-block" style="margin-top: 15px">
-            <select name="selectName" lay-verify="">
-                <option value="">请选择一个战队</option>
+            <select name="selectLive" id="selectLive" lay-verify="">
+                <option value="">选择一个战队</option>
                 <option value="1">黑金战队</option>
                 <option value="2">狙击战队</option>
                 <option value="3">风云战队</option>
@@ -82,26 +115,6 @@
         </div>
     </div>
 
-
-    <script>
-        layui.use('laydate', function () {
-            var laydate = layui.laydate;
-
-            //执行一个laydate实例
-            laydate.render({
-                elem: '#updateDate' //指定元素
-                , type: 'datetime'
-            });
-        });
-        $(function () {
-            $("#reset").click(function () {
-                layui.use('layer', function () {
-                    var layer = layui.layer;
-                    layer.msg("重置成功，请重新上传文件");
-                })
-            })
-        })
-    </script>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -111,35 +124,58 @@
 </form>
 
 <script>
-    //Demo
-    layui.use('form', function () {
-        var form = layui.form;
 
-        //监听提交
-        form.on('submit(formDemo)', function (data) {
-            $.ajax({
-                url: "/insertStrategy",
-                type: "post",
-                data: data.field,
-                dataType: "json",
-                headers:{token:$.cookie("token")},
-                success: function () {
-                    layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
-                    setTimeout(function () {
-                        layer.msg('添加成功');
-                    }, 1000);
-                    //当你在iframe页面关闭自身时
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                    parent.window.location.reload();
-                },
-                error: function () {
-
+        $.ajax({
+            url: "/getProduct",
+            type: "post",
+            dataType: "json",
+            headers: {token: $.cookie("token")},
+            sync:false,
+            success:function (res) {
+                if (res.code==0){
+                    for (var i = 0; i < res.count; i++) {
+                        $("#productId").append("<option value=\""+res.data[i].productId+"\">"+res.data[i].productName+"</option>")
+                    }
                 }
-            })
-            return false;
-        });
-    });
+
+               var liveData = RequestParameter();
+                $("#selectLive").val(liveData.selectLive);
+                //Demo
+                layui.use('form', function () {
+
+
+                    var form = layui.form;
+
+
+
+                    //监听提交
+                    form.on('submit(formDemo)', function (data) {
+                        $.ajax({
+                            url: "/creatStrategy",
+                            type: "post",
+                            data: JSON.stringify(data.field),
+                            dataType: "json",
+                            contentType:"application/json",
+                            headers: {token: $.cookie("token")},
+                            success: function () {
+                                layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
+                                setTimeout(function () {
+                                    layer.msg('添加成功');
+                                }, 1000);
+                                //当你在iframe页面关闭自身时
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            },
+                            error: function () {
+
+                            }
+                        })
+                        return false;
+                    });
+                });
+            },
+        })
+
 </script>
 </body>
 </html>

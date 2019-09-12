@@ -1,7 +1,9 @@
 package com.zybar.bar.dao;
 
 import com.zybar.bar.model.CloseStrategy;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CloseStrategyMapper {
 
     int deleteByPrimaryKey(Integer closeStrategyId);

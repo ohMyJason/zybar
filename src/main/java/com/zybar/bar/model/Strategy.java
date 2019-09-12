@@ -18,6 +18,15 @@ public class Strategy {
     private Integer closeId;
     private String creatTime;
     private Integer createrId;
+    private Integer selectLive;
+
+    public Integer getSelectLive() {
+        return selectLive;
+    }
+
+    public void setSelectLive(Integer selectLive) {
+        this.selectLive = selectLive;
+    }
 
     public Integer getStrategyId() {
         return strategyId;
