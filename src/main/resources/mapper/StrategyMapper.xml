@@ -64,13 +64,13 @@
       opera, delegate_type, opera_type, 
       position, point, target_one, 
       target_two, stop_loss, remarks, 
-      is_close, close_id, creat_time, 
+      is_close, close_id, creat_time,
       creater_id,select_live)
     values (#{strategyId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{contract,jdbcType=VARCHAR}, 
       #{opera,jdbcType=VARCHAR}, #{delegateType,jdbcType=VARCHAR}, #{operaType,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{point,jdbcType=VARCHAR}, #{targetOne,jdbcType=VARCHAR}, 
       #{targetTwo,jdbcType=VARCHAR}, #{stopLoss,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{isClose,jdbcType=INTEGER}, #{closeId,jdbcType=INTEGER}, #{creatTime,jdbcType=VARCHAR}, 
+      #{isClose,jdbcType=INTEGER}, #{closeId,jdbcType=INTEGER}, #{creatTime,jdbcType=VARCHAR},
       #{createrId,jdbcType=INTEGER}),#{selectLive,jdbcType=INTEGER}
   </insert>
   <insert id="insertSelective" parameterType="com.zybar.bar.model.Strategy" >
@@ -281,6 +281,7 @@
         and if_close = #{ifClose}
       </if>
     </where>
+    order by creat_time desc
     LIMIT #{start},#{limit}
   </select>
 
@@ -296,4 +297,12 @@
      </if>
    </where>
  </select>
+
+  <select id="selectCloseStrategyByCreaterId" resultType="hashmap">
+    SELECT u.username,cs.close_opera,cs.close_time,cs.close_point,cs.remark,s.contract,p.product_name,s.strategy_id
+    FROM tb_strategy s,tb_close_strategy cs,tb_user u,tb_product p
+    WHERE cs.create_strategy_id = s.strategy_id and s.creater_id = #{createrId} and u.user_id = s.creater_id and p.product_id = s.product_id
+    order by cs.close_time desc
+    limit #{start},#{limit}
+  </select>
 </mapper>

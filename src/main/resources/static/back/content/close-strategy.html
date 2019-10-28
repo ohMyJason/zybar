@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../../user/js/jquery-3.1.1.min.js"></script>
+    <script src="../../user/js/jquery-cookie.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>添加战队策略</legend>
+</fieldset>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label"  style="width: 50%" id="product_name">商品名</label>
+        <div class="layui-input-block">
+            <!--<label class="layui-form-label" style="width: 80%" id="product_name"></label>-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">买入/卖出</label>
+        <div class="layui-input-block">
+            <select name="closeOpera" lay-verify="">
+                <option value="">请选择一个操作</option>
+                <option value="多单平仓">多单平仓</option>
+                <option value="空单平仓">空单平仓</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">平仓盈亏</label>
+        <div class="layui-input-block">
+            <select name="ifLoss" lay-verify="">
+                <option value="">请选择一个操作</option>
+                <option value="止盈平仓">止盈平仓</option>
+                <option value="止损平仓">止损平仓</option>
+                <option value="错单平仓">错单平仓</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">委托类型</label>
+        <div class="layui-input-block">
+            <select name="closeDelegateType" lay-verify="">
+                <option value="">请选择一个委托类型</option>
+                <option value="市价委托">市价委托</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作类型</label>
+        <div class="layui-input-block">
+            <!--<input type="text" name="operating" required lay-verify="required" placeholder="请输入策略操作" autocomplete="off"-->
+            <!--class="layui-input">-->
+            <select name="operaType" lay-verify="">
+                <option value="">请选择一个操作</option>
+                <option value="日内操作">日内操作</option>
+                <option value="趋势操作">趋势操作</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">点位</label>
+        <div class="layui-input-inline">
+            <input type="text" name="closePoint" required lay-verify="required" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">平仓描述</label>
+        <div class="layui-input-block" style="margin-top: 15px">
+            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    <input type="hidden" name="createStrategyId" id="strategy_id">
+</form>
+
+<script>
+        $(function () {
+            var data =  RequestParameter();
+            console.log(data)
+            $("#product_name").text("商品名："+data.productName)
+            $("#strategy_id").val(data.strategyId)
+            console.log(data.strategyId)
+        })
+        layui.use('form', function () {
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                $.ajax({
+                    url: "/creatCloseStrategy",
+                    type: "post",
+                    data: data.field,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.code ===0){
+                        layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
+                        setTimeout(function () {
+                            layer.msg('平仓成功，界面自动跳转');
+
+                        }, 1000);
+                        setTimeout(function () {
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            parent.window.location.reload();
+                        }, 3000);
+                        }else {
+                            layer.alert(data.msg);
+                        }
+                    },
+                    error: function () {
+                    }
+                })
+                return false;
+            });
+        });
+
+</script>
+</body>
+</html>

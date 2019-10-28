@@ -92,12 +92,12 @@
                                         layer.alert("直播间连接出现错误,请刷新页面重新连接");
                                     })
                                 }else {
-                                    var message = "2&*&" + content + "&*&" + $.cookie("username")+"&*&"+$.cookie("photoUrl")+"&*&"+$("#selectOnline").val()+"&*&"+$("#replayName").text();
-                                    websocket.send(message);
-
+                                    // var message = "2&*&" + content + "&*&" + $.cookie("username")+"&*&"+$.cookie("photoUrl")+"&*&"+$("#selectOnline").val()+"&*&"+$("#replayName").text();
+                                    // websocket.send(message);
+                                    var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text()}
+                                    websocket.send(JSON.stringify(message));
                                     layer.msg('发送成功');
                                     $("#replayName").text("无选择回复");
-
                                 }
                             });
                         })

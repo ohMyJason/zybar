@@ -206,10 +206,11 @@
               url:"/login",
               type:"post",
               dataType:"json",
-              data:{
+              contentType:"application/json",
+              data:JSON.stringify({
                   userId:$("#userId").val(),
                   password:$("#password").val()
-              },
+              }),
               success:function (data) {
                   if (data.code==0){
                       $.cookie("token",data.data[1],{ expires:1,path:'/'});

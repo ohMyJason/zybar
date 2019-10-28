@@ -11,14 +11,14 @@ public class CloseStrategy {
     private String closePoint;
     private String remark;
     private String closeTime;
-    private Integer creatStrategyId;
+    private Integer createStrategyId;
 
-    public Integer getCreatStrategyId() {
-        return creatStrategyId;
+    public Integer getCreateStrategyId() {
+        return createStrategyId;
     }
 
-    public void setCreatStrategyId(Integer creatStrategyId) {
-        this.creatStrategyId = creatStrategyId;
+    public void setCreateStrategyId(Integer creatStrategyId) {
+        this.createStrategyId = creatStrategyId;
     }
 
     public Integer getCloseStrategyId() {
@@ -85,8 +85,10 @@ public class CloseStrategy {
         return closeTime;
     }
 
-    
+
     public void setCloseTime(String closeTime) {
         this.closeTime = closeTime;
     }
+
+
 }

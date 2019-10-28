@@ -12,7 +12,6 @@ function getQueryString(name) {
 function RequestParameter() {
     var url = window.location.search; //获取url中"?"符后的字串
     url = decodeURI(url);
-    console.log(url);
     var theRequest = new Object();
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
@@ -72,7 +71,7 @@ function ajaxPOST(url, data, func){
         success: function (data) {
             if(data.code == 0){
                 //执行传入的函数
-                if(func){func();}
+                if(func){func(data);}
             }else if(data.code == -100){
                 layer.msg(data.msg);
             }else{

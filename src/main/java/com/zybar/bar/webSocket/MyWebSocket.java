@@ -1,5 +1,7 @@
 package com.zybar.bar.webSocket;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -22,6 +24,9 @@ public class MyWebSocket {
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     /**
      * 连接建立成功调用的方法*/

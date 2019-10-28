@@ -50,15 +50,24 @@
                         ,templet:function (data) {
                             return data.productName+"("+data.contract+")"
                         }
-                        ,width: 120}
+                        ,width: 110}
                     , {field: 'point', title: '点位',width: 80}
                     , {field: 'position', title: '仓位',width: 60}
-                    , {field: 'targetOne', title: '目标点位1',width: 80}
-                    , {field: 'targetTwo', title: '目标点位2',width: 80}
+                    , {field: 'targetOne', title: '目标点位1',width: 120}
+                    , {field: 'targetTwo', title: '目标点位2',width: 120}
                     , {field: 'stopLoss', title: '止损',width: 80}
+                    , {field: 'ifClose', title: '是否平仓',width: 120,templet:function (data){
+                            if (data.isClose ===1){
+                                return "已经平仓";
+                            }else {
+                                return "<p style='color: red'>未平仓</p>";
+                            }
+
+                        }}
                     , {field: 'remarks', title: '备注',width: 100}
                     , {fixed: 'right', title: '详情', toolbar: '#barDemo', width: 90}
                 ]]
+
                 , page: true
                 , where: { //设定异步数据接口的额外参数，任意设
                     selectLive: 1
@@ -90,6 +99,14 @@
                 var data = obj.data;
                 if (obj.event === 'close') {
 
+                    layer.open({
+                        type:2,
+                        title:"提交平仓",
+                        area: ['80%','60%'],
+                        shadeClose:true,
+                        content:"/back/content/close-strategy.html?productName="+data.productName+"("+data.contract+")-"+data.teacherName+"-"+data.creatTime+"&strategyId="+data.strategyId,
+                        area: ['60%','100%'],
+                    })
 
                 }
             });

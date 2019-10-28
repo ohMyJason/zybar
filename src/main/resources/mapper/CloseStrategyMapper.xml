@@ -14,7 +14,7 @@
     <result column="close_point" property="closePoint" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="close_time" property="closeTime" jdbcType="VARCHAR" />
-    <result column="create_Strategy_id" property="creatStrategyId" jdbcType="INTEGER" />
+    <result column="create_Strategy_id" property="createStrategyId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -88,7 +88,7 @@
         close_time,
       </if>
       <if test="createStrategyId != null" >
-        creat_Strategy_id,
+        create_Strategy_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
