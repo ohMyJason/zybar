@@ -1,5 +1,6 @@
 package com.zybar.bar.webSocket;
 
+import com.zybar.bar.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -25,8 +26,6 @@ public class MyWebSocket {
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
 
-    @Autowired
-    RedisTemplate redisTemplate;
 
     /**
      * 连接建立成功调用的方法*/
@@ -59,15 +58,21 @@ public class MyWebSocket {
      * @param message 客户端发送过来的消息*/
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("来自客户端的消息:" + message);
+        try {
 
-        //群发消息
-        for (MyWebSocket item : webSocketSet) {
-            try {
-                item.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
+            System.out.println("来自客户端的消息:" + message);
+//            redisTemplate.opsForList().rightPush("messageList", message);
+
+            //群发消息
+            for (MyWebSocket item : webSocketSet) {
+                try {
+                    item.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

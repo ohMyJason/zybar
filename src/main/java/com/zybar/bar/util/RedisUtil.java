@@ -538,6 +538,21 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 删除list最左边的数据
+     * @param key
+     * @return
+     */
+    public Object leftRemove(String key){
+        try {
+            Object o = redisTemplate.opsForList().leftPop(key);
+            return o;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     // -------------------------------zSet
     public boolean addZSet(String key,double count,Object memeber){
         try {

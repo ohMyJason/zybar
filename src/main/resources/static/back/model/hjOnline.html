@@ -125,10 +125,17 @@
                                     })
                                 }else {
                                     // var message = "2&*&" + content + "&*&" + $.cookie("username")+"&*&"+$.cookie("photoUrl")+"&*&"+$("#selectOnline").val()+"&*&"+$("#replayName").text();
-                                    var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text()}
+                                    var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentTime:new Date().toLocaleTimeString()}
                                     websocket.send(JSON.stringify(message));
+                                    ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:1},function f(res) {
+                                        if (res.code==0){
 
-                                    layer.msg('发送成功');
+                                            layer.msg('发送成功');
+                                        } else {
+                                            layer.msg('操作失败');
+                                        }
+
+                                    })
                                     $("#replayName").text("无选择回复");
                                 }
                             });

@@ -30,25 +30,25 @@ public class TestController {
 
 
 
-    @PostMapping("/testSetRedis")
+    @PostMapping("/testSetZsetRedis")
     public Result testRedis(String key, String member, Double count) {
         redisUtil.addZSet(key,count,member);
         return Result.createSuccessResult();
     }
 
-    @PostMapping("/testGetRedis")
+    @PostMapping("/testGetZsetRedis")
     public Result testGetRedis(String key) {
         System.out.println(redisUtil.getZsetRange(key));
         return Result.createSuccessResult();
     }
 
-    @PostMapping("/testIncrRedis")
+    @PostMapping("/testIncrZsetRedis")
     public  Result testIncrRedis(){
         System.out.println(redisUtil.updateZet("circle-range",1,"搞笑圈"));
         return Result.createSuccessResult();
     }
 
-    @PostMapping("/testHashKey")
+    @PostMapping("/testHaveKey")
     public  Result testHashKey(String member){
         if (redisUtil.hasMember("circle-range",member)){
             return Result.createSuccessResult("有");
@@ -58,6 +58,21 @@ public class TestController {
     }
 
 
+    @PostMapping("/testListAdd")
+    public Result testList(String key,String msg){
+        redisUtil.lSet(key,msg);
+        return Result.createSuccessResult();
+    }
 
+    @PostMapping("/testListGet")
+    public Result testListGet(String key){
+        List<Object> testMessage = redisUtil.lGet(key, 0, -1);
+        return Result.createSuccessResult(testMessage);
+    }
+    @PostMapping("/testListLeftDelete")
+    public  Result testListPush(String key){
+        Object testMessage = redisUtil.leftRemove(key);
+        return Result.createSuccessResult(testMessage);
+    }
 
 }
