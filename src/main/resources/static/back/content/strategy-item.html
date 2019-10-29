@@ -14,14 +14,14 @@
     <legend>添加战队策略</legend>
 </fieldset>
 <form class="layui-form"  lay-filter="formDemo">
-    <div class="layui-form-item">
-        <label class="layui-form-label">商品名</label>
-        <div class="layui-input-block">
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">商品名</label>-->
+        <!--<div class="layui-input-block">-->
 
-            <input type="text" name="productId"  lay-verify="" autocomplete="off"
-                   class="layui-input" readonly="true">
-        </div>
-    </div>
+            <!--<input type="text" name="productId"  lay-verify="" autocomplete="off"-->
+                   <!--class="layui-input" readonly="true">-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="layui-form-item">
         <label class="layui-form-label">合约</label>
         <div class="layui-input-block">
@@ -115,7 +115,7 @@
     layui.use('form', function () {
         var form = layui.form;
         var ID = RequestParameter();
-        console.log(ID.strategyId);
+        // console.log(ID.strategyId);
         $.ajax({
             method: 'POST',
             cache: false,
@@ -128,8 +128,9 @@
                 console.log(data)
                 if(data.code === 0){
                     //执行传入的函数
+
                     form.val("formDemo", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-                        "productId": data.data.productId, // "name": "value"
+                        // "productId": data.data.productId, // "name": "value"
                         "contract": data.data.contract, // "name": "value"
                         "opera": data.data.opera, // "name": "value"
                         "delegateType": data.data.delegateType, // "name": "value"

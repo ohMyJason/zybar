@@ -166,3 +166,20 @@ layui.use('layedit', function () {
 });
 
 
+function getHistoryMsg(selectOnline) {
+    ajaxPOST("/getMessageList",{selectOnline:selectOnline},function (res) {
+        if (res.code ==0){
+            for (let i = 0; i <res.count ; i++) {
+                var msg = res.data[i];
+                console.log(msg);
+                var event = new Object();
+                event.data = msg;
+                setMessage(event);
+
+            }
+        } else {
+            layer.alert("历史消息拉取失败")
+        }
+    })
+}
+

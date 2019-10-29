@@ -94,7 +94,7 @@
                                     })
                                 }else {
                                     // var message = "2&*&" + content + "&*&" + $.cookie("username")+"&*&"+$.cookie("photoUrl")+"&*&"+$("#selectOnline").val()+"&*&"+$("#replayName").text();
-                                    var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentItme:new Date().toLocaleTimeString()}
+                                    var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentItme:new Date().toLocaleString()}
                                     websocket.send(JSON.stringify(message));
                                     ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:0},function f(res) {
                                         if (res.code==0){
@@ -159,6 +159,8 @@
 
         //虚假的局部刷新，通过改变css让左边导航显示对应块
         $("#viewOnline").attr("class", "layui-nav-item layui-nav-itemed")
+
+        getHistoryMsg(0);  //获取历史消息
 
     });
 </script>

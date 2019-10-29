@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author 刘佳昇
  * @Date 2019/10/29 2:22
@@ -36,7 +38,8 @@ public class MessageController {
     @PostMapping("/getMessageList")
     public Result getMessage(String selectOnline) {
         try {
-            return Result.createSuccessResult(redisUtil.lGet("messageLise" + selectOnline, 0, -1));
+            List<Object> msgList = redisUtil.lGet("messageList" + selectOnline, 0, -1);
+            return Result.createSuccessResult(msgList.size(),msgList);
         } catch (Exception e) {
             e.printStackTrace();
             return Result.createByFailure(e.getMessage());

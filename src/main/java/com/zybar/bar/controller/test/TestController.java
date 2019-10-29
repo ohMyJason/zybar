@@ -75,4 +75,22 @@ public class TestController {
         return Result.createSuccessResult(testMessage);
     }
 
+    /**
+     * 删除缓存
+     * @return
+     */
+    @PostMapping("/testDeleteByKey")
+    public Result testDeleteListByKey(String key){
+        try {
+
+            redisUtil.del(key);
+            return Result.createSuccessResult();
+        }catch (Exception e ){
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
+
+
+    }
+
 }
