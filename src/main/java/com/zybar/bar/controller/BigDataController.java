@@ -7,8 +7,10 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,8 +26,11 @@ public class BigDataController {
 
 
     @PostMapping("/getAllBigData")
-    public Result getAllBigData(String name,int page,int limit ){
+    public Result getAllBigData(@RequestBody HashMap<String,Object> map){
         try {
+            int page = Integer.parseInt((String) map.get("page"));
+            int limit = Integer.parseInt((String) map.get("limit")) ;
+            String name = (String) map.get("name");
             page = PageCheck.checkPage(page);
             limit = PageCheck.checkLimit(limit);
             int start = PageCheck.calculateStart(page, limit);

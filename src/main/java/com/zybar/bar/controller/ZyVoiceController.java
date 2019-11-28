@@ -10,10 +10,12 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,14 +35,18 @@ public class ZyVoiceController {
 
 
     /**
-     * @param mp3Name
-     * @param page
-     * @param limit
-     * @param flag    判断是用户端发出的还是后台发出的，因为用户端需要特殊返回数据 1-用户  2-后台
+     * @ mp3Name
+     * @ page
+     * @ limit
+     * @ flag    判断是用户端发出的还是后台发出的，因为用户端需要特殊返回数据 1-用户  2-后台
      * @return
      */
     @PostMapping("/getZyVoice")
-    public Result getZyVoice(String mp3Name, int page, int limit, Integer flag) {
+    public Result getZyVoice(@RequestBody HashMap<String,Object> map) {
+        int page = Integer.parseInt((String)map.get("page"));
+        int limit = Integer.parseInt((String)map.get("limit"));
+        int flag = Integer.parseInt((String)map.get("flag"));
+        String mp3Name = map.containsKey("mp3Name")?(String) map.get("mp3Name"):null;
         page = PageCheck.checkPage(page);
         limit = PageCheck.checkLimit(limit);
         int start = PageCheck.calculateStart(page, limit);

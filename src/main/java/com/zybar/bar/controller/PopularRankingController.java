@@ -6,8 +6,10 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,8 +35,10 @@ public class PopularRankingController {
 
 
     @PostMapping("/getAllPopularRanking")
-    public  Result getAllPopularRanking(int page,int limit){
+    public  Result getAllPopularRanking(@RequestBody HashMap<String,Integer> map){
         try {
+            int page = map.get("page");
+            int limit = map.get("limit");
             page = PageCheck.checkPage(page);
             limit = PageCheck.checkLimit(limit);
             int start = PageCheck.calculateStart(page,limit);

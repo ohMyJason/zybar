@@ -4,8 +4,10 @@ import com.zybar.bar.util.RedisUtil;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,8 +38,9 @@ public class MessageController {
     }
 
     @PostMapping("/getMessageList")
-    public Result getMessage(String selectOnline) {
+    public Result getMessage(@RequestBody HashMap<String,String> map) {
         try {
+            String selectOnline = map.get("selectOnline");
             List<Object> msgList = redisUtil.lGet("messageList" + selectOnline, 0, -1);
             return Result.createSuccessResult(msgList.size(),msgList);
         } catch (Exception e) {

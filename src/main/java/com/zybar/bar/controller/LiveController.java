@@ -9,11 +9,13 @@ import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -64,9 +66,19 @@ public class LiveController {
     }
 
 
+    /**
+     *
+     * @ page
+     * @ limit
+     * @ liveName
+     * @return
+     */
     @PostMapping("/getAllLive")
-    public Result getAllLive(int page, int limit, String liveName) {
+    public Result getAllLive(@RequestBody HashMap<String,Object> map) {
         try {
+            int page = Integer.parseInt((String)map.get("page"));
+            int limit = Integer.parseInt((String)map.get("limit"));
+            String liveName = map.containsKey("liveName")?(String)map.get("liveName"):null;
             page = PageCheck.checkPage(page);
             limit = PageCheck.checkLimit(limit);
             int start = PageCheck.calculateStart(page, limit);

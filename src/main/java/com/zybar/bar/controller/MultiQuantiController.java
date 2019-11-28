@@ -6,8 +6,10 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,8 +70,9 @@ public class MultiQuantiController {
 
 
     @PostMapping("/userGetAllMultiQuanti")
-    public Result getAllMultiQuanti(int category){
+    public Result getAllMultiQuanti(@RequestBody HashMap<String,Object> map){
         try {
+            int category = Integer.parseInt((String)map.get("category"));
             int page =1 ;
             int limit =10000;
             page = PageCheck.checkPage(page);
