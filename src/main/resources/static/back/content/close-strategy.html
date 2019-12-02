@@ -10,12 +10,35 @@
     <script src="../js/common.js"></script>
 </head>
 <body>
+<script>
+    var websocket = null;
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost:8080/websocket");
+    } else {
+        alert('Not support websocket');
+    }
+
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function () {
+        websocket.close();
+    }
+
+    //连接发生错误的回调方法
+    websocket.onerror = function () {
+        // setMessageInnerHTML("error");
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.alert("连接出现错误，策略可以发送，但可能无法及时推送");
+        })
+    };
+</script>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>添加战队策略</legend>
 </fieldset>
 <form class="layui-form">
     <div class="layui-form-item">
-        <label class="layui-form-label"  style="width: 50%" id="product_name">商品名</label>
+        <label class="layui-form-label" style="width: 50%" id="product_name">商品名</label>
         <div class="layui-input-block">
             <!--<label class="layui-form-label" style="width: 80%" id="product_name"></label>-->
         </div>
@@ -81,7 +104,6 @@
     </div>
 
 
-
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -92,25 +114,29 @@
 </form>
 
 <script>
-        $(function () {
-            var data =  RequestParameter();
-            console.log(data)
-            $("#product_name").text("商品名："+data.productName)
-            $("#strategy_id").val(data.strategyId)
-            console.log(data.strategyId)
-        })
-        layui.use('form', function () {
-            var form = layui.form;
+    $(function () {
+        var data = RequestParameter();
+        console.log(data)
+        $("#product_name").text("商品名：" + data.productName)
+        $("#strategy_id").val(data.strategyId)
+        console.log(data.strategyId)
+    })
+    layui.use('form', function () {
+        var form = layui.form;
 
-            //监听提交
-            form.on('submit(formDemo)', function (data) {
-                $.ajax({
-                    url: "/creatCloseStrategy",
-                    type: "post",
-                    data: data.field,
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.code ===0){
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url: "/creatCloseStrategy",
+                type: "post",
+                data: data.field,
+                dataType: "json",
+                success: function (res) {
+                    if (res.code === 0) {
+                        //推送平仓消息
+                        var message = data.field;
+                        message.selectOnline = 5;
+                        websocket.send(JSON.stringify(message));
                         layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
                         setTimeout(function () {
                             layer.msg('平仓成功，界面自动跳转');
@@ -122,16 +148,16 @@
                             parent.layer.close(index); //再执行关闭
                             parent.window.location.reload();
                         }, 3000);
-                        }else {
-                            layer.alert(data.msg);
-                        }
-                    },
-                    error: function () {
+                    } else {
+                        layer.alert(res.msg);
                     }
-                })
-                return false;
-            });
+                },
+                error: function () {
+                }
+            })
+            return false;
         });
+    });
 
 </script>
 </body>
