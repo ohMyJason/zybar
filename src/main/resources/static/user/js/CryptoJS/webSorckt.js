@@ -29,7 +29,6 @@ $(function () {
                 } else {
                     layer.msg('操作失败');
                 }
-
             })
             $("#message-aera").val(" ");
             if (websocket.readyState !== 1) {

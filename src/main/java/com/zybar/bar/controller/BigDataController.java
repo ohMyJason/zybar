@@ -28,9 +28,9 @@ public class BigDataController {
     @PostMapping("/getAllBigData")
     public Result getAllBigData(@RequestBody HashMap<String,Object> map){
         try {
-            int page = Integer.parseInt((String) map.get("page"));
-            int limit = Integer.parseInt((String) map.get("limit")) ;
-            String name = (String) map.get("name");
+            int page = (Integer)map.get("page");
+            int limit =(Integer)map.get("limit") ;
+            String name = (String)map.get("name");
             page = PageCheck.checkPage(page);
             limit = PageCheck.checkLimit(limit);
             int start = PageCheck.calculateStart(page, limit);

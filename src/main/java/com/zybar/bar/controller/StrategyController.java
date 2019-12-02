@@ -11,6 +11,7 @@ import com.zybar.bar.dao.UserMapper;
 import com.zybar.bar.model.CloseStrategy;
 import com.zybar.bar.model.Product;
 import com.zybar.bar.model.Strategy;
+import com.zybar.bar.model.User;
 import com.zybar.bar.service.TokenService;
 import com.zybar.bar.util.FileUtil;
 import com.zybar.bar.util.PageCheck;
@@ -55,27 +56,27 @@ public class StrategyController {
     UserMapper userMapper;
 
     @PostMapping("/insertProduct")
-    public  Result insertProduct(Product product){
+    public Result insertProduct(Product product) {
         productMapper.insertSelective(product);
         return Result.createSuccessResult();
     }
 
     @PostMapping("/getProduct")
-    public Result getProduct(){
+    public Result getProduct() {
         List<Product> products = productMapper.selectAll();
-        return Result.createSuccessResult(products.size(),products);
+        return Result.createSuccessResult(products.size(), products);
     }
 
 
     @PostMapping("/creatStrategy")
-    public Result creatStrategy(@RequestBody Strategy strategy,HttpServletRequest httpServletRequest){
+    public Result creatStrategy(@RequestBody Strategy strategy, HttpServletRequest httpServletRequest) {
         try {
             String createrId = tokenService.getUserId(httpServletRequest);
             strategy.setCreaterId(Integer.parseInt(createrId));
             strategy.setCreatTime(fileUtil.getCurrTime());
             strategyMapper.insertSelective(strategy);
             return Result.createSuccessResult();
-        }catch (Exception e ){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return Result.createByFailure("异常");
         }
@@ -84,12 +85,12 @@ public class StrategyController {
 
     @PostMapping("/creatCloseStrategy")
     @Transactional
-    public Result creatCloseStrategy(CloseStrategy closeStrategy){
+    public Result creatCloseStrategy(CloseStrategy closeStrategy) {
         try {
             Strategy strategy = strategyMapper.selectByPrimaryKey(closeStrategy.getCreateStrategyId());
 
             //设置成已平仓
-            if (strategy.getIsClose()==1){
+            if (strategy.getIsClose() == 1) {
                 return Result.createByFailure("该策略已平仓");
             }
             strategy.setIsClose(1);
@@ -101,7 +102,7 @@ public class StrategyController {
             //数据库更新建仓
             strategyMapper.updateByPrimaryKeySelective(strategy);
             return Result.createSuccessResult();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return Result.createByFailure("异常,联系管理员");
         }
@@ -110,51 +111,59 @@ public class StrategyController {
 
     /**
      * 查询用户的建仓列表
+     *
      * @param httpServletRequest
      * @return
      */
     @PostMapping("/getStrategyByToken")
-    public Result getStrategy(HttpServletRequest httpServletRequest,int page,int limit){
+    public Result getStrategy(HttpServletRequest httpServletRequest, @RequestBody HashMap<String, Object> parm) {
+        Integer page = (Integer) parm.get("page");
+        Integer limit = (Integer) parm.get("limit");
+        Integer selectLive = (Integer) parm.get("selectLive");
         String userId = tokenService.getUserId(httpServletRequest);
         int start = PageCheck.calculateStart(page, limit);
         //这里不用分辨是否平仓，所以用null代替
         Integer ifClose = null;
-        int count = strategyMapper.getCount(Integer.parseInt(userId),ifClose);
-        List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(Integer.parseInt(userId),start,limit,ifClose);
+        int count = strategyMapper.getCount(Integer.parseInt(userId), ifClose, selectLive);
+        List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(Integer.parseInt(userId), start, limit, ifClose, selectLive);
         JSONArray res = new JSONArray();
 //        将已经平仓的返回json对象里面加个平仓的json对象
-        for (Strategy strategy : strategies){
+        for (Strategy strategy : strategies) {
             if (strategy.getIsClose() == 1) {
-                JSONObject jsonStrategy = (JSONObject)JSON.toJSON(strategy);
-                jsonStrategy.put("strategyId",strategy.getStrategyId());
-                jsonStrategy.put("productName",productMapper.selectById(strategy.getProductId()).getProductName());
-                jsonStrategy.put("teacherName",userMapper.selectByPrimaryKey(strategy.getCreaterId()).getUsername());
+                JSONObject jsonStrategy = (JSONObject) JSON.toJSON(strategy);
+                jsonStrategy.put("strategyId", strategy.getStrategyId());
+                jsonStrategy.put("productName", productMapper.selectById(strategy.getProductId()).getProductName());
+                jsonStrategy.put("teacherName", userMapper.selectByPrimaryKey(strategy.getCreaterId()).getUsername());
                 CloseStrategy closeStrategy = closeStrategyMapper.selectByPrimaryKey(strategy.getCloseId());
-                JSONObject jsonCloseStrategy = (JSONObject)JSON.toJSON(closeStrategy);
-                jsonStrategy.put("closeStrategy",jsonCloseStrategy);
+                JSONObject jsonCloseStrategy = (JSONObject) JSON.toJSON(closeStrategy);
+                jsonStrategy.put("closeStrategy", jsonCloseStrategy);
                 res.add(jsonStrategy);
-            }else {
-                JSONObject jsonStrategy = (JSONObject)JSON.toJSON(strategy);
-                jsonStrategy.put("strategyId",strategy.getStrategyId());
-                jsonStrategy.put("productName",productMapper.selectById(strategy.getProductId()).getProductName());
-                jsonStrategy.put("teacherName",userMapper.selectByPrimaryKey(strategy.getCreaterId()).getUsername());
+            } else {
+                JSONObject jsonStrategy = (JSONObject) JSON.toJSON(strategy);
+                jsonStrategy.put("strategyId", strategy.getStrategyId());
+                jsonStrategy.put("productName", productMapper.selectById(strategy.getProductId()).getProductName());
+                jsonStrategy.put("teacherName", userMapper.selectByPrimaryKey(strategy.getCreaterId()).getUsername());
                 res.add(jsonStrategy);
             }
         }
-        return  Result.createSuccessResult(count,res);
+        return Result.createSuccessResult(count, res);
     }
 
 
     /**
      * 查询自己的的平仓列表
+     *
      * @param httpServletRequest
      * @return
      */
     @PostMapping("/getCloseStrategy")
-    public  Result getCloseStrategy(int page,int limit,HttpServletRequest httpServletRequest){
+    public Result getCloseStrategy(@RequestBody HashMap<String, Object> parm, HttpServletRequest httpServletRequest) {
+        Integer page = (Integer) parm.get("page");
+        Integer limit = (Integer) parm.get("limit");
+        Integer selectLive = (Integer) parm.get("selectLive");
         String userId = tokenService.getUserId(httpServletRequest);
         int start = PageCheck.calculateStart(page, limit);
-        List<HashMap<String, String>> closeStrages = strategyMapper.selectCloseStrategyByCreaterId(Integer.parseInt(userId), start, limit);
+        List<HashMap<String, String>> closeStrages = strategyMapper.selectCloseStrategyByCreaterId(Integer.parseInt(userId), start, limit, selectLive);
         return Result.createSuccessResult(closeStrages);
 //        //查询已经平仓的建仓策略
 //        Integer ifClose = 1;
@@ -172,10 +181,45 @@ public class StrategyController {
     }
 
     @PostMapping("/getStrategyItemByToken")
-    public  Result getStrategyItemByToken(Integer strategyId){
+    public Result getStrategyItemByToken(Integer strategyId) {
         Strategy strategy = strategyMapper.selectByPrimaryKey(strategyId);
         return Result.createSuccessResult(strategy);
     }
+
+    /**
+     * 查询直播间的所有建仓
+     * 参数 ：
+     * selectLive 判断查询的直播间
+     *
+     * @param parm
+     * @return
+     */
+    @PostMapping("/userGetStrategy")
+    @Transactional
+    public Result userGetStrategy(@RequestBody HashMap<String, Object> parm) {
+        try {
+            Integer selectLive = (Integer) parm.get("selectLive");
+            int count = strategyMapper.getCount(null, null, selectLive);
+            List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(null, 1, 1000, null, selectLive);
+            JSONArray res = new JSONArray();
+            for (Strategy strategy : strategies) {
+                User creater = userMapper.selectByPrimaryKey(strategy.getCreaterId());
+                JSONObject item = (JSONObject) JSON.toJSON(strategy);
+                item.put("productName",productMapper.selectById(strategy.getProductId()).getProductName());
+                item.put("photoUrl", creater.getPhotoUrl());
+                if (strategy.getIsClose()==1){
+                    item.put("closeStrategy",closeStrategyMapper.selectByPrimaryKey(strategy.getCloseId()));
+                }
+                res.add(item);
+            }
+            return Result.createSuccessResult(count, res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
+    }
+
+
 
 
 

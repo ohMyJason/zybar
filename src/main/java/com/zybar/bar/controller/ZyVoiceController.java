@@ -43,9 +43,9 @@ public class ZyVoiceController {
      */
     @PostMapping("/getZyVoice")
     public Result getZyVoice(@RequestBody HashMap<String,Object> map) {
-        int page = Integer.parseInt((String)map.get("page"));
-        int limit = Integer.parseInt((String)map.get("limit"));
-        int flag = Integer.parseInt((String)map.get("flag"));
+        Integer page = (Integer) map.get("page");
+        Integer limit = (Integer) map.get("limit");
+        int flag = (Integer) map.get("flag");
         String mp3Name = map.containsKey("mp3Name")?(String) map.get("mp3Name"):null;
         page = PageCheck.checkPage(page);
         limit = PageCheck.checkLimit(limit);

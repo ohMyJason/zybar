@@ -25,7 +25,8 @@
 
     <script>
         layui.use('table', function () {
-            var table = layui.table;
+            var table = layui.table
+            var selectLive = parseInt(RequestParameter().selectLive);
             table.render({
                 elem: '#hj-table'
                 , url: '/getStrategyByToken'
@@ -70,9 +71,10 @@
 
                 , page: true
                 , where: { //设定异步数据接口的额外参数，任意设
-                    selectLive: 1
+                    selectLive: selectLive
                 }
                 , headers: {"token": $.cookie("token")}
+                ,contentType:"application/json"
             });
 
             //头工具栏事件

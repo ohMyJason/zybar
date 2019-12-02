@@ -28,18 +28,22 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>狙击战队专属直播间</legend>
             <div style="margin-top: 20px">
-                <div style="width: 70%; margin: 0;">
-                    <button type="button" id="editMessage" style="float: left" class="layui-btn">发送消息</button>
-                    <input type="hidden" id="selectOnline" value="2">
-                    <button style="float: left;margin-left: 10%" type="button" id="restReply" class="layui-btn">取消回复</button>
-                    <blockquote style="float: left;margin-left: 10%" class="layui-elem-quote" id="replayName">无选择回复</blockquote>
+                <div style="margin-top: 20px">
+                    <div style="width: 70%; margin: 0;">
+                        <button type="button" id="editMessage" style="float: left" class="layui-btn">发送消息</button>
+                        <button type="button" id="addStrategy" style="float: left" class="layui-btn">添加策略</button>
+                        <button type="button" id="createStrategy" style="float: left" class="layui-btn">查看建仓策略</button>
+                        <button type="button" id="closeStrategy" style="float: left" class="layui-btn">查看平仓策略</button>
+                        <input type="hidden" id="selectOnline" value="2">
+                        <button style="float: left;margin-left: 10%" type="button" id="restReply" class="layui-btn">取消回复</button>
+                        <blockquote style="float: left;margin-left: 10%" class="layui-elem-quote" id="replayName">无选择回复</blockquote>
+                    </div>
                 </div>
             </div>
             <script>
                 $(function () {
                     $("#jjUserChat").on('click','.layui-card',function () {
                         var replay = $(this).children().eq(0).text()+":"+$(this).children().eq(1).text().trim();
-                        console.log(replay);
                         $("#replayName").text(replay);
 
                     })
@@ -48,9 +52,37 @@
                         $("#replayName").text("无选择回复");
                     })
 
-                    $("#editMessage").click(function () {
+                    $("#addStrategy").click(function () {
+                        layer.open({
+                            type:2,
+                            title:"推送策略",
+                            area: ['80%','90%'],
+                            shadeClose:true,
+                            content:"/back/content/add-strategy.html?selectLive=2"
+                        })
+                    })
 
-                        console.log("cauch");
+                    $("#closeStrategy").click(function () {
+                        layer.open({
+                            type:2,
+                            title:"查看平仓策略",
+                            area: ['80%','60%'],
+                            shadeClose:true,
+                            content:"/back/model/hjCloseStrategy.html?selectLive=2"
+                        })
+                    })
+
+                    $("#createStrategy").click(function () {
+                        layer.open({
+                            type:2,
+                            title:"查看建仓策略",
+                            area: ['90%','90%'],
+                            shadeClose:true,
+                            content:"/back/model/hjStrategy.html?selectLive=2"
+                        })
+                    })
+
+                    $("#editMessage").click(function () {
                         layer.open({
                             type: 1,
                             title: "直播间",

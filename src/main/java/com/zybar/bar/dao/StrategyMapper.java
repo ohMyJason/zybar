@@ -29,9 +29,9 @@ public interface StrategyMapper {
     
     int updateByPrimaryKey(Strategy record);
 
-    List<Strategy> selectStrategyByCreaterId(@Param("createrId") Integer createrId,@Param("start") int start,@Param("limit") int limit,@Param("ifClose") Integer ifClose);
+    List<Strategy> selectStrategyByCreaterId(@Param("createrId") Integer createrId,@Param("start") int start,@Param("limit") int limit,@Param("ifClose") Integer ifClose,@Param("selectLive") Integer selectLive);
 
-    int getCount(@Param("createrId") Integer createrId,@Param("ifClose") Integer ifClose);
+    int getCount(@Param("createrId") Integer createrId,@Param("ifClose") Integer ifClose,@Param("selectLive") Integer selectLive);
 
-    List<HashMap<String,String>> selectCloseStrategyByCreaterId(@Param("createrId") Integer createrId, @Param("start") int start, @Param("limit") int limit );
+    List<HashMap<String,String>> selectCloseStrategyByCreaterId(@Param("createrId") Integer createrId, @Param("start") int start, @Param("limit") int limit,@Param("selectLive") int selectLive );
 }

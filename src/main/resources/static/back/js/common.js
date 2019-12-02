@@ -65,8 +65,8 @@ function ajaxPOST(url, data, func){
         cache: false,
         url:  url,
         dataType: 'json',
-        // contentType: "application/json; charset=utf-8",
-        data: data,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
         headers:{token:$.cookie("token")},
         success: function (data) {
             if(data.code == 0){
