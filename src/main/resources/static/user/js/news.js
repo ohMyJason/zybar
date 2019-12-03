@@ -201,7 +201,6 @@ $(function () {
 
 
     $(".nav3").click(function () {
-        console.log("观点在线")
         $(".expert-message").show()
         $(".data-view").hide()
         $(this).css("color","white")

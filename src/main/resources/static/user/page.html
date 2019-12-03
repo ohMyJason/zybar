@@ -160,8 +160,8 @@
                     $.ajax({
                         url: "/getZyVoice",
                         type: "post",
-                        data: {page: 1, limit: 1000, flag: 1},
-                        dataType: "",
+                        contentType:"application/json",
+                        data: JSON.stringify({page: 1, limit: 1000, flag: 1}),
                         success: function (data) {
                             voices = data.data;
                             var player = new skPlayer({
@@ -361,8 +361,6 @@
 
                         $("#Layout-plan>div").click(function () {
                             // alert(this.html());
-                            console.log($(this).html());
-
                             layer.open({
                                 type: 1,
                                 offset: 't',
@@ -402,7 +400,6 @@
 
                         $("#datum>div").click(function () {
                             // alert(this.html());
-                            console.log($(this).html());
                             layer.open({
                                 type: 1,
                                 offset: 't',

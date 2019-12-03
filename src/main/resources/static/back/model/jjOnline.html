@@ -117,8 +117,6 @@
                             //发送消息
                             $("#send").click(function () {
                                 var content = layedit.getContent(index);
-
-                                console.log(content);
                                 if (websocket.readyState != 1) {
                                     layui.use('layer', function () {
                                         var layer = layui.layer;

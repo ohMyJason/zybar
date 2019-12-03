@@ -136,7 +136,13 @@
                         //推送平仓消息
                         var message = data.field;
                         message.selectOnline = 5;
-                        websocket.send(JSON.stringify(message));
+                        //请求商品名
+                        ajaxPOST("/getProductByStrategyId",{strategyId:message.createStrategyId},function (data) {
+                            message.productName = data.data.product+"("+data.data.contract+")";
+                            websocket.send(JSON.stringify(message));
+
+                        })
+
                         layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
                         setTimeout(function () {
                             layer.msg('平仓成功，界面自动跳转');

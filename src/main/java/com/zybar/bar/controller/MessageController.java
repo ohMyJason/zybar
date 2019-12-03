@@ -21,9 +21,17 @@ public class MessageController {
     @Autowired
     RedisUtil redisUtil;
 
+    /**
+     *
+     * @ message |string| json格式的消息
+     * @ selectOnline |int|  直播间标识
+     * @return
+     */
     @PostMapping("/insertMessage")
-    public Result insertMessage(String message, String selectOnline) {
+    public Result insertMessage(@RequestBody HashMap<String,Object> parm) {
         try {
+            Integer selectOnline = (Integer)parm.get("selectOnline");
+            String message = (String)parm.get("message");
             String key = "messageList" + selectOnline;
             redisUtil.lSet(key, message);
             redisUtil.expire(key, 85400);

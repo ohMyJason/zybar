@@ -23,7 +23,7 @@ $(function () {
 
             var message  = {role:1,content:content,username:$.cookie("username"),photoUrl:$.cookie("userPhotoUrl"),selectOnline:$("#selectOnline").val(),replay:"#",sentTime:new Date().toLocaleString()}
             websocket.send(JSON.stringify(message));
-            ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:$("#selectOnline").val()},function f(res) {
+            ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:parseInt($("#selectOnline").val())},function f(res) {
                 if (res.code==0){
                     layer.msg('发送成功');
                 } else {

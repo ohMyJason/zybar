@@ -67,6 +67,22 @@ public class StrategyController {
         return Result.createSuccessResult(products.size(), products);
     }
 
+    /**
+     * id 商品id
+     * @return
+     */
+    @PostMapping("/getProductById")
+    public Result getProductById(@RequestBody HashMap<String,Integer> parm){
+        try {
+            Integer productId = parm.get("productId");
+            return Result.createSuccessResult(productMapper.selectById(productId));
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
+
+    }
+
 
     @PostMapping("/creatStrategy")
     public Result creatStrategy(@RequestBody Strategy strategy, HttpServletRequest httpServletRequest) {
@@ -214,6 +230,23 @@ public class StrategyController {
             }
             return Result.createSuccessResult(count, res);
         } catch (Exception e) {
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
+    }
+
+    @PostMapping("/getProductByStrategyId")
+    @Transactional
+    public Result getStrategyById(@RequestBody HashMap<String,Integer> parm){
+        try {
+            Integer strategyId = parm.get("strategyId");
+            Strategy strategy = strategyMapper.selectByPrimaryKey(strategyId);
+            Product product = productMapper.selectById(strategy.getProductId());
+            HashMap<String,String> res = new HashMap<String,String>();
+            res.put("product",product.getProductName());
+            res.put("contract",strategy.getContract());
+            return Result.createSuccessResult(res);
+        }catch (Exception e){
             e.printStackTrace();
             return Result.createByFailure(e.getMessage());
         }
