@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../user/js/jquery-3.1.1.min.js"></script>
+    <script src="../../user/js/jquery.cookie.js"></script>
+    <script src="../js/common.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+<div id="editor">
+
+</div>
+
+<div style="margin-top: 20px">
+    <button style="margin-right: 20px" type="button" class="layui-btn layui-btn-normal" id="send">发送</button>
+</div>
+<script type="text/javascript" src="../wangEditor-3.1.1/release/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.create()
+</script>
+</body>
+</html>

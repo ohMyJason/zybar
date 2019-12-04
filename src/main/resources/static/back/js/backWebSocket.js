@@ -1,7 +1,7 @@
 var websocket = null;
 //判断当前浏览器是否支持WebSocket
 if ('WebSocket' in window) {
-    websocket = new WebSocket("ws://47.103.51.238:8080/websocket");
+    websocket = new WebSocket("ws://localhost:8080/websocket");
 } else {
     alert('Not support websocket');
 }
@@ -100,7 +100,7 @@ websocket.onopen = function (event) {
 
     layui.use('layer', function () {
         var layer = layui.layer;
-        layer.alert("连接成功");
+        layer.msg("连接成功");
     })
 }
 
@@ -150,22 +150,6 @@ function scrollDown(divId) {
     }
 }
 
-layui.use('layedit', function () {
-    var layedit = layui.layedit;
-    layedit.set({
-        uploadImage: {
-            url: '/uploadChatImg' //接口url
-            , type: 'post' //默认post
-        }
-    });
-
-    var index = layedit.build('edit'); //建立编辑器
-
-
-
-});
-
-
 function getHistoryMsg(selectOnline) {
     ajaxPOST("/getMessageList",{selectOnline:selectOnline},function (res) {
         if (res.code ==0){
@@ -182,4 +166,3 @@ function getHistoryMsg(selectOnline) {
         }
     })
 }
-

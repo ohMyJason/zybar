@@ -216,7 +216,7 @@ public class StrategyController {
         try {
             Integer selectLive = (Integer) parm.get("selectLive");
             int count = strategyMapper.getCount(null, null, selectLive);
-            List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(null, 1, 1000, null, selectLive);
+            List<Strategy> strategies = strategyMapper.selectStrategyByCreaterId(null, 0, 10000, null, selectLive);
             JSONArray res = new JSONArray();
             for (Strategy strategy : strategies) {
                 User creater = userMapper.selectByPrimaryKey(strategy.getCreaterId());

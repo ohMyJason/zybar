@@ -32,11 +32,12 @@
                     <blockquote style="float: left;margin-left: 10%" class="layui-elem-quote" id="replayName">无选择回复</blockquote>
                 </div>
             </div>
+            <script type="text/javascript" src="../wangEditor-3.1.1/release/wangEditor.min.js"></script>
+
             <script>
                 $(function () {
                     $("#hjUserChat").on('click','.layui-card',function () {
                         var replay = $(this).children().eq(0).text()+":"+$(this).children().eq(1).text().trim();
-                        console.log(replay);
                         $("#replayName").text(replay);
                     })
 
@@ -80,58 +81,46 @@
                             title: "直播间",
                             area: ['800px', '600px'],
                             shadeClose: true,
-                            content: "    <div >\n" +
-                                "        <!-- 内容主体区域 -->\n" +
-                                "        <fieldset class=\"layui-elem-field layui-field-title\" style=\"margin-top: 20px;\">\n" +
-                                "            <legend>发送消息</legend>\n" +
-                                "        <div style=\"position:absolute;bottom:0;width:100%;\">\n" +
-                                "            <textarea id=\"edit\" style=\"display: none;\"></textarea>\n" +
-                                "            <button style=\"margin-top: 5px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
-                                "        </div>\n" +
-                                "        </fieldset>\n" +
-                                "    </div>" //这里content是一个普通的String
+                            content: "<div id=\"editor\">\n" +
+                                "\n" +
+                                "</div>\n" +
+                                "\n" +
+                                "<div style=\"margin-top: 20px\">\n" +
+                                "    <button style=\"margin-right: 20px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
+                                "</div>"//这里content是一个普通的String
+                        });
+                        var E = window.wangEditor
+                        var editor = new E('#editor')
+                        editor.customConfig.uploadImgServer = '/uploadChatImg'
+
+                        editor.customConfig.uploadFileName = 'file'                        // 或者 var editor = new E( document.getElementById('editor') )
+                        editor.create()
+
+                        $("#send").click(function () {
+                            var content = editor.txt.html();
+                            console.log(content)
+                            if (websocket.readyState !== 1) {
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.alert("直播间连接出现错误,请刷新页面重新连接");
+                                })
+                            }else {
+                                var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentTime:new Date().toLocaleString()}
+                                websocket.send(JSON.stringify(message));
+                                ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:0},function f(res) {
+                                    if (res.code==0){
+                                        layer.msg('发送成功');
+                                    } else {
+                                        layer.msg('操作失败');
+                                    }
+
+                                })
+                            }
+                            $("#replayName").text("无选择回复");
                         });
 
-                        layui.use('layedit', function () {
-                            var layedit = layui.layedit;
-                            layedit.set({
-                                uploadImage: {
-                                    url: '/uploadChatImg' //接口url
-                                    , type: 'post' //默认post
-                                }
-                            });
-
-                            var index = layedit.build('edit',{
-                                height: 400 //设置编辑器高度
-                            }); //建立编辑器
-
-
-                            //发送消息
-                            $("#send").click(function () {
-                                var content = layedit.getContent(index);
-                                if (websocket.readyState != 1) {
-                                    layui.use('layer', function () {
-                                        var layer = layui.layer;
-                                        layer.alert("直播间连接出现错误,请刷新页面重新连接");
-                                    })
-                                }else {
-                                    // var message = "2&*&" + content + "&*&" + $.cookie("username")+"&*&"+$.cookie("photoUrl")+"&*&"+$("#selectOnline").val()+"&*&"+$("#replayName").text();
-                                    var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentTime:new Date().toLocaleString()}
-                                    websocket.send(JSON.stringify(message));
-                                    ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:1},function f(res) {
-                                        if (res.code==0){
-
-                                            layer.msg('发送成功');
-                                        } else {
-                                            layer.msg('操作失败');
-                                        }
-
-                                    })
-                                    $("#replayName").text("无选择回复");
-                                }
-                            });
-                        })
                     })
+
                 })
             </script>
             <hr class="layui-bg-red">

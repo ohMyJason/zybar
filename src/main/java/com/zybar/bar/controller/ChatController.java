@@ -20,12 +20,26 @@ public class ChatController {
     FileUtil fileUtil;
 
 
+    /**
+     * 专为wangedit设计
+     * @param file
+     * @return
+     */
     @PostMapping("/uploadChatImg")
-    public Result uploadChatImg(@RequestParam(name = "file")MultipartFile file){
-        String url = fileUtil.fileUpload(file, 4);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("src",url);
-        return Result.createSuccessResult(jsonObject);
+    public JSONObject uploadChatImg(@RequestParam(name = "file")MultipartFile file){
+        try {
+
+            String url = fileUtil.fileUpload(file, 4);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("errno",0);
+            jsonObject.put("data",new String[]{url});
+            return jsonObject;
+        }catch (Exception e){
+            e.printStackTrace();
+            JSONObject error = new JSONObject();
+            error.put("errno",-1);
+            return error;
+        }
     }
 
 }
