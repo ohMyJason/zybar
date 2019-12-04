@@ -13,7 +13,11 @@
     <script src="../js/backWebSocket.js"></script>
     <style>
         #fwTeacherChat img{
-            width: 80%;
+            max-width: 100%;
+        }
+        html,body{
+            height: 100%;
+            margin: 0;
         }
     </style>
 </head>
@@ -24,10 +28,10 @@
         <!-- 内容主体区域 -->
 
 
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;height: 20%">
             <legend>风云战队专属直播间</legend>
             <div style="margin-top: 20px">
-                <div style="width: 70%; margin: 0;">
+                <div style="width: 100%; margin: 0;">
                     <button type="button" id="editMessage" style="float: left" class="layui-btn">发送消息</button>
                     <button type="button" id="addStrategy" style="float: left" class="layui-btn">添加策略</button>
                     <button type="button" id="createStrategy" style="float: left" class="layui-btn">查看建仓策略</button>
@@ -67,7 +71,7 @@
                             title:"查看平仓策略",
                             area: ['80%','60%'],
                             shadeClose:true,
-                            content:"/back/model/hjCloseStrategy.html?selectLive=3"
+                            content:"/back/model/CloseStrategy.html?selectLive=3"
                         })
                     })
 
@@ -77,7 +81,7 @@
                             title:"查看建仓策略",
                             area: ['90%','90%'],
                             shadeClose:true,
-                            content:"/back/model/hjStrategy.html?selectLive=3"
+                            content:"/back/model/Strategy.html?selectLive=3"
                         })
                     })
                     $("body").keydown(function () {
@@ -135,7 +139,7 @@
                                     websocket.send(JSON.stringify(message));
                                     ajaxPOST("/insertMessage", {
                                         message: JSON.stringify(message),
-                                        selectOnline: 0
+                                        selectOnline: 3
                                     }, function f(res) {
                                         if (res.code == 0) {
                                             layer.msg('发送成功');
@@ -157,40 +161,26 @@
                 })
             </script>
             <hr class="layui-bg-red">
-            <div class="layui-col-md6">
+            <div style="width: 50%;float: left">
                 <legend>老师消息</legend>
 
             </div>
-            <div class="layui-col-md6">
+            <div style="width: 50%;float: left">
                 <legend>网友消息</legend>
-
             </div>
 
         </fieldset>
 
 
-        <div style="padding: 20px; background-color: #F2F2F2;">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="fwTeacherChat">
-                    <!--<div class="layui-card" id="chatModel">-->
-                    <!--<div class="layui-card-header">用户名</div>-->
-                    <!--<div class="layui-card-body">-->
-                    <!--卡片式面板面板通常用于非白色背景色的主体内<br>-->
-                    <!--从而映衬出边框投影-->
-                    <!--</div>-->
-                    <!--</div>-->
-                </div>
-                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="fwUserChat">
-                    <!--<div class="layui-card">-->
-                    <!--<div class="layui-card-header">用户名</div>-->
-                    <!--<div class="layui-card-body">-->
-                    <!--结合 layui 的栅格系统<br>-->
-                    <!--轻松实现响应式布局-->
-                    <!--</div>-->
-                    <!--</div>-->
-                </div>
-
+        <div style="padding: 20px; background-color: #F2F2F2;height: 80%">
+            <!--<div style="width: 100%;height: 100%">-->
+            <div style="width:50%;overflow: auto;float: left;overflow-x: hidden" id="fwTeacherChat">
             </div>
+            <div  style="width:50%;overflow: auto;float: left" id="fwUserChat">
+            </div>
+
+
+            <!--</div>-->
         </div>
 
 
@@ -205,6 +195,9 @@
 
 
         getHistoryMsg(3);  //获取历史消息
+        var screenHeight = window.innerHeight;
+        $("#fwTeacherChat").height(screenHeight*0.8-20*3)
+        $("#fwUserChat").height(screenHeight*0.8-20*3)
 
     });
 </script>

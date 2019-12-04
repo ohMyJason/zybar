@@ -9,12 +9,6 @@ if ('WebSocket' in window) {
 
 //将接收到的html代码（消息）贴到版面上
 function setMessage(event) {
-    // var role = event.data.split("&*&")[0];  //老师是2 用户1
-    //     // var message = event.data.split("&*&")[1];  //消息
-    //     // var username = event.data.split("&*&")[2];    //用户名
-    //     // var photoUrl = event.data.split("&*&")[3];  // 头像
-    //     // var selectOnline = event.data.split("&*&")[4];  //选择是哪个直播间 0是大厅 1是黑金 2狙击 3风云
-    //     // var replay = event.data.split("&*&")[5];  //这个回复消息
     var data = JSON.parse(event.data);
     console.log(data)
     var role = data.role;
@@ -81,7 +75,7 @@ function setMessage(event) {
         }
     }
 
-    // ResizeImages();
+
 }
 
 
@@ -120,34 +114,15 @@ window.onbeforeunload = function () {
 }
 
 
-//缩放图片到合适大小
-// function ResizeImages() {
-//     var myimg, oldwidth;
-//     var maxwidth = $("#teacherChat").width() - 60;
-//     // oldwidth=$("#teacherChat").find("img").width();
-//     var imgs = document.getElementById('teacherChat').getElementsByTagName('img');   //如果你定义的id不是article，请修改此处
-//
-//     console.log($("#teacherChat").width());
-//
-//
-//     for (i = 0; i < imgs.length; i++) {
-//         myimg = imgs[i];
-//         // 过滤掉表情
-//         if (myimg.src.charAt(myimg.src.length - 3) != "g") {
-//             // oldwidth = myimg.width;
-//             myimg.width = maxwidth;
-//             // 注释掉的代码本来想等比例放大的，没办法，获取不到原图片的高
-//             // myimg.height=myimg.height*(myimg.width/oldwidth);
-//         }
-//     }
-// }
-
 // 保持滚动条在最下面
 function scrollDown(divId) {
     var content = document.getElementById(divId);
     if (content!=null){
+
         content.scrollTop = content.scrollHeight;
     }
+
+
 }
 
 function getHistoryMsg(selectOnline) {
