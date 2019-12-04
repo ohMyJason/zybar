@@ -1029,10 +1029,11 @@
 
                         $.ajax({
                             url: "/getAllLive",
-                            data: {page: 1, limit: 1000},
+                            data: JSON.stringify({page: 1, limit: 1000}),
                             dataType: "json",
                             type: "post",
                             async: false,//取消异步
+                            contentType:"application/json",
                             success: function (res) {
                                 for (let i = 0; i < res.data.length; i++) {
                                     $("#liveImg").append("<div class=\"\"><a target=\"_blank\" href=\"" + res.data[i].liveUrl + "\"><img width=\"100%\" height=\"100%\" src=\"" + res.data[i].liveImgUrl + "\"></a></div>\n")

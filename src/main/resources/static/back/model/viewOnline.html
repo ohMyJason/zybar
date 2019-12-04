@@ -12,129 +12,152 @@
     <script src="../js/common.js"></script>
     <script src="../js/backWebSocket.js"></script>
     <style>
-        #teacherChat img{
-            width: 80%;
+        #teacherChat img {
+            max-width: 100%;
         }
     </style>
 </head>
 <body class="layui-layout-body">
 
 
+<!-- 内容主体区域 -->
 
 
-        <!-- 内容主体区域 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>直播间</legend>
+    <div style="margin-top: 20px">
+        <div style="width: 70%; margin: 0;">
+            <button style="float: left" type="button" id="editMessage" class="layui-btn">发送消息</button>
+            <input type="hidden" id="selectOnline" value="0">
+            <button style="float: left;margin-left: 10%" type="button" id="restReply" class="layui-btn">取消回复</button>
+            <blockquote style="float: left;margin-left: 10%" class="layui-elem-quote" id="replayName">无选择回复</blockquote>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="../wangEditor-3.1.1/release/wangEditor.min.js"></script>
+    <script>
+        $(function () {
+
+            $("#userChat").on('click', '.layui-card', function () {
+                var replay = $(this).children().eq(0).text() + ":" + $(this).children().eq(1).text().trim();
+                $("#replayName").text(replay);
+
+            });
+
+            $("#restReply").click(function () {
+                $("#replayName").text("无选择回复");
+            });
+
+            $("body").keydown(function () {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    $('#send').click();
+                }
+            });
 
 
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>直播间</legend>
-            <div style="margin-top: 20px">
-                <div style="width: 70%; margin: 0;">
-                    <button style="float: left" type="button" id="editMessage" class="layui-btn">发送消息</button>
-                    <input type="hidden" id="selectOnline" value="0">
-                    <button style="float: left;margin-left: 10%" type="button" id="restReply" class="layui-btn">取消回复</button>
-                    <blockquote style="float: left;margin-left: 10%" class="layui-elem-quote" id="replayName">无选择回复</blockquote>
+            $("#editMessage").click(function () {
+                layer.open({
+                    type: 1,
+                    title: "发送消息",
+                    area: ['60%', '50%'],
+                    shadeClose: true,
+                    content:
+                        "<div>\n" +
+                        "    <button style=\"margin-right: 20px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
+                        "</div>\n" +
+                        "<div id=\"editor\" style='max-height: 40%'></div>"
 
-                </div>
-            </div>
-            <script type="text/javascript" src="../wangEditor-3.1.1/release/wangEditor.min.js"></script>
-            <script>
-                $(function () {
+                });
+                var E = window.wangEditor
+                var editor = new E('#editor')
+                editor.customConfig.uploadImgServer = '/uploadChatImg'
 
-                    $("#userChat").on('click','.layui-card',function () {
-                        var replay = $(this).children().eq(0).text()+":"+$(this).children().eq(1).text().trim();
-                        $("#replayName").text(replay);
-
-                    });
-
-                    $("#restReply").click(function () {
-                        $("#replayName").text("无选择回复");
-                    });
+                editor.customConfig.uploadFileName = 'file'                        // 或者 var editor = new E( document.getElementById('editor') )
+                editor.create()
 
 
-                    $("#editMessage").click(function () {
-                        layer.open({
-                            type: 1,
-                            title: "直播间",
-                            area: ['800px', '600px'],
-                            shadeClose: true,
-                            content: "<div id=\"editor\">\n" +
-                                "\n" +
-                                "</div>\n" +
-                                "\n" +
-                                "<div style=\"margin-top: 20px\">\n" +
-                                "    <button style=\"margin-right: 20px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
-                                "</div>"//这里content是一个普通的String
-                        });
-                        var E = window.wangEditor
-                        var editor = new E('#editor')
-                        editor.customConfig.uploadImgServer = '/uploadChatImg'
-
-                        editor.customConfig.uploadFileName = 'file'                        // 或者 var editor = new E( document.getElementById('editor') )
-                        editor.create()
-
-                        $("#send").click(function () {
-                            var content = editor.txt.html();
-                            console.log(content)
-                            if (websocket.readyState !== 1) {
-                                layui.use('layer', function () {
-                                    var layer = layui.layer;
-                                    layer.alert("直播间连接出现错误,请刷新页面重新连接");
-                                })
-                            }else {
-                                var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentTime:new Date().toLocaleString()}
-                                websocket.send(JSON.stringify(message));
-                                ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:0},function f(res) {
-                                    if (res.code==0){
-                                        layer.msg('发送成功');
-                                    } else {
-                                        layer.msg('操作失败');
-                                    }
-
-                                })
+                $("#send").click(function () {
+                    var content = editor.txt.html();
+                    if (content=='<p><br></p>') {
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg("请输入内容");
+                        })
+                    } else {
+                        console.log(content)
+                        if (websocket.readyState !== 1) {
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                layer.alert("直播间连接出现错误,请刷新页面重新连接");
+                            })
+                        } else {
+                            var message = {
+                                role: 2,
+                                content: content,
+                                username: $.cookie("username"),
+                                photoUrl: $.cookie("photoUrl"),
+                                selectOnline: $("#selectOnline").val(),
+                                replay: $("#replayName").text(),
+                                sentTime: new Date().toLocaleString()
                             }
-                            $("#replayName").text("无选择回复");
-                        });
+                            websocket.send(JSON.stringify(message));
+                            ajaxPOST("/insertMessage", {
+                                message: JSON.stringify(message),
+                                selectOnline: 0
+                            }, function f(res) {
+                                if (res.code == 0) {
+                                    layer.msg('发送成功');
+                                } else {
+                                    layer.msg('操作失败');
+                                }
 
-                    })
-                })
-            </script>
-            <hr class="layui-bg-red">
-            <div class="layui-col-md6">
-                <legend>老师消息</legend>
-
-            </div>
-            <div class="layui-col-md6">
-                <legend>网友消息</legend>
-
-            </div>
-
-        </fieldset>
+                            })
+                        }
+                        $("#replayName").text("无选择回复");
+                        layer.closeAll()
+                    }
+                });
 
 
-        <div style="padding: 20px; background-color: #F2F2F2; height: 80%">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="teacherChat">
-                    <!--<div class="layui-card" id="chatModel">-->
-                    <!--<div class="layui-card-header">用户名</div>-->
-                    <!--<div class="layui-card-body">-->
-                    <!--卡片式面板面板通常用于非白色背景色的主体内<br>-->
-                    <!--从而映衬出边框投影-->
-                    <!--</div>-->
-                    <!--</div>-->
-                </div>
-                <div class="layui-col-md6" style="height: 400px;overflow: auto" id="userChat">
-                    <!--<div class="layui-card">-->
-                    <!--<div class="layui-card-header">用户名</div>-->
-                    <!--<div class="layui-card-body">-->
-                    <!--结合 layui 的栅格系统<br>-->
-                    <!--轻松实现响应式布局-->
-                    <!--</div>-->
-                    <!--</div>-->
-                </div>
+            })
+        })
+    </script>
+    <hr class="layui-bg-red">
+    <div class="layui-col-md6">
+        <legend>老师消息</legend>
 
-            </div>
+    </div>
+    <div class="layui-col-md6">
+        <legend>网友消息</legend>
+
+    </div>
+
+</fieldset>
+
+
+<div style="padding: 20px; background-color: #F2F2F2; height: 80%">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6" style="height: 400px;overflow: auto" id="teacherChat">
+            <!--<div class="layui-card" id="chatModel">-->
+            <!--<div class="layui-card-header">用户名</div>-->
+            <!--<div class="layui-card-body">-->
+            <!--卡片式面板面板通常用于非白色背景色的主体内<br>-->
+            <!--从而映衬出边框投影-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="layui-col-md6" style="height: 400px;overflow: auto" id="userChat">
+            <!--<div class="layui-card">-->
+            <!--<div class="layui-card-header">用户名</div>-->
+            <!--<div class="layui-card-body">-->
+            <!--结合 layui 的栅格系统<br>-->
+            <!--轻松实现响应式布局-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
 
+    </div>
+</div>
 
 
 <script>

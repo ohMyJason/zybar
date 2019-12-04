@@ -6,7 +6,6 @@ $(function () {
     userGetHistoryMsg(2);
     userGetHistoryMsg(3);
 
-    console.log("cauch")
     $("body").keydown(function () {
         if (event.keyCode == "13") {//keyCode=13是回车键
             $('#send').click();

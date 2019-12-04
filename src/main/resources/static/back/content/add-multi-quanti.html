@@ -63,7 +63,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">类别</label>
         <div class="layui-input-block">
-            <select name="category" lay-filter="aihao">
+            <select id="category" name="category" lay-filter="aihao" disabled="disabled">
                 <option value="">请选择一个类别</option>
                 <option value="1">焦炭</option>
                 <option value="2">甲醛</option>
@@ -85,8 +85,14 @@
 </form>
 
 <script>
-    //Demo
+    $(function () {
+        //根据flag设置类别
+        var parm = RequestParameter();
+        $("#category").val(parm.flag);
+    })
+
     layui.use('form', function () {
+
         var form = layui.form;
 
         //监听提交

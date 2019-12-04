@@ -74,20 +74,24 @@
                             content:"/back/model/hjStrategy.html?selectLive=1"
                         })
                     })
+                    $("body").keydown(function () {
+                        if (event.keyCode == "13") {//keyCode=13是回车键
+                            $('#send').click();
+                        }
+                    });
 
                     $("#editMessage").click(function () {
                         layer.open({
                             type: 1,
-                            title: "直播间",
-                            area: ['800px', '600px'],
+                            title: "发送消息",
+                            area: ['60%', '50%'],
                             shadeClose: true,
-                            content: "<div id=\"editor\">\n" +
-                                "\n" +
-                                "</div>\n" +
-                                "\n" +
-                                "<div style=\"margin-top: 20px\">\n" +
+                            content:
+                                "<div>\n" +
                                 "    <button style=\"margin-right: 20px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
-                                "</div>"//这里content是一个普通的String
+                                "</div>\n" +
+                                "<div id=\"editor\" style='max-height: 40%'></div>"
+
                         });
                         var E = window.wangEditor
                         var editor = new E('#editor')
@@ -96,30 +100,52 @@
                         editor.customConfig.uploadFileName = 'file'                        // 或者 var editor = new E( document.getElementById('editor') )
                         editor.create()
 
+
                         $("#send").click(function () {
                             var content = editor.txt.html();
-                            console.log(content)
-                            if (websocket.readyState !== 1) {
+                            if (content=='<p><br></p>') {
                                 layui.use('layer', function () {
                                     var layer = layui.layer;
-                                    layer.alert("直播间连接出现错误,请刷新页面重新连接");
+                                    layer.msg("请输入内容");
                                 })
-                            }else {
-                                var message  = {role:2,content:content,username:$.cookie("username"),photoUrl:$.cookie("photoUrl"),selectOnline:$("#selectOnline").val(),replay:$("#replayName").text(),sentTime:new Date().toLocaleString()}
-                                websocket.send(JSON.stringify(message));
-                                ajaxPOST("/insertMessage",{message:JSON.stringify(message),selectOnline:0},function f(res) {
-                                    if (res.code==0){
-                                        layer.msg('发送成功');
-                                    } else {
-                                        layer.msg('操作失败');
+                            } else {
+                                console.log(content)
+                                if (websocket.readyState !== 1) {
+                                    layui.use('layer', function () {
+                                        var layer = layui.layer;
+                                        layer.alert("直播间连接出现错误,请刷新页面重新连接");
+                                    })
+                                } else {
+                                    var message = {
+                                        role: 2,
+                                        content: content,
+                                        username: $.cookie("username"),
+                                        photoUrl: $.cookie("photoUrl"),
+                                        selectOnline: $("#selectOnline").val(),
+                                        replay: $("#replayName").text(),
+                                        sentTime: new Date().toLocaleString()
                                     }
+                                    websocket.send(JSON.stringify(message));
+                                    ajaxPOST("/insertMessage", {
+                                        message: JSON.stringify(message),
+                                        selectOnline: 0
+                                    }, function f(res) {
+                                        if (res.code == 0) {
+                                            layer.msg('发送成功');
+                                        } else {
+                                            layer.msg('操作失败');
+                                        }
 
-                                })
+                                    })
+                                }
+                                $("#replayName").text("无选择回复");
+                                layer.closeAll()
                             }
-                            $("#replayName").text("无选择回复");
                         });
 
+
                     })
+
 
                 })
             </script>

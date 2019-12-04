@@ -41,10 +41,15 @@
 
         //监听提交
         form.on('submit(formDemo)', function (data) {
+            var input = data.field;
+            console.log(input.zyViewUrl.substr(0,4))
+            if (input.zyViewUrl.substr(0,4)!='http'){
+                input.zyViewUrl='http://'+input.zyViewUrl;
+            }
             $.ajax({
                 url:"/insertZyView",
                 type:"post",
-                data:data.field,
+                data:input,
                 dataType:"json",
                 success:function () {
                     layer.load(1, {time: 1*1000}); //又换了种风格，并且设定最长等待10秒

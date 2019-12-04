@@ -76,8 +76,8 @@ public class LiveController {
     @PostMapping("/getAllLive")
     public Result getAllLive(@RequestBody HashMap<String,Object> map) {
         try {
-            int page = Integer.parseInt((String)map.get("page"));
-            int limit = Integer.parseInt((String)map.get("limit"));
+            int page = (Integer)map.get("page");
+            int limit = (Integer) map.get("limit");
             String liveName = map.containsKey("liveName")?(String)map.get("liveName"):null;
             page = PageCheck.checkPage(page);
             limit = PageCheck.checkLimit(limit);
@@ -89,8 +89,8 @@ public class LiveController {
             else
                 return Result.createByFailure("无数据");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return Result.createByFailure("异常");
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
         }
     }
 
