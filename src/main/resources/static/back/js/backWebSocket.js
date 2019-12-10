@@ -16,6 +16,7 @@ function setMessage(event) {
     var username = data.username;
     var photoUrl  = data.photoUrl;
     var selectOnline = data.selectOnline;
+    var sentTime = data.sentTime;
     var replay = data.replay;
     if (replay=="无选择回复"){
         replay = "";
@@ -26,13 +27,13 @@ function setMessage(event) {
     }
 
     var msgModel =  "<div class=\"layui-card\">\n" +
-        "                        <div class=\"layui-card-header\">" + username + "</div>\n" +
+        "                        <div class=\"layui-card-header\">" + username + " "+sentTime+"</div>\n" +
         "                        <div class=\"layui-card-body\">\n" +
         replay+"<b>"+content +"</b>" +
         "                        </div>\n" +
         "                    </div>"
     var userMsgModel = "<div class=\"layui-card\">\n" +
-        "                        <div class=\"layui-card-header\"><button type=\"button\" style='margin-right: 5px' class=\"layui-btn layui-btn-sm layui-btn-warm\">回复@</button>" + username + "</div>\n" +
+        "                        <div class=\"layui-card-header\"><button type=\"button\" style='margin-right: 5px' class=\"layui-btn layui-btn-sm layui-btn-warm\">回复@</button>" + username + " "+sentTime+"</div>\n" +
         "                        <div class=\"layui-card-body\">\n" +
          content +
         "                        </div>\n" +

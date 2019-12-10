@@ -7,6 +7,7 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -83,7 +84,7 @@ public class ZyViewController {
      * @return
      */
     @PostMapping("/deleteZyView")
-    public Result deleteZyView(ZyView zyView){
+    public Result deleteZyView(@RequestBody  ZyView zyView){
         try {
             int col = zyViewMapper.deleteByPrimaryKey(zyView.getZyViewId());
             if (col>0){

@@ -8,10 +8,12 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,7 +32,7 @@ public class PlanController {
     FileUtil fileUtil;
 
     @PostMapping("/insertPlan")
-    public Result insertPlan(Plan plan){
+    public Result insertPlan(@RequestBody  Plan plan){
         try {
             plan.setUpdateTime(fileUtil.getCurrTime());
             planMapper.insertSelective(plan);
@@ -76,8 +78,9 @@ public class PlanController {
 
 
     @PostMapping("/deletePlan")
-    public Result deletePlan(int planId){
+    public Result deletePlan(@RequestBody HashMap<String,Integer> parm){
         try {
+            int planId = parm.get("planId");
             planMapper.deleteByPrimaryKey(planId);
             return Result.createSuccessResult();
         }catch (Exception e){

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,15 +57,51 @@ public class StrategyController {
     UserMapper userMapper;
 
     @PostMapping("/insertProduct")
-    public Result insertProduct(Product product) {
-        productMapper.insertSelective(product);
-        return Result.createSuccessResult();
+    public Result insertProduct(@RequestBody  Product product) {
+        try {
+            productMapper.insert(product);
+            return Result.createSuccessResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
     }
 
     @PostMapping("/getProduct")
     public Result getProduct() {
         List<Product> products = productMapper.selectAll();
         return Result.createSuccessResult(products.size(), products);
+    }
+
+    @PostMapping("/tableGetProduct")
+    public Result tableGetProduct(@RequestBody  HashMap<String,Object> parm){
+        try {
+        Integer limit = (Integer) parm.get("limit");
+        Integer page = (Integer)parm.get("page");
+        String productName = parm.containsKey("productName")?(String) parm.get("productName"):null;
+        limit = PageCheck.checkLimit(limit);
+        page = PageCheck.checkPage(page);
+        int start = PageCheck.calculateStart(page,limit);
+        int count = productMapper.getCount(productName);
+        List<Product> products = productMapper.tableSelectAll(start, limit, productName);
+        return Result.createSuccessResult(count,products);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
+    }
+
+    @PostMapping("/tableDeleteProduct")
+    public Result tableDeleteProduct(@RequestBody HashMap<String,Integer> parm){
+        try {
+
+            Integer productId = parm.get("productId");
+            productMapper.deleteById(productId);
+            return Result.createSuccessResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+        }
     }
 
     /**
@@ -245,6 +282,7 @@ public class StrategyController {
             HashMap<String,String> res = new HashMap<String,String>();
             res.put("product",product.getProductName());
             res.put("contract",strategy.getContract());
+            res.put("selectLive",strategy.getSelectLive()+"");
             return Result.createSuccessResult(res);
         }catch (Exception e){
             e.printStackTrace();

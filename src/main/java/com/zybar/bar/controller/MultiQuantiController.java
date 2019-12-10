@@ -39,8 +39,9 @@ public class MultiQuantiController {
     }
 
     @PostMapping("/deleteMultiQuanti")
-    public Result deleteMultiQuanti(Integer multiQuantiId){
+    public Result deleteMultiQuanti(@RequestBody HashMap<String,Integer> parm){
         try {
+            int multiQuantiId = parm.get("multiQuantiId");
             int col = multiQuantiMapper.deleteByPrimaryKey(multiQuantiId);
             if(col>0){
                 return Result.createSuccessResult();

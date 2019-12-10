@@ -59,34 +59,35 @@ public class WinningRateRankingController {
 
 
     @PostMapping("/deleteWinRete")
-    public Result deleteWinRete(int winningRateRankingId){
+    public Result deleteWinRete(@RequestBody HashMap<String,Integer> parm){
         try {
+            int winningRateRankingId = parm.get("winningRateRankingId");
             int col = winningRateRankingMapper.deleteByPrimaryKey(winningRateRankingId);
             if (col>0){
                 return Result.createSuccessResult();
             }else {
-                return Result.createByFailure("删除失败001，请重试");
+                return Result.createByFailure("未删除");
             }
 
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return Result.createByFailure("删除失败003，请联系管理员");
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
         }
 
     }
 
     @PostMapping("updateWinRate")
-    public Result updateWinRate(WinningRateRanking winningRateRanking){
+    public Result updateWinRate(@RequestBody  WinningRateRanking winningRateRanking){
         try {
             int col = winningRateRankingMapper.updateByPrimaryKeySelective(winningRateRanking);
             if (col>0){
                 return Result.createSuccessResult();
             }else {
-                return Result.createByFailure("更新失败001，请重试");
+                return Result.createByFailure("未更新");
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return Result.createByFailure("更新失败003,请联系管理员");
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
         }
     }
 

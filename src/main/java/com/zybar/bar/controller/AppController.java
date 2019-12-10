@@ -77,11 +77,11 @@ public class AppController {
      * @return
      */
     @PostMapping("/deleteApp")
-    public Result deleteApp(App app) {
+    public Result deleteApp(@RequestBody App app) {
         try{
             return appService.deleteApp(app.getAppId());
         }catch (Exception e){
-            return Result.createByFailure("出错了");
+            return Result.createByFailure(e.getMessage());
         }
     }
 

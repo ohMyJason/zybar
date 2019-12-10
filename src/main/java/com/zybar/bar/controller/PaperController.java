@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -102,8 +103,9 @@ public class PaperController {
      * 文件删除
      */
     @PostMapping("/deletePaper")
-    public Result deletePaper(@RequestParam(name = "paperId") Integer paperId){
+    public Result deletePaper(@RequestBody HashMap<String,Integer> parm){
         try {
+            int paperId = parm.get("paperId");
             Paper paper = paperMapper.selectByPrimaryKey(paperId);
             fileUtil.deleteFile(paper.getPdfUrl());
             int col = paperMapper.deleteByPrimaryKey(paperId);

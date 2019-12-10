@@ -73,7 +73,7 @@ function ajaxPOST(url, data, func){
                 //执行传入的函数
                 if(func){func(data);}
             }else if(data.code == -100){
-                layer.msg(data.msg);
+                layer.msg("操作失败，错误代码："+data.msg);
             }else{
                 layer.msg('操作失败，请稍候重试');
             }

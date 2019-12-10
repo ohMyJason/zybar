@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>风口交易吧后台</title>
+    <script src="../../user/js/jquery-3.1.1.min.js"></script>
+    <script src="../../user/js/jquery.cookie.js"></script>
+
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+<body class="layui-layout-body">
+
+
+<!-- 内容主体区域 -->
+
+<div style="margin: 15px;">
+    <button type="button" id="add-product" class="layui-btn">添加商品</button>
+</div>
+<script>
+    $("#add-product").click(function () {
+        layer.open({
+            type: 2,
+            area: ['800px', '580px'],
+            content: '/back/content/add-product.html' //这里content是一个普通的String
+        });
+    })
+</script>
+<div style="padding: 15px;margin-top: 30px">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <input class="layui-input" id="zy-product-name" placeholder="商品名" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" id="search">搜索</button>
+    </div>
+
+    <table class="layui-hide" id="product-table" lay-filter="product-table"></table>
+
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="barDemo">
+        <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#product-table'
+                , url: '/tableGetProduct'
+                , toolbar: '#toolbarDemo'
+                , title: '商品管理'
+                , method: 'post'
+                , cols: [[
+                    {type: 'checkbox', fixed: 'left', width: 100}
+                    , {field: 'productId', title: 'ID', fixed: 'left', width: 150, unresize: true, sort: true}
+                    , {field: 'productName', title: '商品名', sort: true}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                ]]
+                , page: true
+                , contentType: "application/json"
+            });
+
+            //头工具栏事件
+            table.on('toolbar(product-table)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'getCheckData':
+                        var data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                        break;
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：' + data.length + ' 个');
+                        break;
+                    case 'isAll':
+                        layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                        break;
+                }
+                ;
+            });
+
+            //监听行工具事件
+            table.on('tool(product-table)', function (obj) {
+                var data = obj.data;
+                // console.log(obj.data.paperId)
+                // layer.alert(data.paperId);
+
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除么', function (index) {
+
+                        $.ajax({
+                            method: 'POST',
+                            cache: false,
+                            url:  "/tableDeleteProduct",
+                            dataType: 'json',
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify( {productId: data.productId}),
+                            headers:{token:$.cookie("token")},
+                            success:function (res) {
+                                if (res.code == 0 ) {
+                                    obj.del();
+                                    layer.close(index);
+                                    layui.use('layer', function () {
+                                        var layer = layui.layer;
+                                        layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
+                                        setTimeout(function () {
+                                            layer.msg('删除成功');
+                                        }, 1000);
+                                    });
+                                }else {
+                                    layui.use('layer',function () {
+                                        var layer = layui.layer;
+                                        layer.msg("删除失败，当前商品已存在其他策略中");
+                                    })
+                                }
+                            }
+
+                        })
+
+
+
+                    });
+                }
+            });
+
+            // 搜索
+            $("#search").click(function () {
+                //重新加载表格
+                table.reload('product-table', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        productName: $("#zy-product-name").val()
+                    },
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    contentType: "application/json"
+                });
+            });
+        });
+    </script>
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+        $("#super").attr("class", "layui-nav-item layui-nav-itemed")
+
+    });
+</script>
+</body>
+</html>

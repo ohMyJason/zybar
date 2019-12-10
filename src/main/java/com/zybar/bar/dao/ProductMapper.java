@@ -17,4 +17,9 @@ public interface ProductMapper {
     Product selectById(@Param("productId") Integer productId);
 
     List<Product> selectAll();
+
+    List<Product> tableSelectAll(@Param("start") Integer start,@Param("limit") Integer limit,@Param("productName") String productName);
+    int getCount(@Param("productName") String productName);
+
+    int deleteById(@Param("productId") Integer productId);
 }

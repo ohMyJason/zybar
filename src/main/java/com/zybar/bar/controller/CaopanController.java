@@ -7,10 +7,12 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -100,12 +102,13 @@ public class CaopanController {
     /**
      * 删除操盘经典
      *
-     * @param caopanId
+     * @ caopanId
      * @return
      */
     @PostMapping("/deleteCaopan")
-    public Result deleteCaopan(@RequestParam(name = "caopanId") Integer caopanId) {
+    public Result deleteCaopan(@RequestBody HashMap<String,Integer> parm) {
         try {
+            int caopanId = parm.get("caopanId");
             Caopan caopan = caopanMapper.selectByPrimaryKey(caopanId);
             String pdfUrl = caopan.getPdfUrl();
             String isDelete = fileUtil.deleteFile(pdfUrl);

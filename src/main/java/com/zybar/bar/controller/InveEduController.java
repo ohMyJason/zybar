@@ -7,6 +7,7 @@ import com.zybar.bar.util.PageCheck;
 import com.zybar.bar.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -110,7 +111,7 @@ public class InveEduController {
      * @return
      */
     @PostMapping("/deleteInveEduById")
-    public Result deleteInveEduById(InveEdu inveEdu) {
+    public Result deleteInveEduById(@RequestBody  InveEdu inveEdu) {
         try {
             fileUtil.deleteFile(inveEdu.getPdfUrl());
             inveEduMapper.deleteByPrimaryKey(inveEdu.getPaperId());

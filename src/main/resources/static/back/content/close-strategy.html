@@ -139,6 +139,7 @@
                         //请求商品名
                         ajaxPOST("/getProductByStrategyId",{strategyId:message.createStrategyId},function (data) {
                             message.productName = data.data.product+"("+data.data.contract+")";
+                            message.selectLive = data.data.selectLive;
                             websocket.send(JSON.stringify(message));
 
                         })

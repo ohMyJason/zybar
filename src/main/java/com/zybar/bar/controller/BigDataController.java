@@ -46,7 +46,7 @@ public class BigDataController {
 
 
     @PostMapping("/insertBigData")
-    public Result insertBigData(BigData bigData){
+    public Result insertBigData(@RequestBody  BigData bigData){
         try {
             bigData.setUpdateTime(fileUtil.getCurrTime());
             bigDataMapper.insertSelective(bigData);
@@ -58,8 +58,10 @@ public class BigDataController {
     }
 
     @PostMapping("/deleteBigData")
-    public Result deleteBigData(Integer bigDataId){
+    public Result deleteBigData(@RequestBody  HashMap<String,Integer> parm){
+
         try {
+            int bigDataId = parm.get("bigDataId");
             int col = bigDataMapper.deleteByPrimaryKey(bigDataId);
             if (col>0){
                 return Result.createSuccessResult();
@@ -67,8 +69,7 @@ public class BigDataController {
                 return Result.createByFailure();
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return Result.createByFailure("异常");
+            return Result.createByFailure(e.getMessage());
         }
     }
 
