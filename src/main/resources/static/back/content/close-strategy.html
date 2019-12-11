@@ -99,7 +99,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">平仓描述</label>
         <div class="layui-input-block" style="margin-top: 15px">
-            <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
     </div>
 
@@ -149,12 +149,14 @@
                             layer.msg('平仓成功，界面自动跳转');
 
                         }, 1000);
+
                         setTimeout(function () {
                             //当你在iframe页面关闭自身时
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭
+
                             parent.window.location.reload();
-                        }, 3000);
+                        }, 1000);
                     } else {
                         layer.alert(res.msg);
                     }
