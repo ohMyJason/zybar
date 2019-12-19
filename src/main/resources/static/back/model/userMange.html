@@ -88,10 +88,14 @@
                                         if (d.photoUrl==null){
                                             return "无头像"
                                         }else {
-                                            return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
+                                            // return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
+                                            return `<a href="`+d.photoUrl+`" target="_blank"><img src="`+d.photoUrl+`" style="height: 30px;width: 30px" alt="无图片"></a>`
+
                                         }
                                     } else {
-                                        return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
+                                        // return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
+                                        return `<a href="`+d.photoUrl+`" target="_blank"><img src="`+d.photoUrl+`" style="height: 30px;width: 30px" alt="无图片"></a>`
+
                                     }
                                 }}
                             ,{field:'username', title:'用户名'}

@@ -133,8 +133,12 @@ public class UserController {
 
         if (user.getUsername()==null||user.getUsername().equals("")){
             user.setUsername(baseUser.getUsername());
-        }else if (user.getPhotoUrl()==null||user.getPhotoUrl().equals("")){
+        }
+        if (user.getPhotoUrl()==null||user.getPhotoUrl().equals("")){
             user.setPhotoUrl(baseUser.getPhotoUrl());
+        }
+        if (user.getPassword()==null||user.getPassword().equals("")){
+            user.setPassword(baseUser.getPassword());
         }
 
         try {

@@ -66,8 +66,9 @@
                         ,cols: [[
                             {type: 'checkbox', fixed: 'left',width:100}
                             ,{field:'appId', title:'ID', fixed: 'left', unresize: true, sort: true}
-                            ,{field:'photoUrl', title:'二维码地址',templet:function (d) {
-                                    return "<a href=\""+d.photoUrl+"\" target=\"_blank\">"+d.photoUrl+"</a>\n"
+                            ,{field:'photoUrl', title:'二维码',templet:function (d) {
+                                    // return ""+d.photoUrl+"</a>\n"
+                                    return `<a href="`+d.photoUrl+`" target="_blank"><img src="`+d.photoUrl+`" style="height: 30px;width: 30px" alt="无图片"></a>`
                                 }}
                             ,{field:'name', title:'app名',sort: true}
                             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}

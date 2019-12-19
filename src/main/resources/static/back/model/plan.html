@@ -111,8 +111,8 @@
                             layer.open({
                                 type: 1,
                                 shadeClose: true,
-                                content: data.content, //这里content是一个普通的String
-                                area: ['400', '650px']
+                                content: `<style>.bigContent img{ width: 100%}</style><div class="bigContent">`+data.content+`</div></div>`, //这里content是一个普通的String
+                                area: ['50%', '70%']
                             });
                         }
                     });
