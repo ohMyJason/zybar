@@ -95,8 +95,9 @@ public class LiveController {
     }
 
     @PostMapping("/deleteLive")
-    public Result deleteLive(Integer liveId) {
+    public Result deleteLive(@RequestBody HashMap<String,Integer> parm) {
         try {
+            int liveId = parm.get("liveId");
             Live live = liveMapper.selectByPrimaryKey(liveId);
             String[] splits = live.getLiveImgUrl().split("/");//获得文件名
             String imgName = splits[splits.length - 1];
@@ -112,8 +113,8 @@ public class LiveController {
                 return Result.createByFailure("文件删除失败");
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return Result.createByFailure("异常");
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
         }
     }
 

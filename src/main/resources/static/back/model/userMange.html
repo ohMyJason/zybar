@@ -33,11 +33,27 @@
         </script>
         <div style="padding: 15px;margin-top: 30px">
             <div class="demoTable">
+                <form class="layui-form" action="">
                 <div class="layui-inline">
                     <input class="layui-input" id="username" placeholder="用户名" autocomplete="off">
                 </div>
-                <button class="layui-btn" data-type="reload" id="search">搜索</button>
+                <div class="layui-input-inline">
+                    <button class="layui-btn" data-type="reload" id="search">搜索</button>
+                </div>
+                <!--<div class="layui-input-inline">-->
+                    <!--<label class="layui-form-label">选择类别</label>-->
+                    <!--<div class="layui-input-block">-->
+                        <!--<input type="radio" name="sex" value="男" title="老师" checked="">-->
+                        <!--<input type="radio" name="sex" value="女" title="用户">-->
+                    <!--</div>-->
+                <!--</div>-->
+                </form>
             </div>
+            <script>
+                layui.use('form', function() {
+                    var form = layui.form
+                });
+            </script>
 
             <table class="layui-hide" id="user-table" lay-filter="user-table"></table>
 
@@ -57,6 +73,7 @@
             <script>
                 layui.use('table', function(){
                     var table = layui.table;
+                    var data = RequestParameter();
                     table.render({
                         elem: '#user-table'
                         ,url:'/backGetAllUser'
@@ -117,6 +134,7 @@
                         ,page: true
                         ,where: { //设定异步数据接口的额外参数，任意设
                                         category : 5
+                                        ,role:data.role
                                     }
                     });
 

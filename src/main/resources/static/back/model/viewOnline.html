@@ -55,19 +55,24 @@
             });
 
 
-            $("#editMessage").click(function () {
-                layer.open({
-                    type: 1,
-                    title: "发送消息",
-                    area: ['60%', '50%'],
-                    shadeClose: true,
-                    content:
-                        "<div>\n" +
-                        "    <button style=\"margin-right: 20px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
-                        "</div>\n" +
-                        "<div id=\"editor\" style='max-height: 40%'></div>"
 
-                });
+            $("#editMessage").click(function () {
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    layer.open({
+                        type: 1,
+                        title: "发送消息",
+                        area: ['60%', '50%'],
+                        shadeClose: true,
+                        content:
+                            "<div>\n" +
+                            "    <button style=\"margin-right: 20px\" type=\"button\" class=\"layui-btn layui-btn-normal\" id=\"send\">发送</button>\n" +
+                            "</div>\n" +
+                            "<div id=\"editor\" style='max-height: 40%'></div>"
+
+                    });
+                })
+
                 var E = window.wangEditor
                 var editor = new E('#editor')
                 editor.customConfig.uploadImgServer = '/uploadChatImg'

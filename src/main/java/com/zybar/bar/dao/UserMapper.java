@@ -61,7 +61,7 @@ public interface UserMapper {
 
     User selectByUserName(User user);
 
-    List<User> getAllUser(@Param("start") int start,@Param("limit") int limit,@Param("username") String username);
+    List<User> getAllUser(@Param("start") int start,@Param("limit") int limit,@Param("username") String username,@Param("role") Integer role);
 
-    int getCount(@Param("username") String username);
+    int getCount(@Param("username") String username,@Param("role") Integer role);
 }

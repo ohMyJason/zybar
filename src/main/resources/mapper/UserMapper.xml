@@ -175,6 +175,9 @@
             <if test="username!=null">
                 username like '%${username}%'
             </if>
+            <if test="role!=null">
+                and role = #{role}
+            </if>
         </where>
         LIMIT #{start},#{limit}
     </select>
@@ -183,8 +186,11 @@
         select count(*)
         from tb_user
         <where>
-            <if test="username1=null">
+            <if test="username!=null">
                 username like '%${username}%'
+            </if>
+            <if test="role!=null">
+                and role = #{role}
             </if>
         </where>
     </select>

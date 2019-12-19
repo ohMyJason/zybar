@@ -85,18 +85,17 @@ public class UserController {
         //懒得在写一个无参mapper了
         int start = 1;
         int limit = 10000;
-        String username = null;
-       return  Result.createSuccessResult(userMapper.getAllUser(start, limit, username));
+       return  Result.createSuccessResult(userMapper.getAllUser(start, limit, null,null));
     }
 
     //这里多了个getUser接口给后台用由于上个api是无参的，无法满足后台的分页要求，加上上个接口用到好多处，如果改的话会乱掉，答应我，下次设计api的时候用点心（：D）
     @PostMapping("/backGetAllUser")
-    public Result backGetAllUser(int page,int limit,String username){
+    public Result backGetAllUser(int page,int limit,String username,Integer role){
         page = PageCheck.checkPage(page);
         limit = PageCheck.checkLimit(limit);
         int start = PageCheck.calculateStart(page, limit);
-        int count = userMapper.getCount(username);
-        List<User> allUser = userMapper.getAllUser(start, limit, username);
+        int count = userMapper.getCount(username,role);
+        List<User> allUser = userMapper.getAllUser(start, limit, username,role);
         return Result.createSuccessResult(count,allUser);
     }
 

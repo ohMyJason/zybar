@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 刘佳昇
@@ -90,14 +91,15 @@ public class ZyVoiceController {
     }
 
     @PostMapping("/deleteZyVoice")
-    public Result deleteZyVoice(Integer voiceId) {
+    public Result deleteZyVoice(@RequestBody  HashMap<String,Integer> parm) {
         try {
-
+            int voiceId = parm.get("voiceId");
             zyvoiceMapper.deleteByPrimaryKey(voiceId);
             return Result.createSuccessResult();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return Result.createByFailure("异常");
+            e.printStackTrace();
+            return Result.createByFailure(e.getMessage());
+
         }
     }
 

@@ -99,6 +99,7 @@
                     <a href="javascript:;">账号管理</a>
                     <dl class="layui-nav-child">
                         <dd><a id="enterUserMange">用户管理</a></dd>
+                        <dd><a id="enterTeacherMange">老师管理</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -139,28 +140,36 @@
         })
 
         $("#enterUserMange").click(function () {
-            $.ajax({
-                url: "/getUserByToken",
-                headers: {token: $.cookie("token")},
-                dataType: "json",
-                type:"post",
-                success: function (res) {
-                    if (res.code == 0) {
-                        if (res.data.role == 3) {
-                            $("#content-aera").attr("src", "/back/model/userMange.html");
-                        } else {
-                            layer.alert("只有超级管理员有权限管理用户信息，请登录超级管理员账号。")
-                        }
-                    } else {
-                        layer.msg("操作失败");
-                    }
-                },
-                error: function () {
-
-                }
-            })
+           selectUserOrTeacherManage(1)
+        })
+        $("#enterTeacherMange").click(function () {
+           selectUserOrTeacherManage(2)
         })
     })
+
+    //判断是否能进用户管理，选择进入的界面
+    function selectUserOrTeacherManage(role){
+        $.ajax({
+            url: "/getUserByToken",
+            headers: {token: $.cookie("token")},
+            dataType: "json",
+            type:"post",
+            success: function (res) {
+                if (res.code == 0) {
+                    if (res.data.role == 3) {
+                        $("#content-aera").attr("src", "/back/model/userMange.html?role="+role);
+                    } else {
+                        layer.alert("只有超级管理员有权限管理用户信息，请登录超级管理员账号。")
+                    }
+                } else {
+                    layer.msg("操作失败");
+                }
+            },
+            error: function () {
+
+            }
+        })
+    }
 
 </script>
 </body>
