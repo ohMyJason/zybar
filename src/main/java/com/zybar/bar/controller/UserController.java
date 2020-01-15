@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 刘佳昇
@@ -37,17 +38,30 @@ public class UserController {
     FileUtil fileUtil;
 
 
+    /**
+     * loginName ：登录名
+     * password ： 密码
+     * userId : zqq的登录页面
+     * @param param
+     * @return
+     */
     //登录 -> 检查用户名密码与数据库中的记录是否匹配
     @PostMapping("/login")
-    public Result login(@RequestBody  User user) {
-        System.out.println(user.getUserId()+"-"+user.getUsername()+"-"+user.getPassword());
+    public Result login(@RequestBody Map<String,String> param) {
 //        User userForBase = userService.findByUsername(user);
 //        上面是根据用户名登录，这里是根据id登录
-        User userForBase = userService.findUserById(user.getUserId());
+        User userForBase;
+        if (param.get("userId")==null||param.get("userId").equals("")){
+
+             userForBase = userMapper.selectByUserNameOrLoginNameOrId(param.get("loginName"));
+        }else {
+             userForBase = userMapper.selectByUserNameOrLoginNameOrId(param.get("userId"));
+        }
+
         if (userForBase == null) {
             return Result.createByFailure("登录失败,用户不存在");
         } else {
-            if (!userForBase.getPassword().equals(user.getPassword())) {
+            if (!userForBase.getPassword().equals(param.get("password"))) {
                 return Result.createByFailure("登录失败,密码错误");
             } else {
                 String token = tokenService.getToken(userForBase);
@@ -157,14 +171,24 @@ public class UserController {
     @PostMapping("/updateUserById")
     public Result updateUserById(User user){
         try {
+
+            User userByLoginName = userMapper.selectCountByLoginName(user.getLoginName());
+            if (userByLoginName!=null && !userByLoginName.getUserId().equals(user.getUserId())){
+                return Result.createByFailure("登录名与其他登录名重复");
+            }
+
             int col = userMapper.updateByPrimaryKeySelective(user);
+
+
+
+
             if (col>0){
                 return Result.createSuccessResult();
             }else {
                 return Result.createByFailure();
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
+           e.printStackTrace();
             return Result.createByFailure("异常");
         }
     }

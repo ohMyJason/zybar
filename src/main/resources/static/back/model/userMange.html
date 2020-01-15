@@ -99,6 +99,7 @@
                                     }
                                 }}
                             ,{field:'username', title:'用户名'}
+                            ,{field:'loginName', title:'自定登录名'}
                             ,{field:'password', title:'密码'}
                             ,{field:'phone', title:'电话'}
                             ,{field:'role', title:'角色',sort: true,templet:function (d) {
@@ -184,7 +185,7 @@
                                 type: 2,
                                 shadeClose: true,
                                 area : ['800px' , '480px'],
-                                content: '/back/content/edit-user.html?username='+data.username+'&password='+data.password+'&userId='+data.userId+'&phone='+data.phone+'&role='+data.role+'&level='+data.level+'&ifHj='+data.ifHj+'&ifJj='+data.ifJj+'&ifFw='+data.ifFw+'&photoUrl='+data.photoUrl //这里content是一个普通的String
+                                content: '/back/content/edit-user.html?username='+data.username+'&password='+data.password+'&userId='+data.userId+'&phone='+data.phone+'&role='+data.role+'&level='+data.level+'&ifHj='+data.ifHj+'&ifJj='+data.ifJj+'&ifFw='+data.ifFw+'&photoUrl='+data.photoUrl+'&loginName='+data.loginName //这里content是一个普通的String
                             });
                         }
                     });

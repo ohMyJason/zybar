@@ -106,7 +106,29 @@
             </div>
         </div>
     </div>
+
     <div class="layui-form-item">
+
+    </div>
+    <div class="layui-form-item">
+
+
+
+        <div class="layui-inline">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-inline">
+                <img class="layui-upload-img" id="photo"  src="https://cn.bing.com/th?id=OIP.1sUChQBpHabn1A_HQqFR0wHaHa&pid=Api&rs=1" width="100px" height="100px">
+            </div>
+        </div>
+
+
+        <div class="layui-inline">
+            <label class="layui-form-label">自定登录名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="loginName" id="loginName" lay-verify="required" placeholder="请输入自定义登录名" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
 
         <div class="layui-input-block" style="margin-top: 20px;">
             <button type="button" class="layui-btn" id="test1">
@@ -115,12 +137,7 @@
             <input type="hidden" name="photoUrl" id="photoUrl">
         </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">头像</label>
-            <div class="layui-input-inline">
-                <img class="layui-upload-img" id="photo" width="100%" height="100%">
-            </div>
-        </div>
+
     </div>
     <input type="hidden" id="userId" name="userId">
 
@@ -184,6 +201,7 @@
         $("#ifJj").val(data.ifJj);
         $("#ifFw").val(data.ifFw);
         $("#photoUrl").val(data.photoUrl);
+        $("#loginName").val(data.loginName);
         if (data.photoUrl==null||data.photoUrl=="null"){
             $("#photo").attr("src", "/back/layui/images/imgInit.png");
         } else {
@@ -201,17 +219,23 @@
                 data: data.field,
                 dataType: "json",
                 success: function (data) {
-                    layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
-                    setTimeout(function () {
-                        layer.msg('修改成功，界面自动跳转');
+                    if (data.code == 0){
 
-                    }, 1000);
-                    setTimeout(function () {
-                        //当你在iframe页面关闭自身时
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                        parent.window.location.reload();
-                    }, 3000);
+
+                        layer.load(1, {time: 1 * 1000}); //又换了种风格，并且设定最长等待10秒
+                        setTimeout(function () {
+                            layer.msg('修改成功，界面自动跳转');
+
+                        }, 1000);
+                        setTimeout(function () {
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            parent.window.location.reload();
+                        }, 3000);
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 },
                 error: function () {
                 }

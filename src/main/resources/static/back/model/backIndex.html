@@ -11,6 +11,15 @@
     <script src="../js/common.js"></script>
     <script>
         $(function () {
+            if ($.cookie("username")==""||$.cookie("username")==null){
+                var index = layui.use('layer',function () {
+                    layer.alert("您还未登录，请登录",function () {
+                        window.location.href = "/back/adminLogin.html";
+
+                    });
+
+                })
+            }
             $("#indexUsername").text($.cookie("username"));
             $("#indexPhoto").attr("src", $.cookie("photoUrl"));
             console.log($.cookie("photoUrl"));
@@ -28,7 +37,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">其它系统</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="/user/page.html">前台</a></dd>
+                    <dd><a href="/dist/index.html">前台</a></dd>
                 </dl>
             </li>
         </ul>

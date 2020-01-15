@@ -62,6 +62,16 @@ public class User {
     private Integer ifJj;
     private Integer ifFw;
 
+    private String loginName;
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
     public Integer getLevel() {
         return level;
     }
